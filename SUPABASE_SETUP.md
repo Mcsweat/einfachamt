@@ -19,6 +19,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_ROLE_KEY=server-side-placeholder
 STRIPE_SECRET_KEY=sk_test_placeholder
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
+OCR_PROVIDER=tesseract
 ```
 
 Restart the dev server after adding env variables.
@@ -76,6 +77,8 @@ After upload:
 1. File goes to private Supabase Storage bucket `documents`
 2. Metadata is inserted into `documents`
 3. User is redirected to `/loading/[documentId]`
-4. The app still shows mock analysis
+4. JPG/PNG files are read with Tesseract OCR when `OCR_PROVIDER=tesseract`
+5. PDF files still use mock OCR fallback
+6. The app still shows mock analysis
 
-OCR and real AI analysis are the next milestone.
+Real PDF OCR and real AI analysis are the next milestones.

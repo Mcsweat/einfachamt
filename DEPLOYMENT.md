@@ -12,6 +12,7 @@ NEXT_PUBLIC_SUPABASE_URL=https://nunanvvnotqgpsmlobwg.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-publishable-key
 NEXT_PUBLIC_SITE_URL=https://your-domain.de
 STRIPE_SECRET_KEY=sk_test_placeholder
+OCR_PROVIDER=tesseract
 ```
 
 Do not add `SUPABASE_SERVICE_ROLE_KEY` until server-only OCR/admin jobs need it.
@@ -49,6 +50,7 @@ http://127.0.0.1:3000/**
 - Real Supabase upload: yes
 - Private Storage bucket: yes
 - Mock read/analyze pipeline: yes
-- Real OCR: not yet
+- Tesseract OCR for JPG/PNG: yes
+- PDF OCR: not yet
 - Real AI analysis: not yet
 - Stripe Checkout: placeholder only
