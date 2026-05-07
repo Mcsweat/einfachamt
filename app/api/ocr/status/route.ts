@@ -1,19 +1,20 @@
 import { NextResponse } from "next/server";
-import { isAzureOcrConfigured } from "@/lib/azure-ocr";
+import { isGoogleDocumentAiConfigured } from "@/lib/google-document-ai";
 
 export function GET() {
   const provider = process.env.OCR_PROVIDER?.trim() ?? "mock";
+  const googleConfigured = isGoogleDocumentAiConfigured();
 
   return NextResponse.json({
     ok: true,
     provider,
-    azureConfigured: isAzureOcrConfigured(),
-    azureEnabled: provider === "azure" && isAzureOcrConfigured(),
+    googleConfigured,
+    googleEnabled: provider === "google" && googleConfigured,
     tesseractEnabled: provider === "tesseract",
     supportedTypes:
-      provider === "azure"
+      provider === "google"
         ? ["application/pdf", "image/jpeg", "image/png"]
         : ["image/jpeg", "image/png"],
-    pdfSupport: provider === "azure" ? "yes" : "not_yet",
+    pdfSupport: provider === "google" ? "yes" : "not_yet",
   });
 }

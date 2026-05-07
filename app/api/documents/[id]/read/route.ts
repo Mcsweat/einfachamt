@@ -15,11 +15,11 @@ const fallbackOcrText =
   "Mock OCR: Das Jobcenter möchte Unterlagen. Bitte rechtzeitig antworten.";
 
 function textForStorage(ocrResult: {
-  provider: "azure" | "tesseract" | "mock";
+  provider: "google" | "tesseract" | "mock";
   text: string;
   note?: string;
 }) {
-  if (ocrResult.provider === "azure" || ocrResult.provider === "tesseract") {
+  if (ocrResult.provider === "google" || ocrResult.provider === "tesseract") {
     return ocrResult.text;
   }
 
@@ -83,7 +83,7 @@ export async function POST(_request: Request, { params }: ReadRouteProps) {
     ocrResult = {
       provider: "mock" as const,
       text: fallbackOcrText,
-      note: "Tesseract OCR ist fehlgeschlagen.",
+      note: "OCR ist fehlgeschlagen.",
     };
   }
 
@@ -130,8 +130,8 @@ export async function POST(_request: Request, { params }: ReadRouteProps) {
   return NextResponse.json({
     ok: true,
     mode:
-      ocrResult.provider === "azure"
-        ? "azure_ocr"
+      ocrResult.provider === "google"
+        ? "google_document_ai_ocr"
         : ocrResult.provider === "tesseract"
           ? "tesseract_ocr"
           : "mock_ocr",

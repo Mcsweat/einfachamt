@@ -1,14 +1,17 @@
 import { createWorker } from "tesseract.js";
-import { extractTextWithAzure, isAzureOcrConfigured } from "@/lib/azure-ocr";
+import {
+  extractTextWithGoogleDocumentAi,
+  isGoogleDocumentAiConfigured,
+} from "@/lib/google-document-ai";
 
 export type OcrResult = {
-  provider: "azure" | "tesseract" | "mock";
+  provider: "google" | "tesseract" | "mock";
   text: string;
   note?: string;
 };
 
 const mockText =
-  "Mock OCR: Das Jobcenter möchte Unterlagen. Bitte rechtzeitig antworten.";
+  "Mock OCR: Das Jobcenter moechte Unterlagen. Bitte rechtzeitig antworten.";
 
 function supportsTesseract(fileType: string) {
   return fileType === "image/jpeg" || fileType === "image/png";
@@ -26,50 +29,43 @@ async function recognizeWithLanguage(file: Blob, language: string) {
   }
 }
 
-export async function extractTextWithOcr(
-  file: Blob,
-  fileType: string,
-): Promise<OcrResult> {
-  if (process.env.OCR_PROVIDER === "azure") {
-    const text = await extractTextWithAzure(file, fileType);
+async function readWithGoogle(file: Blob, fileType: string): Promise<OcrResult> {
+  const text = await extractTextWithGoogleDocumentAi(file, fileType);
 
-    if (text) {
-      return {
-        provider: "azure",
-        text,
-      };
-    }
-
+  if (text) {
     return {
-      provider: "mock",
-      text: mockText,
-      note:
-        "OCR_PROVIDER ist auf azure gesetzt, aber Azure ist nicht konfiguriert.",
-    };
-  }
-
-  if (process.env.OCR_PROVIDER === "auto" && isAzureOcrConfigured()) {
-    const text = await extractTextWithAzure(file, fileType);
-
-    if (!text) {
-      return {
-        provider: "mock",
-        text: mockText,
-        note: "Azure ist konfiguriert, hat aber keinen Text zurückgegeben.",
-      };
-    }
-
-    return {
-      provider: "azure",
+      provider: "google",
       text,
     };
   }
 
-  if (process.env.OCR_PROVIDER !== "tesseract") {
+  return {
+    provider: "mock",
+    text: mockText,
+    note:
+      "Google Document AI ist nicht vollstaendig konfiguriert oder hat keinen Text erkannt.",
+  };
+}
+
+export async function extractTextWithOcr(
+  file: Blob,
+  fileType: string,
+): Promise<OcrResult> {
+  const provider = process.env.OCR_PROVIDER?.trim() ?? "mock";
+
+  if (provider === "google") {
+    return readWithGoogle(file, fileType);
+  }
+
+  if (provider === "auto" && isGoogleDocumentAiConfigured()) {
+    return readWithGoogle(file, fileType);
+  }
+
+  if (provider !== "tesseract") {
     return {
       provider: "mock",
       text: mockText,
-      note: "OCR_PROVIDER ist nicht auf tesseract gesetzt.",
+      note: "OCR_PROVIDER ist nicht auf google oder tesseract gesetzt.",
     };
   }
 
@@ -77,7 +73,7 @@ export async function extractTextWithOcr(
     return {
       provider: "mock",
       text: mockText,
-      note: "Tesseract MVP unterstützt aktuell JPG und PNG. PDF folgt später.",
+      note: "Tesseract MVP unterstuetzt aktuell JPG und PNG. PDF folgt spaeter.",
     };
   }
 
