@@ -13,6 +13,18 @@ function supportsTesseract(fileType: string) {
   return fileType === "image/jpeg" || fileType === "image/png";
 }
 
+async function recognizeWithLanguage(file: Blob, language: string) {
+  const worker = await createWorker(language);
+
+  try {
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const result = await worker.recognize(buffer);
+    return result.data.text.trim();
+  } finally {
+    await worker.terminate();
+  }
+}
+
 export async function extractTextWithOcr(
   file: Blob,
   fileType: string,
@@ -33,26 +45,24 @@ export async function extractTextWithOcr(
     };
   }
 
-  const worker = await createWorker("deu+eng");
+  let text = "";
 
   try {
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const result = await worker.recognize(buffer);
-    const text = result.data.text.trim();
+    text = await recognizeWithLanguage(file, "deu+eng");
+  } catch {
+    text = await recognizeWithLanguage(file, "eng");
+  }
 
-    if (!text) {
-      return {
-        provider: "mock",
-        text: mockText,
-        note: "Tesseract hat keinen Text erkannt.",
-      };
-    }
-
+  if (text) {
     return {
       provider: "tesseract",
       text,
     };
-  } finally {
-    await worker.terminate();
   }
+
+  return {
+    provider: "mock",
+    text: mockText,
+    note: "Tesseract hat keinen Text erkannt.",
+  };
 }

@@ -12,6 +12,21 @@ type ReadRouteProps = {
 const fallbackOcrText =
   "Mock OCR: Das Jobcenter möchte Unterlagen. Bitte rechtzeitig antworten.";
 
+function textForStorage(ocrResult: {
+  provider: "tesseract" | "mock";
+  text: string;
+  note?: string;
+}) {
+  if (ocrResult.provider === "tesseract") {
+    return ocrResult.text;
+  }
+
+  return [
+    ocrResult.note ? `OCR Hinweis: ${ocrResult.note}` : "OCR Hinweis: Mock-Fallback.",
+    ocrResult.text,
+  ].join("\n\n");
+}
+
 export async function POST(_request: Request, { params }: ReadRouteProps) {
   const { id } = await params;
 
@@ -99,7 +114,7 @@ export async function POST(_request: Request, { params }: ReadRouteProps) {
     .from("documents")
     .update({
       status: "analyzed",
-      extracted_text: ocrResult.text,
+      extracted_text: textForStorage(ocrResult),
     })
     .eq("id", id);
 
