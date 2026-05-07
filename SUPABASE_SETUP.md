@@ -19,7 +19,9 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_ROLE_KEY=server-side-placeholder
 STRIPE_SECRET_KEY=sk_test_placeholder
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
-OCR_PROVIDER=tesseract
+OCR_PROVIDER=azure
+AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT=https://your-resource.cognitiveservices.azure.com
+AZURE_DOCUMENT_INTELLIGENCE_KEY=your-azure-key
 ```
 
 Restart the dev server after adding env variables.
@@ -77,8 +79,8 @@ After upload:
 1. File goes to private Supabase Storage bucket `documents`
 2. Metadata is inserted into `documents`
 3. User is redirected to `/loading/[documentId]`
-4. JPG/PNG files are read with Tesseract OCR when `OCR_PROVIDER=tesseract`
-5. PDF files still use mock OCR fallback
+4. PDF/JPG/PNG files are read with Azure Document Intelligence when `OCR_PROVIDER=azure`
+5. JPG/PNG files can use Tesseract locally when `OCR_PROVIDER=tesseract`
 6. The app still shows mock analysis
 
-Real PDF OCR and real AI analysis are the next milestones.
+Real AI analysis is the next milestone.

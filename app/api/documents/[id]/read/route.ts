@@ -3,6 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import { mockAnalysis } from "@/lib/mock-data";
 import { extractTextWithOcr } from "@/lib/ocr";
 
+export const maxDuration = 60;
+
 type ReadRouteProps = {
   params: Promise<{
     id: string;
@@ -13,11 +15,11 @@ const fallbackOcrText =
   "Mock OCR: Das Jobcenter möchte Unterlagen. Bitte rechtzeitig antworten.";
 
 function textForStorage(ocrResult: {
-  provider: "tesseract" | "mock";
+  provider: "azure" | "tesseract" | "mock";
   text: string;
   note?: string;
 }) {
-  if (ocrResult.provider === "tesseract") {
+  if (ocrResult.provider === "azure" || ocrResult.provider === "tesseract") {
     return ocrResult.text;
   }
 
@@ -127,7 +129,12 @@ export async function POST(_request: Request, { params }: ReadRouteProps) {
 
   return NextResponse.json({
     ok: true,
-    mode: ocrResult.provider === "tesseract" ? "tesseract_ocr" : "mock_ocr",
+    mode:
+      ocrResult.provider === "azure"
+        ? "azure_ocr"
+        : ocrResult.provider === "tesseract"
+          ? "tesseract_ocr"
+          : "mock_ocr",
     documentId: id,
     analysisSaved: true,
     ocrNote: ocrResult.note ?? null,

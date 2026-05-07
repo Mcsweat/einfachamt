@@ -1,7 +1,8 @@
 import { createWorker } from "tesseract.js";
+import { extractTextWithAzure, isAzureOcrConfigured } from "@/lib/azure-ocr";
 
 export type OcrResult = {
-  provider: "tesseract" | "mock";
+  provider: "azure" | "tesseract" | "mock";
   text: string;
   note?: string;
 };
@@ -29,6 +30,41 @@ export async function extractTextWithOcr(
   file: Blob,
   fileType: string,
 ): Promise<OcrResult> {
+  if (process.env.OCR_PROVIDER === "azure") {
+    const text = await extractTextWithAzure(file, fileType);
+
+    if (text) {
+      return {
+        provider: "azure",
+        text,
+      };
+    }
+
+    return {
+      provider: "mock",
+      text: mockText,
+      note:
+        "OCR_PROVIDER ist auf azure gesetzt, aber Azure ist nicht konfiguriert.",
+    };
+  }
+
+  if (process.env.OCR_PROVIDER === "auto" && isAzureOcrConfigured()) {
+    const text = await extractTextWithAzure(file, fileType);
+
+    if (!text) {
+      return {
+        provider: "mock",
+        text: mockText,
+        note: "Azure ist konfiguriert, hat aber keinen Text zurückgegeben.",
+      };
+    }
+
+    return {
+      provider: "azure",
+      text,
+    };
+  }
+
   if (process.env.OCR_PROVIDER !== "tesseract") {
     return {
       provider: "mock",
