@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { mockAnalysis } from "@/lib/mock-data";
+import { buildAnalysisFromText } from "@/lib/knowledge-base";
 import { extractTextWithOcr } from "@/lib/ocr";
 
 export const maxDuration = 60;
@@ -92,15 +92,16 @@ export async function POST(_request: Request, { params }: ReadRouteProps) {
     .select("id")
     .eq("document_id", id)
     .maybeSingle();
+  const matchedAnalysis = buildAnalysisFromText(ocrResult.text);
 
   if (!existingAnalysis) {
     const { error: analysisError } = await supabase.from("analyses").insert({
       document_id: id,
-      summary: mockAnalysis.summary,
-      authority_request: mockAnalysis.authorityRequest,
-      deadlines: mockAnalysis.deadlines,
-      todos: mockAnalysis.todos,
-      risks: mockAnalysis.risks,
+      summary: matchedAnalysis.summary,
+      authority_request: matchedAnalysis.authorityRequest,
+      deadlines: matchedAnalysis.deadlines,
+      todos: matchedAnalysis.todos,
+      risks: matchedAnalysis.risks,
       language: "de",
     });
 
