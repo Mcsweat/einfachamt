@@ -1,11 +1,15 @@
 import { NextResponse } from "next/server";
 import { isGoogleDocumentAiConfigured } from "@/lib/google-document-ai";
 import { getOcrAccess } from "@/lib/ocr-access";
+import { getCurrentUserSubscription } from "@/lib/subscription";
 
-export function GET() {
+export async function GET() {
   const provider = process.env.OCR_PROVIDER?.trim() ?? "mock";
   const googleConfigured = isGoogleDocumentAiConfigured();
-  const ocrAccess = getOcrAccess();
+  const subscription = await getCurrentUserSubscription();
+  const ocrAccess = getOcrAccess({
+    hasActiveSubscription: subscription.isPaid,
+  });
   const googleAvailable =
     provider === "google" &&
     googleConfigured &&
@@ -16,6 +20,8 @@ export function GET() {
     provider,
     googleConfigured,
     googlePaywallEnabled: ocrAccess.googlePaywallEnabled,
+    subscriptionStatus: subscription.status,
+    hasActiveSubscription: ocrAccess.hasActiveSubscription,
     googlePaywalled:
       provider === "google" &&
       googleConfigured &&

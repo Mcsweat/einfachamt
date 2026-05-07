@@ -35,7 +35,7 @@ export const copy = {
     ],
     pricingTitle: "3 Briefe kostenlos",
     pricingText:
-      "Danach einfacher Monatsplan. Stripe Checkout wird später angebunden.",
+      "Danach einfacher Monatsplan mit Stripe Checkout.",
     pricingLink: "Preise ansehen",
     uploadTitle: "Lade deinen Brief hoch",
     uploadIntro:
@@ -92,7 +92,7 @@ export const copy = {
     ],
     pricingTitle: "3 letters free",
     pricingText:
-      "After that, a simple monthly plan. Stripe Checkout will be connected later.",
+      "After that, a simple monthly plan with Stripe Checkout.",
     pricingLink: "View pricing",
     uploadTitle: "Upload your letter",
     uploadIntro:

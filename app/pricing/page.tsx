@@ -2,8 +2,18 @@ import Link from "next/link";
 import { FooterDisclaimer } from "@/components/FooterDisclaimer";
 import { MobileHeader } from "@/components/MobileHeader";
 import { PricingCard } from "@/components/PricingCard";
+import { PricingCheckoutButton } from "./PricingCheckoutButton";
 
-export default function PricingPage() {
+type PricingPageProps = {
+  searchParams?: Promise<{
+    checkout?: string;
+  }>;
+};
+
+export default async function PricingPage({ searchParams }: PricingPageProps) {
+  const params = await searchParams;
+  const checkout = params?.checkout;
+
   return (
     <main className="min-h-svh bg-trust-50">
       <MobileHeader title="Preise" backHref="/" />
@@ -12,50 +22,64 @@ export default function PricingPage() {
           Einfach starten
         </h1>
         <p className="mt-4 text-xl leading-8 text-slate-700">
-          Die erste Version nutzt Platzhalter. Zahlungen kommen später über
-          Stripe Checkout.
+          Starte kostenlos. Mit Plus werden echte OCR-Lesung und mehr Briefe
+          freigeschaltet.
         </p>
+
+        {checkout === "success" ? (
+          <p className="mt-5 rounded-[1.25rem] bg-emerald-50 p-4 text-base font-bold leading-6 text-emerald-800">
+            Danke. Dein Plus-Zugang wird gerade aktiviert.
+          </p>
+        ) : null}
+
+        {checkout === "cancelled" ? (
+          <p className="mt-5 rounded-[1.25rem] bg-amber-50 p-4 text-base font-bold leading-6 text-amber-900">
+            Checkout wurde abgebrochen. Du kannst jederzeit neu starten.
+          </p>
+        ) : null}
 
         <div className="mt-7 space-y-4">
           <PricingCard
             name="Free"
-            price="0 €"
+            price="0 EUR"
             description="Zum Ausprobieren."
             features={[
               "3 Briefanalysen",
-              "einfache Erklärung",
+              "einfache Erklaerung",
               "Antwortentwurf",
             ]}
           />
           <PricingCard
             name="Plus"
-            price="9 €/Monat"
-            description="Platzhalter für den Monatsplan."
+            price="9 EUR/Monat"
+            description="Fuer echte OCR-Lesung und mehr Nutzung."
             highlighted
             features={[
-              "unbegrenzte Analysen",
+              "Google Document AI OCR",
+              "mehr Briefanalysen",
               "gespeicherte Briefe",
-              "Erinnerungen",
-              "Antwortentwürfe",
+              "Antwortentwuerfe",
             ]}
           />
           <PricingCard
-            name="Premium später"
-            price="39–99 €"
-            description="Platzhalter für geführte Formularhilfe."
+            name="Premium spaeter"
+            price="39-99 EUR"
+            description="Platzhalter fuer gefuehrte Formularhilfe."
             features={[
-              "geführte Formularhilfe",
-              "mehr Unterstützung",
-              "später verfügbar",
+              "gefuehrte Formularhilfe",
+              "mehr Unterstuetzung",
+              "spaeter verfuegbar",
             ]}
           />
         </div>
 
+        <PricingCheckoutButton />
+
         <Link
           href="/upload"
-          className="mt-6 flex min-h-14 items-center justify-center rounded-full bg-trust-100 px-5 py-4 text-center text-lg font-bold text-trust-700"
+          className="mt-3 flex min-h-14 items-center justify-center rounded-full bg-trust-100 px-5 py-4 text-center text-lg font-bold text-trust-700"
         >
-          Kostenlos starten
+          Erst kostenlos testen
         </Link>
       </section>
       <FooterDisclaimer />

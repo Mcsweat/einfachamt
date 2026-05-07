@@ -12,6 +12,8 @@ NEXT_PUBLIC_SUPABASE_URL=https://nunanvvnotqgpsmlobwg.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-publishable-key
 NEXT_PUBLIC_SITE_URL=https://your-domain.de
 STRIPE_SECRET_KEY=sk_test_placeholder
+STRIPE_PRICE_ID=price_placeholder
+STRIPE_WEBHOOK_SECRET=whsec_placeholder
 OCR_PROVIDER=google
 GOOGLE_DOCUMENT_AI_PROJECT_ID=your-google-cloud-project-id
 GOOGLE_DOCUMENT_AI_LOCATION=eu
@@ -59,4 +61,4 @@ http://127.0.0.1:3000/**
 - Google Document AI OCR for PDF/JPG/PNG: configured, but paywalled by default
 - Tesseract OCR for JPG/PNG: local fallback
 - Real AI analysis: not yet
-- Stripe Checkout: placeholder only
+- Stripe Checkout: yes, when Stripe env vars and webhook are configured

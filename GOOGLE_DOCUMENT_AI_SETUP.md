@@ -70,6 +70,8 @@ Expected:
   "googleConfigured": true,
   "googlePaywallEnabled": true,
   "googlePaywalled": true,
+  "subscriptionStatus": "none",
+  "hasActiveSubscription": false,
   "googleEnabled": false,
   "pdfSupport": "yes"
 }

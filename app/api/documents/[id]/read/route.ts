@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { buildAnalysisFromText } from "@/lib/knowledge-base";
 import { getOcrAccess } from "@/lib/ocr-access";
 import { extractTextWithOcr } from "@/lib/ocr";
+import { getCurrentUserSubscription } from "@/lib/subscription";
 
 export const maxDuration = 60;
 
@@ -78,7 +79,10 @@ export async function POST(_request: Request, { params }: ReadRouteProps) {
 
   let ocrResult;
   try {
-    const ocrAccess = getOcrAccess();
+    const subscription = await getCurrentUserSubscription();
+    const ocrAccess = getOcrAccess({
+      hasActiveSubscription: subscription.isPaid,
+    });
     ocrResult = await extractTextWithOcr(file, document.file_type, {
       allowGoogleDocumentAi: ocrAccess.allowGoogleDocumentAi,
     });
