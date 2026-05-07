@@ -17,6 +17,8 @@ GOOGLE_DOCUMENT_AI_PROJECT_ID=your-google-cloud-project-id
 GOOGLE_DOCUMENT_AI_LOCATION=eu
 GOOGLE_DOCUMENT_AI_PROCESSOR_ID=your-processor-id
 GOOGLE_DOCUMENT_AI_SERVICE_ACCOUNT_BASE64=base64-encoded-service-account-json
+GOOGLE_DOCUMENT_AI_PAYWALL=on
+EINFACHAMT_PAID_OCR_OVERRIDE=false
 ```
 
 Do not add `SUPABASE_SERVICE_ROLE_KEY` until server-only OCR/admin jobs need it.
@@ -54,7 +56,7 @@ http://127.0.0.1:3000/**
 - Real Supabase upload: yes
 - Private Storage bucket: yes
 - Mock read/analyze pipeline: yes
-- Google Document AI OCR for PDF/JPG/PNG: yes, when Google env vars are configured
+- Google Document AI OCR for PDF/JPG/PNG: configured, but paywalled by default
 - Tesseract OCR for JPG/PNG: local fallback
 - Real AI analysis: not yet
 - Stripe Checkout: placeholder only

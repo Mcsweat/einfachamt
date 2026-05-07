@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { buildAnalysisFromText } from "@/lib/knowledge-base";
+import { getOcrAccess } from "@/lib/ocr-access";
 import { extractTextWithOcr } from "@/lib/ocr";
 
 export const maxDuration = 60;
@@ -77,7 +78,10 @@ export async function POST(_request: Request, { params }: ReadRouteProps) {
 
   let ocrResult;
   try {
-    ocrResult = await extractTextWithOcr(file, document.file_type);
+    const ocrAccess = getOcrAccess();
+    ocrResult = await extractTextWithOcr(file, document.file_type, {
+      allowGoogleDocumentAi: ocrAccess.allowGoogleDocumentAi,
+    });
   } catch (ocrError) {
     console.error(ocrError);
     ocrResult = {

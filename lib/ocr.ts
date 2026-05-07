@@ -10,6 +10,10 @@ export type OcrResult = {
   note?: string;
 };
 
+type OcrOptions = {
+  allowGoogleDocumentAi?: boolean;
+};
+
 const mockText =
   "Mock OCR: Das Jobcenter moechte Unterlagen. Bitte rechtzeitig antworten.";
 
@@ -50,8 +54,22 @@ async function readWithGoogle(file: Blob, fileType: string): Promise<OcrResult> 
 export async function extractTextWithOcr(
   file: Blob,
   fileType: string,
+  options: OcrOptions = {},
 ): Promise<OcrResult> {
   const provider = process.env.OCR_PROVIDER?.trim() ?? "mock";
+
+  if (
+    (provider === "google" ||
+      (provider === "auto" && isGoogleDocumentAiConfigured())) &&
+    !options.allowGoogleDocumentAi
+  ) {
+    return {
+      provider: "mock",
+      text: mockText,
+      note:
+        "Google Document AI ist fuer den Plus-Plan reserviert. Aktuell nutzt EinfachAmt die einfache Analyse.",
+    };
+  }
 
   if (provider === "google") {
     return readWithGoogle(file, fileType);

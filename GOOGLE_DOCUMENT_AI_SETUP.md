@@ -47,6 +47,8 @@ GOOGLE_DOCUMENT_AI_PROJECT_ID=your-google-cloud-project-id
 GOOGLE_DOCUMENT_AI_LOCATION=eu
 GOOGLE_DOCUMENT_AI_PROCESSOR_ID=your-processor-id
 GOOGLE_DOCUMENT_AI_SERVICE_ACCOUNT_BASE64=the-long-base64-output
+GOOGLE_DOCUMENT_AI_PAYWALL=on
+EINFACHAMT_PAID_OCR_OVERRIDE=false
 ```
 
 Use `Production and Preview`, then redeploy.
@@ -66,9 +68,19 @@ Expected:
   "ok": true,
   "provider": "google",
   "googleConfigured": true,
-  "googleEnabled": true,
+  "googlePaywallEnabled": true,
+  "googlePaywalled": true,
+  "googleEnabled": false,
   "pdfSupport": "yes"
 }
+```
+
+This means Google Document AI is ready but locked behind the paid tier. Until Stripe subscription checks are connected, keep `EINFACHAMT_PAID_OCR_OVERRIDE=false` in production.
+
+For a short private test only, set:
+
+```env
+EINFACHAMT_PAID_OCR_OVERRIDE=true
 ```
 
 Then upload a new PDF, JPG, or PNG. In Supabase, the `documents.extracted_text` column should contain real OCR text instead of mock text.
