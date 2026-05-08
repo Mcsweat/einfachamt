@@ -16,6 +16,14 @@ type ReadRouteProps = {
 const fallbackOcrText =
   "Mock OCR: Das Jobcenter möchte Unterlagen. Bitte rechtzeitig antworten.";
 
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error) {
+    return error.message.slice(0, 500);
+  }
+
+  return "Unbekannter OCR-Fehler.";
+}
+
 function textForStorage(ocrResult: {
   provider: "google" | "tesseract" | "mock";
   text: string;
@@ -91,7 +99,7 @@ export async function POST(_request: Request, { params }: ReadRouteProps) {
     ocrResult = {
       provider: "mock" as const,
       text: fallbackOcrText,
-      note: "OCR ist fehlgeschlagen.",
+      note: `OCR ist fehlgeschlagen: ${getErrorMessage(ocrError)}`,
     };
   }
 
