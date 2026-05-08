@@ -2,11 +2,20 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { getStripe } from "@/lib/stripe";
 
+function getSiteUrl() {
+  const rawUrl =
+    process.env.NEXT_PUBLIC_SITE_URL?.trim() ?? "http://127.0.0.1:3000";
+  const withProtocol = rawUrl.startsWith("http")
+    ? rawUrl
+    : `https://${rawUrl}`;
+
+  return withProtocol.replace(/\/$/, "");
+}
+
 export async function POST() {
   try {
     const priceId = process.env.STRIPE_PRICE_ID;
-    const siteUrl =
-      process.env.NEXT_PUBLIC_SITE_URL ?? "http://127.0.0.1:3000";
+    const siteUrl = getSiteUrl();
 
     if (!priceId) {
       return NextResponse.json(
