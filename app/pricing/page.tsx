@@ -2,6 +2,7 @@ import Link from "next/link";
 import { FooterDisclaimer } from "@/components/FooterDisclaimer";
 import { MobileHeader } from "@/components/MobileHeader";
 import { PricingCard } from "@/components/PricingCard";
+import { createClient } from "@/lib/supabase/server";
 import { PricingCheckoutButton } from "./PricingCheckoutButton";
 
 type PricingPageProps = {
@@ -13,6 +14,11 @@ type PricingPageProps = {
 export default async function PricingPage({ searchParams }: PricingPageProps) {
   const params = await searchParams;
   const checkout = params?.checkout;
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const isLoggedIn = Boolean(user && !user.is_anonymous);
 
   return (
     <main className="min-h-svh bg-trust-50">
@@ -73,7 +79,7 @@ export default async function PricingPage({ searchParams }: PricingPageProps) {
           />
         </div>
 
-        <PricingCheckoutButton />
+        <PricingCheckoutButton isLoggedIn={isLoggedIn} />
 
         <Link
           href="/upload"

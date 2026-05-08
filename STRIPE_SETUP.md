@@ -66,6 +66,9 @@ https://your-domain.de/pricing
 
 Click `Plus freischalten`.
 
+If you are not logged in, the app first sends an email magic link. Open the link,
+then return to `/pricing` and click `Plus freischalten` again.
+
 Use Stripe test card:
 
 ```text

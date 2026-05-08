@@ -40,6 +40,17 @@ export async function POST() {
       );
     }
 
+    if (user.is_anonymous) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error:
+            "Bitte melde dich mit E-Mail an, damit dein Plus-Zugang gespeichert bleibt.",
+        },
+        { status: 401 },
+      );
+    }
+
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
       .select("stripe_customer_id")

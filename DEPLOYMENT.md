@@ -50,6 +50,7 @@ Redirect URLs:
 
 ```text
 https://your-domain.de/**
+https://your-domain.de/auth/callback
 http://127.0.0.1:3000/**
 ```
 

@@ -52,7 +52,31 @@ Authentication -> Sign In / Providers -> Anonymous sign-ins -> Enable
 
 The MVP uses anonymous auth so stressed users can upload first without an account wall.
 
-## 5. Verify
+## 5. Enable email login
+
+In Supabase:
+
+Authentication -> Sign In / Providers -> Email -> Enable
+
+Then open Authentication -> URL Configuration.
+
+Site URL:
+
+```text
+https://www.einfachamt.com
+```
+
+Redirect URLs:
+
+```text
+https://www.einfachamt.com/auth/callback
+https://www.einfachamt.com/**
+http://127.0.0.1:3000/**
+```
+
+Plus checkout requires email login so subscriptions are remembered across devices.
+
+## 6. Verify
 
 Open:
 

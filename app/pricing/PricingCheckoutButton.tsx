@@ -3,7 +3,13 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
-export function PricingCheckoutButton() {
+type PricingCheckoutButtonProps = {
+  isLoggedIn?: boolean;
+};
+
+export function PricingCheckoutButton({
+  isLoggedIn = false,
+}: PricingCheckoutButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -15,14 +21,9 @@ export function PricingCheckoutButton() {
       const supabase = createClient();
       const { data: sessionData } = await supabase.auth.getSession();
 
-      if (!sessionData.session) {
-        const { error: authError } = await supabase.auth.signInAnonymously();
-
-        if (authError) {
-          throw new Error(
-            "Login konnte nicht gestartet werden. Bitte pruefe Supabase Anonymous Auth.",
-          );
-        }
+      if (!isLoggedIn || !sessionData.session || sessionData.session.user.is_anonymous) {
+        window.location.href = "/login?next=/pricing&reason=plus";
+        return;
       }
 
       const response = await fetch("/api/stripe/checkout", {
@@ -58,7 +59,11 @@ export function PricingCheckoutButton() {
         disabled={isLoading}
         className="flex min-h-14 w-full items-center justify-center rounded-full bg-trust-500 px-5 py-4 text-center text-lg font-bold text-white shadow-soft transition active:scale-[0.98] disabled:opacity-70"
       >
-        {isLoading ? "Weiter zu Stripe..." : "Plus freischalten"}
+        {isLoading
+          ? "Weiter..."
+          : isLoggedIn
+            ? "Plus freischalten"
+            : "Mit E-Mail einloggen"}
       </button>
       {error ? (
         <p className="mt-3 rounded-2xl bg-amber-50 p-4 text-base font-semibold leading-6 text-amber-900">
