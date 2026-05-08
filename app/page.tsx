@@ -5,10 +5,16 @@ import { Logo } from "@/components/Logo";
 import { SimpleListCard } from "@/components/SimpleListCard";
 import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function LandingPage() {
   const language = await getLanguage();
   const t = copy[language];
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const isEmailUser = Boolean(user && !user.is_anonymous);
 
   return (
     <main className="min-h-svh bg-trust-50">
@@ -17,7 +23,15 @@ export default async function LandingPage() {
           <Link href="/" aria-label="EinfachAmt Startseite">
             <Logo />
           </Link>
-          <LanguageToggle active={language} label={t.languageLabel} />
+          <div className="flex shrink-0 items-center gap-2">
+            <Link
+              href={isEmailUser ? "/account" : "/login?next=/account"}
+              className="flex min-h-10 items-center justify-center rounded-full bg-white/90 px-3 text-sm font-bold text-trust-700 shadow-sm"
+            >
+              {isEmailUser ? "Konto" : "Login"}
+            </Link>
+            <LanguageToggle active={language} label={t.languageLabel} />
+          </div>
         </div>
 
         <div className="flex flex-1 flex-col justify-center py-9">
@@ -42,6 +56,12 @@ export default async function LandingPage() {
               className="flex min-h-14 w-full items-center justify-center rounded-full bg-white/95 px-6 py-4 text-center text-lg font-bold text-trust-500 shadow-sm transition active:scale-[0.98]"
             >
               {t.exampleCta}
+            </Link>
+            <Link
+              href="/dashboard"
+              className="flex min-h-14 w-full items-center justify-center rounded-full bg-trust-100 px-6 py-4 text-center text-lg font-bold text-trust-700 transition active:scale-[0.98]"
+            >
+              Meine Briefe
             </Link>
           </div>
         </div>
