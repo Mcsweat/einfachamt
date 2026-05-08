@@ -23,10 +23,6 @@ export default async function LoadingPage({ params }: LoadingPageProps) {
           <h1 className="mt-6 text-4xl font-bold leading-tight text-ink">
             Dein Brief wird gelesen...
           </h1>
-          <p className="mt-4 text-xl leading-8 text-slate-700">
-            Wir bereiten jetzt die Erklärung vor. OCR und echte KI kommen im
-            nächsten Schritt.
-          </p>
         </div>
         <div className="mt-6">
           <LoadingSkeleton />
