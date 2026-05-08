@@ -1,23 +1,46 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { BottomActionBar } from "@/components/BottomActionBar";
 import { EditableResponse } from "@/components/EditableResponse";
 import { ResponseButton } from "@/components/ResponseButton";
-import { responseDrafts, responseTypes } from "@/lib/mock-data";
+import { copy, type Language } from "@/lib/i18n";
 
-type ResponseTypeId = keyof typeof responseDrafts;
+type ResponseTypeId = keyof typeof copy.de.responseDrafts;
 
-export function ResponseDraftClient() {
+const responseTypeIds: ResponseTypeId[] = [
+  "extension",
+  "submitted",
+  "objection",
+  "sick",
+  "explain",
+];
+
+type ResponseDraftClientProps = {
+  language: Language;
+};
+
+export function ResponseDraftClient({ language }: ResponseDraftClientProps) {
+  const t = copy[language];
+  const responseTypes = useMemo(
+    () =>
+      responseTypeIds.map((id) => ({
+        id,
+        label: t.responseTypes[id],
+      })),
+    [t.responseTypes],
+  );
   const [selectedType, setSelectedType] = useState<ResponseTypeId>(
     responseTypes[0].id,
   );
-  const [draft, setDraft] = useState(responseDrafts[responseTypes[0].id]);
+  const [draft, setDraft] = useState<string>(
+    t.responseDrafts[responseTypes[0].id],
+  );
   const [copied, setCopied] = useState(false);
 
   function selectType(type: ResponseTypeId) {
     setSelectedType(type);
-    setDraft(responseDrafts[type]);
+    setDraft(t.responseDrafts[type]);
     setCopied(false);
   }
 
@@ -40,7 +63,7 @@ export function ResponseDraftClient() {
       </div>
 
       <section className="mt-6">
-        <h2 className="mb-3 text-2xl font-bold text-ink">Dein Entwurf</h2>
+        <h2 className="mb-3 text-2xl font-bold text-ink">{t.draftTitle}</h2>
         <EditableResponse value={draft} onChange={setDraft} />
       </section>
 
@@ -50,13 +73,13 @@ export function ResponseDraftClient() {
           onClick={copyDraft}
           className="min-h-14 rounded-full bg-trust-500 px-5 py-4 text-[17px] font-bold text-white shadow-soft transition active:scale-[0.98]"
         >
-          {copied ? "Kopiert" : "Text kopieren"}
+          {copied ? t.copied : t.copyText}
         </button>
         <button
           type="button"
           className="min-h-12 rounded-full bg-trust-100 px-5 py-3 font-bold text-trust-500 transition active:scale-[0.99]"
         >
-          PDF speichern (bald)
+          {t.savePdfSoon}
         </button>
       </BottomActionBar>
     </>

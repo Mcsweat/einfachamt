@@ -28,7 +28,7 @@ export default async function LandingPage() {
               href={isEmailUser ? "/account" : "/login?next=/account"}
               className="flex min-h-10 items-center justify-center rounded-full bg-white/90 px-3 text-sm font-bold text-trust-700 shadow-sm"
             >
-              {isEmailUser ? "Konto" : "Login"}
+              {isEmailUser ? t.account : t.login}
             </Link>
             <LanguageToggle active={language} label={t.languageLabel} />
           </div>
@@ -55,7 +55,7 @@ export default async function LandingPage() {
               href="/dashboard"
               className="flex min-h-14 w-full items-center justify-center rounded-full bg-trust-100 px-6 py-4 text-center text-lg font-bold text-trust-700 transition active:scale-[0.98]"
             >
-              Meine Briefe
+              {t.dashboardCta}
             </Link>
           </div>
         </div>

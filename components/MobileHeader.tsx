@@ -10,6 +10,8 @@ type MobileHeaderProps = {
   language?: Language;
   languageLabel?: string;
   backLabel?: string;
+  accountLabel?: string;
+  loginLabel?: string;
 };
 
 export async function MobileHeader({
@@ -18,6 +20,8 @@ export async function MobileHeader({
   language = "de",
   languageLabel,
   backLabel = "Zurück",
+  accountLabel = "Konto",
+  loginLabel = "Login",
 }: MobileHeaderProps) {
   const supabase = await createClient();
   const {
@@ -51,7 +55,7 @@ export async function MobileHeader({
           href={isEmailUser ? "/account" : "/login?next=/account"}
           className="flex min-h-10 shrink-0 items-center justify-center rounded-full bg-white/90 px-3 text-sm font-bold text-trust-700 shadow-sm"
         >
-          {isEmailUser ? "Konto" : "Login"}
+          {isEmailUser ? accountLabel : loginLabel}
         </Link>
       </div>
     </header>

@@ -5,9 +5,13 @@ import { useRouter } from "next/navigation";
 
 type LoadingRedirectProps = {
   id: string;
+  errorText?: string;
 };
 
-export function LoadingRedirect({ id }: LoadingRedirectProps) {
+export function LoadingRedirect({
+  id,
+  errorText = "Der Brief konnte nicht gelesen werden.",
+}: LoadingRedirectProps) {
   const router = useRouter();
   const [error, setError] = useState("");
 
@@ -22,7 +26,7 @@ export function LoadingRedirect({ id }: LoadingRedirectProps) {
         const result = await response.json();
 
         if (!response.ok || !result.ok) {
-          throw new Error(result.error ?? "Der Brief konnte nicht gelesen werden.");
+          throw new Error(result.error ?? errorText);
         }
 
         if (isMounted) {
@@ -34,7 +38,7 @@ export function LoadingRedirect({ id }: LoadingRedirectProps) {
           setError(
             readError instanceof Error
               ? readError.message
-              : "Der Brief konnte nicht gelesen werden.",
+              : errorText,
           );
         }
       }
@@ -45,7 +49,7 @@ export function LoadingRedirect({ id }: LoadingRedirectProps) {
     return () => {
       isMounted = false;
     };
-  }, [id, router]);
+  }, [errorText, id, router]);
 
   if (!error) {
     return null;

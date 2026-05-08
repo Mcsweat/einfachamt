@@ -1,15 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { copy, type Language } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/client";
 
 type PricingCheckoutButtonProps = {
   isLoggedIn?: boolean;
+  language?: Language;
 };
 
 export function PricingCheckoutButton({
   isLoggedIn = false,
+  language = "de",
 }: PricingCheckoutButtonProps) {
+  const t = copy[language];
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -36,7 +40,7 @@ export function PricingCheckoutButton({
 
       if (!response.ok || !data.url) {
         throw new Error(
-          data.error ?? "Stripe Checkout konnte nicht gestartet werden.",
+          data.error ?? t.checkoutError,
         );
       }
 
@@ -45,7 +49,7 @@ export function PricingCheckoutButton({
       setError(
         checkoutError instanceof Error
           ? checkoutError.message
-          : "Stripe Checkout konnte nicht gestartet werden.",
+          : t.checkoutError,
       );
       setIsLoading(false);
     }
@@ -60,10 +64,10 @@ export function PricingCheckoutButton({
         className="flex min-h-14 w-full items-center justify-center rounded-full bg-trust-500 px-5 py-4 text-center text-lg font-bold text-white shadow-soft transition active:scale-[0.98] disabled:opacity-70"
       >
         {isLoading
-          ? "Weiter..."
+          ? t.checkoutContinue
           : isLoggedIn
-            ? "Plus freischalten"
-            : "Mit E-Mail einloggen"}
+            ? t.unlockPlus
+            : t.emailLogin}
       </button>
       {error ? (
         <p className="mt-3 rounded-2xl bg-amber-50 p-4 text-base font-semibold leading-6 text-amber-900">

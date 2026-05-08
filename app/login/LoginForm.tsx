@@ -2,12 +2,18 @@
 
 import { useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { copy, type Language } from "@/lib/i18n";
 
 type LoginFormProps = {
   nextPath?: string;
+  language?: Language;
 };
 
-export function LoginForm({ nextPath = "/pricing" }: LoginFormProps) {
+export function LoginForm({
+  nextPath = "/pricing",
+  language = "de",
+}: LoginFormProps) {
+  const t = copy[language];
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -49,14 +55,14 @@ export function LoginForm({ nextPath = "/pricing" }: LoginFormProps) {
       return;
     }
 
-    setMessage("Wir haben dir einen Login-Link geschickt. Bitte pruefe dein E-Mail-Postfach.");
+    setMessage(t.loginLinkSent);
     setIsLoading(false);
   }
 
   return (
     <form onSubmit={submitLogin} className="mt-7 rounded-[2rem] bg-white/95 p-5 shadow-sm">
       <label htmlFor="email" className="text-lg font-bold text-ink">
-        E-Mail-Adresse
+        {t.emailAddress}
       </label>
       <input
         id="email"
@@ -72,7 +78,7 @@ export function LoginForm({ nextPath = "/pricing" }: LoginFormProps) {
         disabled={isLoading}
         className="mt-4 flex min-h-14 w-full items-center justify-center rounded-full bg-trust-500 px-5 py-4 text-lg font-bold text-white shadow-soft disabled:opacity-70"
       >
-        {isLoading ? "Link wird gesendet..." : "Login-Link senden"}
+        {isLoading ? t.sendingLink : t.sendLoginLink}
       </button>
       {message ? (
         <p className="mt-4 rounded-2xl bg-emerald-50 p-4 text-base font-bold leading-6 text-emerald-800">

@@ -53,7 +53,7 @@ export function UploadCard({ language = "de" }: UploadCardProps) {
       setError(
         uploadError instanceof Error
           ? uploadError.message
-          : "Upload fehlgeschlagen. Bitte versuche es erneut.",
+          : t.uploadError,
       );
       setIsLoading(false);
       setMessage(t.uploadIdle);

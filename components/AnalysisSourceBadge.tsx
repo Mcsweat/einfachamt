@@ -7,23 +7,34 @@ import { type AnalysisResult } from "@/lib/document-data";
 type AnalysisSourceBadgeProps = {
   documentId: string;
   initialSource: AnalysisResult["source"];
+  labels?: Record<AnalysisResult["source"], string>;
 };
 
-function getLabel(source: AnalysisResult["source"]) {
+const defaultLabels: Record<AnalysisResult["source"], string> = {
+  supabase: "Analyse gespeichert",
+  pending: "Analyse vorbereitet",
+  mock: "Demo-Analyse",
+};
+
+function getLabel(
+  source: AnalysisResult["source"],
+  labels: Record<AnalysisResult["source"], string>,
+) {
   if (source === "supabase") {
-    return "Analyse gespeichert";
+    return labels.supabase;
   }
 
   if (source === "pending") {
-    return "Analyse vorbereitet";
+    return labels.pending;
   }
 
-  return "Demo-Analyse";
+  return labels.mock;
 }
 
 export function AnalysisSourceBadge({
   documentId,
   initialSource,
+  labels = defaultLabels,
 }: AnalysisSourceBadgeProps) {
   const [source, setSource] = useState(initialSource);
 
@@ -65,7 +76,7 @@ export function AnalysisSourceBadge({
 
   return (
     <p className="text-base font-bold text-trust-700" aria-live="polite">
-      {getLabel(source)}
+      {getLabel(source, labels)}
     </p>
   );
 }

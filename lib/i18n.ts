@@ -27,6 +27,8 @@ export const copy = {
       "Antwortentwürfe erstellen",
     ],
     trustTitle: "Vertrauen",
+    trustText:
+      "EinfachAmt ist ein privater Dienst. Wir erklären klar, was mit deinem Brief passiert.",
     trustItems: [
       "Privater Dienst",
       "Keine Rechtsberatung",
@@ -46,6 +48,7 @@ export const copy = {
     uploadIdle: "Achte darauf, dass alle Seiten sichtbar sind.",
     uploadUploading: "Dein Brief wird hochgeladen...",
     uploadReading: "Dein Brief wird gelesen...",
+    uploadError: "Upload fehlgeschlagen. Bitte versuche es erneut.",
     safeUploadTitle: "Sicher hochladen",
     safeUploadText:
       "Mock-Version: Noch keine echte Speicherung. Später mit Supabase Storage, EU-Standort und geschützten Uploads.",
@@ -57,6 +60,154 @@ export const copy = {
     impressum: "Impressum",
     pricing: "Preise",
     back: "Zurück",
+    account: "Konto",
+    login: "Login",
+    dashboardCta: "Meine Briefe",
+    dashboardTitle: "Deine Briefe",
+    dashboardIntro: "Hier findest du deine hochgeladenen Briefe wieder.",
+    useEverywhereTitle: "Auf allen Geräten nutzen",
+    useEverywhereText:
+      "Logge dich mit E-Mail ein, damit deine Briefe und dein Plus-Zugang auch auf einem anderen Handy oder Browser verfügbar sind.",
+    emailLogin: "Mit E-Mail einloggen",
+    noLettersTitle: "Noch keine Briefe",
+    noLettersText: "Lade deinen ersten Brief hoch. Danach erscheint er hier.",
+    openAnalysis: "Analyse öffnen",
+    newUpload: "Neuen Brief hochladen",
+    statusAnalyzed: "Analysiert",
+    statusReading: "Wird gelesen",
+    statusUploaded: "Hochgeladen",
+    analysisHeader: "Ergebnis",
+    analysisSourceLabels: {
+      supabase: "Analyse gespeichert",
+      pending: "Analyse vorbereitet",
+      mock: "Demo-Analyse",
+    },
+    analysisTitle: "Das ist wichtig",
+    analysisIntro:
+      "Kurz und einfach. Danach kannst du direkt eine Antwort erstellen.",
+    shortSaid: "Kurz gesagt",
+    authorityWants: "Was möchte das Amt?",
+    importantDeadline: "Wichtige Frist",
+    deadlineHint: "Am besten heute eine kurze Antwort vorbereiten.",
+    todosTitle: "Was du tun solltest",
+    riskTitle: "Risiko, wenn du nicht reagierst",
+    important: "Wichtig",
+    createResponse: "Antwort erstellen",
+    responseHeader: "Antwort",
+    responseTitle: "Was möchtest du sagen?",
+    responseIntro: "Wähle eine Vorlage. Du kannst alles ändern.",
+    draftTitle: "Dein Entwurf",
+    copied: "Kopiert",
+    copyText: "Text kopieren",
+    savePdfSoon: "PDF speichern (bald)",
+    responseTypes: {
+      extension: "Ich brauche mehr Zeit",
+      submitted: "Ich habe Unterlagen nachgereicht",
+      objection: "Ich widerspreche",
+      sick: "Ich bin krank",
+      explain: "Bitte erklären Sie die Entscheidung",
+    },
+    responseDrafts: {
+      extension:
+        "Sehr geehrte Damen und Herren,\n\nhiermit bitte ich um eine Fristverlängerung, da ich die angeforderten Unterlagen noch zusammenstelle.\n\nIch werde diese schnellstmöglich nachreichen.\n\nMit freundlichen Grüßen",
+      submitted:
+        "Sehr geehrte Damen und Herren,\n\nhiermit teile ich mit, dass ich die angeforderten Unterlagen nachgereicht habe.\n\nBitte bestätigen Sie mir den Eingang der Unterlagen schriftlich.\n\nMit freundlichen Grüßen",
+      objection:
+        "Sehr geehrte Damen und Herren,\n\nhiermit widerspreche ich Ihrer Entscheidung fristwahrend. Bitte senden Sie mir eine nachvollziehbare Begründung und prüfen Sie den Bescheid erneut.\n\nMit freundlichen Grüßen",
+      sick:
+        "Sehr geehrte Damen und Herren,\n\nich bin derzeit krank und kann die angeforderten Unterlagen nicht sofort vollständig einreichen. Ich bitte um Verständnis und werde mich schnellstmöglich melden.\n\nMit freundlichen Grüßen",
+      explain:
+        "Sehr geehrte Damen und Herren,\n\nbitte erklären Sie mir die Entscheidung in einfachen Worten. Ich möchte verstehen, welche Unterlagen oder Schritte von mir erwartet werden.\n\nMit freundlichen Grüßen",
+    },
+    loadingHeader: "Brief wird gelesen",
+    loadingTitle: "Dein Brief wird gelesen...",
+    readError: "Der Brief konnte nicht gelesen werden.",
+    pricingPageTitle: "Einfach starten",
+    pricingPageIntro:
+      "Starte kostenlos. Mit Plus werden echte OCR-Lesung und mehr Briefe freigeschaltet.",
+    checkoutSuccess: "Danke. Dein Plus-Zugang wird gerade aktiviert.",
+    checkoutCancelled:
+      "Checkout wurde abgebrochen. Du kannst jederzeit neu starten.",
+    plans: {
+      free: {
+        name: "Free",
+        price: "0 EUR",
+        description: "Zum Ausprobieren.",
+        features: ["3 Briefanalysen", "einfache Erklärung", "Antwortentwurf"],
+      },
+      plus: {
+        name: "Plus",
+        price: "9 EUR/Monat",
+        description: "Für echte OCR-Lesung und mehr Nutzung.",
+        features: [
+          "Google Document AI OCR",
+          "mehr Briefanalysen",
+          "gespeicherte Briefe",
+          "Antwortentwürfe",
+        ],
+      },
+      premium: {
+        name: "Premium später",
+        price: "39-99 EUR",
+        description: "Platzhalter für geführte Formularhilfe.",
+        features: [
+          "geführte Formularhilfe",
+          "mehr Unterstützung",
+          "später verfügbar",
+        ],
+      },
+    },
+    startFree: "Erst kostenlos testen",
+    checkoutContinue: "Weiter...",
+    unlockPlus: "Plus freischalten",
+    checkoutError: "Stripe Checkout konnte nicht gestartet werden.",
+    loginTitle: "Plus-Zugang sichern",
+    loginIntro:
+      "Melde dich mit deiner E-Mail an, damit dein Abo auch auf einem neuen Handy oder Browser erhalten bleibt.",
+    plusNeedsAccount:
+      "Für Plus brauchst du ein Konto. Danach geht es direkt weiter zu Stripe.",
+    emailAddress: "E-Mail-Adresse",
+    sendingLink: "Link wird gesendet...",
+    sendLoginLink: "Login-Link senden",
+    loginLinkSent:
+      "Wir haben dir einen Login-Link geschickt. Bitte prüfe dein E-Mail-Postfach.",
+    accountTitle: "Dein Konto",
+    email: "E-Mail",
+    subscription: "Abo",
+    plusActive: "Plus aktiv",
+    notLoggedIn: "Du bist noch nicht mit E-Mail eingeloggt.",
+    signIn: "Einloggen",
+    signOut: "Ausloggen",
+    notFoundTitle: "Diese Seite gibt es nicht.",
+    notFoundText:
+      "Du bist wahrscheinlich auf einer technischen Platzhalter-Adresse gelandet.",
+    home: "Zur Startseite",
+    privacyTitle: "Datenschutz",
+    privacyCards: [
+      [
+        "Kurz gesagt",
+        "EinfachAmt speichert hochgeladene Dokumente geschützt in Supabase. Die Analyse dient nur als Verständnishilfe.",
+      ],
+      [
+        "Uploads",
+        "Dokumente werden deinem Konto zugeordnet. Du solltest nur Briefe hochladen, die du wirklich analysieren möchtest.",
+      ],
+      [
+        "Wichtig",
+        "EinfachAmt ist kein offizieller Behördendienst und bietet keine Rechtsberatung.",
+      ],
+    ],
+    impressumTitle: "Impressum",
+    impressumCards: [
+      [
+        "Angaben folgen",
+        "Platzhalter für Betreiberangaben, Adresse, Kontakt und verantwortliche Person.",
+      ],
+      [
+        "Hinweis",
+        "EinfachAmt ist kein offizieller Behördendienst und bietet keine Rechtsberatung.",
+      ],
+    ],
   },
   en: {
     languageLabel: "Choose language",
@@ -84,6 +235,8 @@ export const copy = {
       "Create reply drafts",
     ],
     trustTitle: "Trust",
+    trustText:
+      "EinfachAmt is a private service. We explain clearly what happens with your letter.",
     trustItems: [
       "Private service",
       "No legal advice",
@@ -103,6 +256,7 @@ export const copy = {
     uploadIdle: "Make sure all pages are visible.",
     uploadUploading: "Your letter is uploading...",
     uploadReading: "Your letter is being read...",
+    uploadError: "Upload failed. Please try again.",
     safeUploadTitle: "Secure upload",
     safeUploadText:
       "Mock version: No real storage yet. Later with Supabase Storage, EU location, and protected uploads.",
@@ -114,5 +268,146 @@ export const copy = {
     impressum: "Imprint",
     pricing: "Pricing",
     back: "Back",
+    account: "Account",
+    login: "Login",
+    dashboardCta: "My letters",
+    dashboardTitle: "Your letters",
+    dashboardIntro: "Here you can find your uploaded letters again.",
+    useEverywhereTitle: "Use it on all devices",
+    useEverywhereText:
+      "Log in with email so your letters and Plus access are available on another phone or browser too.",
+    emailLogin: "Log in with email",
+    noLettersTitle: "No letters yet",
+    noLettersText: "Upload your first letter. It will appear here afterwards.",
+    openAnalysis: "Open analysis",
+    newUpload: "Upload new letter",
+    statusAnalyzed: "Analyzed",
+    statusReading: "Being read",
+    statusUploaded: "Uploaded",
+    analysisHeader: "Result",
+    analysisSourceLabels: {
+      supabase: "Analysis saved",
+      pending: "Analysis prepared",
+      mock: "Demo analysis",
+    },
+    analysisTitle: "This is important",
+    analysisIntro:
+      "Short and simple. After this you can create a reply right away.",
+    shortSaid: "In short",
+    authorityWants: "What does the office want?",
+    importantDeadline: "Important deadline",
+    deadlineHint: "It is best to prepare a short reply today.",
+    todosTitle: "What you should do now",
+    riskTitle: "Risk if you do not respond",
+    important: "Important",
+    createResponse: "Create reply",
+    responseHeader: "Reply",
+    responseTitle: "What do you want to say?",
+    responseIntro: "Choose a template. You can edit everything.",
+    draftTitle: "Your draft",
+    copied: "Copied",
+    copyText: "Copy text",
+    savePdfSoon: "Save PDF (soon)",
+    responseTypes: {
+      extension: "I need more time",
+      submitted: "I submitted documents",
+      objection: "I object",
+      sick: "I am sick",
+      explain: "Please explain the decision",
+    },
+    responseDrafts: {
+      extension:
+        "Dear Sir or Madam,\n\nI hereby request an extension of the deadline because I am still collecting the requested documents.\n\nI will submit them as soon as possible.\n\nKind regards",
+      submitted:
+        "Dear Sir or Madam,\n\nI would like to inform you that I have submitted the requested documents.\n\nPlease confirm receipt of the documents in writing.\n\nKind regards",
+      objection:
+        "Dear Sir or Madam,\n\nI hereby object to your decision within the deadline. Please send me a clear explanation and review the decision again.\n\nKind regards",
+      sick:
+        "Dear Sir or Madam,\n\nI am currently sick and cannot submit the requested documents in full immediately. I ask for your understanding and will contact you as soon as possible.\n\nKind regards",
+      explain:
+        "Dear Sir or Madam,\n\nPlease explain the decision to me in simple words. I would like to understand which documents or steps are expected from me.\n\nKind regards",
+    },
+    loadingHeader: "Letter is being read",
+    loadingTitle: "Your letter is being read...",
+    readError: "The letter could not be read.",
+    pricingPageTitle: "Start simply",
+    pricingPageIntro:
+      "Start for free. Plus unlocks real OCR reading and more letters.",
+    checkoutSuccess: "Thank you. Your Plus access is being activated.",
+    checkoutCancelled: "Checkout was cancelled. You can start again anytime.",
+    plans: {
+      free: {
+        name: "Free",
+        price: "0 EUR",
+        description: "For trying it out.",
+        features: ["3 letter analyses", "simple explanation", "reply draft"],
+      },
+      plus: {
+        name: "Plus",
+        price: "9 EUR/month",
+        description: "For real OCR reading and more usage.",
+        features: [
+          "Google Document AI OCR",
+          "more letter analyses",
+          "saved letters",
+          "reply drafts",
+        ],
+      },
+      premium: {
+        name: "Premium later",
+        price: "39-99 EUR",
+        description: "Placeholder for guided form help.",
+        features: ["guided form help", "more support", "available later"],
+      },
+    },
+    startFree: "Try for free first",
+    checkoutContinue: "Continue...",
+    unlockPlus: "Unlock Plus",
+    checkoutError: "Stripe Checkout could not be started.",
+    loginTitle: "Secure Plus access",
+    loginIntro:
+      "Log in with your email so your subscription stays available on a new phone or browser.",
+    plusNeedsAccount:
+      "You need an account for Plus. After that you will continue directly to Stripe.",
+    emailAddress: "Email address",
+    sendingLink: "Sending link...",
+    sendLoginLink: "Send login link",
+    loginLinkSent: "We sent you a login link. Please check your email inbox.",
+    accountTitle: "Your account",
+    email: "Email",
+    subscription: "Subscription",
+    plusActive: "Plus active",
+    notLoggedIn: "You are not logged in with email yet.",
+    signIn: "Log in",
+    signOut: "Log out",
+    notFoundTitle: "This page does not exist.",
+    notFoundText: "You probably landed on a technical placeholder address.",
+    home: "Back to home",
+    privacyTitle: "Privacy",
+    privacyCards: [
+      [
+        "In short",
+        "EinfachAmt stores uploaded documents securely in Supabase. The analysis is only a comprehension aid.",
+      ],
+      [
+        "Uploads",
+        "Documents are linked to your account. Only upload letters you really want to analyze.",
+      ],
+      [
+        "Important",
+        "EinfachAmt is not an official government service and does not provide legal advice.",
+      ],
+    ],
+    impressumTitle: "Imprint",
+    impressumCards: [
+      [
+        "Details coming soon",
+        "Placeholder for operator details, address, contact and responsible person.",
+      ],
+      [
+        "Notice",
+        "EinfachAmt is not an official government service and does not provide legal advice.",
+      ],
+    ],
   },
 } as const;

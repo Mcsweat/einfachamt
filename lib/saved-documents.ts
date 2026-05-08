@@ -7,15 +7,15 @@ export type SavedDocument = {
   createdAt: string;
 };
 
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat("de-DE", {
+function formatDate(value: string, locale: string) {
+  return new Intl.DateTimeFormat(locale, {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
   }).format(new Date(value));
 }
 
-export async function getSavedDocuments() {
+export async function getSavedDocuments(locale = "de-DE") {
   const supabase = await createClient();
   const {
     data: { user },
@@ -40,7 +40,7 @@ export async function getSavedDocuments() {
       id: document.id,
       fileName: document.file_name,
       status: document.status,
-      createdAt: formatDate(document.created_at),
+      createdAt: formatDate(document.created_at, locale),
     })),
   };
 }

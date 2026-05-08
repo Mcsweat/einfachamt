@@ -1,8 +1,14 @@
 type DeadlineWarningProps = {
   deadline: string;
+  title?: string;
+  hint?: string;
 };
 
-export function DeadlineWarning({ deadline }: DeadlineWarningProps) {
+export function DeadlineWarning({
+  deadline,
+  title = "Wichtige Frist",
+  hint = "Am besten heute eine kurze Antwort vorbereiten.",
+}: DeadlineWarningProps) {
   return (
     <section className="rounded-[1.55rem] border border-amber-200 bg-amber-50 p-5 shadow-sm">
       <div className="flex gap-3">
@@ -13,12 +19,12 @@ export function DeadlineWarning({ deadline }: DeadlineWarningProps) {
           !
         </span>
         <div>
-          <h2 className="text-xl font-bold text-ink">Wichtige Frist</h2>
+          <h2 className="text-xl font-bold text-ink">{title}</h2>
           <p className="mt-2 text-lg font-bold leading-7 text-amber-900">
             {deadline}
           </p>
           <p className="mt-2 leading-7 text-slate-700">
-            Am besten heute eine kurze Antwort vorbereiten.
+            {hint}
           </p>
         </div>
       </div>

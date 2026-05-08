@@ -12,14 +12,16 @@ export function TrustSignalList({
   const t = copy[language];
 
   return (
-    <section className={compact ? "space-y-2" : "rounded-[1.4rem] bg-white/95 p-5 shadow-sm"}>
+    <section
+      className={
+        compact ? "space-y-2" : "rounded-[1.4rem] bg-white/95 p-5 shadow-sm"
+      }
+    >
       {!compact ? (
         <>
           <h2 className="text-xl font-bold text-ink">{t.trustTitle}</h2>
           <p className="mt-2 text-base leading-7 text-slate-700">
-            {language === "en"
-              ? "EinfachAmt is a private service. We explain clearly what happens with your letter."
-              : "EinfachAmt ist ein privater Dienst. Wir erklären klar, was mit deinem Brief passiert."}
+            {t.trustText}
           </p>
         </>
       ) : null}

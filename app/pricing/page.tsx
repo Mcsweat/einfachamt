@@ -2,6 +2,8 @@ import Link from "next/link";
 import { FooterDisclaimer } from "@/components/FooterDisclaimer";
 import { MobileHeader } from "@/components/MobileHeader";
 import { PricingCard } from "@/components/PricingCard";
+import { copy } from "@/lib/i18n";
+import { getLanguage } from "@/lib/i18n-server";
 import { createClient } from "@/lib/supabase/server";
 import { PricingCheckoutButton } from "./PricingCheckoutButton";
 
@@ -14,6 +16,8 @@ type PricingPageProps = {
 export default async function PricingPage({ searchParams }: PricingPageProps) {
   const params = await searchParams;
   const checkout = params?.checkout;
+  const language = await getLanguage();
+  const t = copy[language];
   const supabase = await createClient();
   const {
     data: { user },
@@ -22,73 +26,67 @@ export default async function PricingPage({ searchParams }: PricingPageProps) {
 
   return (
     <main className="min-h-svh bg-trust-50">
-      <MobileHeader title="Preise" backHref="/" />
+      <MobileHeader
+        title={t.pricing}
+        backHref="/"
+        language={language}
+        languageLabel={t.languageLabel}
+        backLabel={t.back}
+        accountLabel={t.account}
+        loginLabel={t.login}
+      />
       <section className="mx-auto w-full max-w-[430px] px-4 pb-28 pt-6">
         <h1 className="text-4xl font-bold leading-tight text-ink">
-          Einfach starten
+          {t.pricingPageTitle}
         </h1>
         <p className="mt-4 text-xl leading-8 text-slate-700">
-          Starte kostenlos. Mit Plus werden echte OCR-Lesung und mehr Briefe
-          freigeschaltet.
+          {t.pricingPageIntro}
         </p>
 
         {checkout === "success" ? (
           <p className="mt-5 rounded-[1.25rem] bg-emerald-50 p-4 text-base font-bold leading-6 text-emerald-800">
-            Danke. Dein Plus-Zugang wird gerade aktiviert.
+            {t.checkoutSuccess}
           </p>
         ) : null}
 
         {checkout === "cancelled" ? (
           <p className="mt-5 rounded-[1.25rem] bg-amber-50 p-4 text-base font-bold leading-6 text-amber-900">
-            Checkout wurde abgebrochen. Du kannst jederzeit neu starten.
+            {t.checkoutCancelled}
           </p>
         ) : null}
 
         <div className="mt-7 space-y-4">
           <PricingCard
-            name="Free"
-            price="0 EUR"
-            description="Zum Ausprobieren."
-            features={[
-              "3 Briefanalysen",
-              "einfache Erklaerung",
-              "Antwortentwurf",
-            ]}
+            name={t.plans.free.name}
+            price={t.plans.free.price}
+            description={t.plans.free.description}
+            features={[...t.plans.free.features]}
           />
           <PricingCard
-            name="Plus"
-            price="9 EUR/Monat"
-            description="Fuer echte OCR-Lesung und mehr Nutzung."
+            name={t.plans.plus.name}
+            price={t.plans.plus.price}
+            description={t.plans.plus.description}
             highlighted
-            features={[
-              "Google Document AI OCR",
-              "mehr Briefanalysen",
-              "gespeicherte Briefe",
-              "Antwortentwuerfe",
-            ]}
+            features={[...t.plans.plus.features]}
           />
           <PricingCard
-            name="Premium spaeter"
-            price="39-99 EUR"
-            description="Platzhalter fuer gefuehrte Formularhilfe."
-            features={[
-              "gefuehrte Formularhilfe",
-              "mehr Unterstuetzung",
-              "spaeter verfuegbar",
-            ]}
+            name={t.plans.premium.name}
+            price={t.plans.premium.price}
+            description={t.plans.premium.description}
+            features={[...t.plans.premium.features]}
           />
         </div>
 
-        <PricingCheckoutButton isLoggedIn={isLoggedIn} />
+        <PricingCheckoutButton isLoggedIn={isLoggedIn} language={language} />
 
         <Link
           href="/upload"
           className="mt-3 flex min-h-14 items-center justify-center rounded-full bg-trust-100 px-5 py-4 text-center text-lg font-bold text-trust-700"
         >
-          Erst kostenlos testen
+          {t.startFree}
         </Link>
       </section>
-      <FooterDisclaimer />
+      <FooterDisclaimer language={language} />
     </main>
   );
 }

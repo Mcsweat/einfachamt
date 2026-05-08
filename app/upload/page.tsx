@@ -17,6 +17,8 @@ export default async function UploadPage() {
         language={language}
         languageLabel={t.languageLabel}
         backLabel={t.back}
+        accountLabel={t.account}
+        loginLabel={t.login}
       />
       <section className="mx-auto w-full max-w-[430px] px-4 pb-10 pt-6">
         <h1 className="text-4xl font-bold leading-tight text-ink">
