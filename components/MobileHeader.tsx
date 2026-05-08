@@ -2,6 +2,7 @@ import Link from "next/link";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { Logo } from "@/components/Logo";
 import { type Language } from "@/lib/i18n";
+import { createClient } from "@/lib/supabase/server";
 
 type MobileHeaderProps = {
   title?: string;
@@ -11,13 +12,19 @@ type MobileHeaderProps = {
   backLabel?: string;
 };
 
-export function MobileHeader({
+export async function MobileHeader({
   title = "EinfachAmt",
   backHref,
   language = "de",
   languageLabel,
   backLabel = "Zurück",
 }: MobileHeaderProps) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const isEmailUser = Boolean(user && !user.is_anonymous);
+
   return (
     <header className="sticky top-0 z-20 bg-trust-50/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 w-full max-w-[430px] items-center gap-3 px-4">
@@ -40,6 +47,12 @@ export function MobileHeader({
           )}
         </Link>
         <LanguageToggle active={language} label={languageLabel} />
+        <Link
+          href={isEmailUser ? "/account" : "/login?next=/account"}
+          className="flex min-h-10 shrink-0 items-center justify-center rounded-full bg-white/90 px-3 text-sm font-bold text-trust-700 shadow-sm"
+        >
+          {isEmailUser ? "Konto" : "Login"}
+        </Link>
       </div>
     </header>
   );
