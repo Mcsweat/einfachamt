@@ -11,31 +11,43 @@ export function PricingCheckoutButton() {
     setIsLoading(true);
     setError("");
 
-    const supabase = createClient();
-    const { data: sessionData } = await supabase.auth.getSession();
+    try {
+      const supabase = createClient();
+      const { data: sessionData } = await supabase.auth.getSession();
 
-    if (!sessionData.session) {
-      const { error: authError } = await supabase.auth.signInAnonymously();
+      if (!sessionData.session) {
+        const { error: authError } = await supabase.auth.signInAnonymously();
 
-      if (authError) {
-        setError("Login konnte nicht gestartet werden. Bitte versuche es erneut.");
-        setIsLoading(false);
-        return;
+        if (authError) {
+          throw new Error(
+            "Login konnte nicht gestartet werden. Bitte pruefe Supabase Anonymous Auth.",
+          );
+        }
       }
-    }
 
-    const response = await fetch("/api/stripe/checkout", {
-      method: "POST",
-    });
-    const data = (await response.json()) as { url?: string; error?: string };
+      const response = await fetch("/api/stripe/checkout", {
+        method: "POST",
+      });
+      const contentType = response.headers.get("content-type") ?? "";
+      const data = contentType.includes("application/json")
+        ? ((await response.json()) as { url?: string; error?: string })
+        : { error: await response.text() };
 
-    if (!response.ok || !data.url) {
-      setError(data.error ?? "Stripe Checkout konnte nicht gestartet werden.");
+      if (!response.ok || !data.url) {
+        throw new Error(
+          data.error ?? "Stripe Checkout konnte nicht gestartet werden.",
+        );
+      }
+
+      window.location.href = data.url;
+    } catch (checkoutError) {
+      setError(
+        checkoutError instanceof Error
+          ? checkoutError.message
+          : "Stripe Checkout konnte nicht gestartet werden.",
+      );
       setIsLoading(false);
-      return;
     }
-
-    window.location.href = data.url;
   }
 
   return (
