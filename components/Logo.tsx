@@ -4,8 +4,8 @@ type LogoProps = {
 
 export function Logo({ compact = false }: LogoProps) {
   return (
-    <div className="flex min-w-0 items-center gap-2.5">
-      <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-[16px] bg-gradient-to-br from-sky-400 to-trust-600 shadow-[0_10px_28px_rgba(24,144,255,0.32)]">
+    <div className="flex min-w-0 items-center gap-2">
+      <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-[15px] bg-gradient-to-br from-sky-300 to-trust-500 shadow-sm">
         <span
           aria-hidden="true"
           className="absolute bottom-2.5 left-3 h-2.5 w-2.5 rounded-[3px] bg-white/45"
@@ -28,7 +28,7 @@ export function Logo({ compact = false }: LogoProps) {
         />
       </div>
       {!compact ? (
-        <span className="truncate text-[22px] font-black tracking-normal text-ink">
+        <span className="whitespace-nowrap text-[20px] font-black tracking-normal text-ink">
           Einfach<span className="text-trust-500">Amt</span>
         </span>
       ) : null}

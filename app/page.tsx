@@ -52,12 +52,6 @@ export default async function LandingPage() {
               {t.uploadCta}
             </Link>
             <Link
-              href="/analysis/demo-brief-1"
-              className="flex min-h-14 w-full items-center justify-center rounded-full bg-white/95 px-6 py-4 text-center text-lg font-bold text-trust-500 shadow-sm transition active:scale-[0.98]"
-            >
-              {t.exampleCta}
-            </Link>
-            <Link
               href="/dashboard"
               className="flex min-h-14 w-full items-center justify-center rounded-full bg-trust-100 px-6 py-4 text-center text-lg font-bold text-trust-700 transition active:scale-[0.98]"
             >
