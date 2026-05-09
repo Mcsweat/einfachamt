@@ -35,7 +35,42 @@ const sharedReferences = [
 
 const datePattern =
   /\b(?:0?[1-9]|[12][0-9]|3[01])[\s./-](?:0?[1-9]|1[0-2])[\s./-](?:20\d{2}|\d{2})\b/g;
+const germanMonthMap: Record<string, string> = {
+  januar: "01",
+  jan: "01",
+  februar: "02",
+  feb: "02",
+  märz: "03",
+  maerz: "03",
+  mrz: "03",
+  april: "04",
+  apr: "04",
+  mai: "05",
+  juni: "06",
+  jun: "06",
+  juli: "07",
+  jul: "07",
+  august: "08",
+  aug: "08",
+  september: "09",
+  sept: "09",
+  sep: "09",
+  oktober: "10",
+  okt: "10",
+  november: "11",
+  nov: "11",
+  dezember: "12",
+  dez: "12",
+};
+const writtenDatePattern =
+  /\b(0?[1-9]|[12][0-9]|3[01])\.?\s+(januar|februar|m[äa]rz|mrz|april|mai|juni|juli|august|september|oktober|november|dezember|jan|feb|apr|jun|jul|aug|sept|sep|okt|nov|dez)\.?\s+(20\d{2})\b/gi;
+const briefDateContextPattern =
+  /\b(?:Datum|vom|Berlin,|am)[:\s]+((?:0?[1-9]|[12][0-9]|3[01])[\s./-](?:0?[1-9]|1[0-2])[\s./-](?:20\d{2}|\d{2}))\b/i;
+const briefDateWrittenContextPattern =
+  /\b(?:Datum|vom|Berlin,|am)[:\s]+(0?[1-9]|[12][0-9]|3[01])\.?\s+(januar|februar|m[äa]rz|mrz|april|mai|juni|juli|august|september|oktober|november|dezember|jan|feb|apr|jun|jul|aug|sept|sep|okt|nov|dez)\.?\s+(20\d{2})\b/i;
 const timePattern = /\b(?:[01]?\d|2[0-3]):[0-5]\d\s*(?:uhr)?\b/gi;
+const timeWithUhrPattern =
+  /\b([01]?\d|2[0-3])(?:[:.]([0-5]\d))?\s*Uhr\b/gi;
 const dayWindowPattern =
   /\binnerhalb\s+von\s+(\d{1,2})\s+tagen?\b|\bfrist\s+von\s+(\d{1,2})\s+tagen?\b/gi;
 const deadlineContextPattern =
@@ -46,6 +81,12 @@ const aktenzeichenPattern =
 const meinZeichenPattern = /Mein[\s_]?Zeichen[:\s]+([A-Z0-9\-/.]{2,})/i;
 const sachbearbeiterPattern =
   /Name[:\s]+((?:Herr|Frau|Dr\.|Prof\.)[\s.]*[A-ZÄÖÜ][a-zäöüß]+(?:\s+[A-ZÄÖÜ][a-zäöüß]+)?)/;
+
+function normalizeWrittenDate(day: string, month: string, year: string) {
+  const monthNumber = germanMonthMap[month.toLowerCase()];
+  if (!monthNumber) return "";
+  return `${day.padStart(2, "0")}.${monthNumber}.${year}`;
+}
 
 function getSignal(signals: ExtractedSignal[], label: string) {
   return signals.find((signal) => signal.label === label)?.value;
@@ -81,8 +122,27 @@ function extractSignals(rawText: string): ExtractedSignal[] {
   const signals: ExtractedSignal[] = [];
   const text = rawText.replace(/\s+/g, " ");
   const normalized = normalize(text);
-  const allDates = unique((text.match(datePattern) ?? []).map(normalizeDate));
-  const times = unique(text.match(timePattern) ?? []);
+
+  const numericDates = unique(
+    (text.match(datePattern) ?? []).map(normalizeDate),
+  );
+  const writtenDates = unique(
+    [...text.matchAll(writtenDatePattern)]
+      .map((match) => normalizeWrittenDate(match[1], match[2], match[3]))
+      .filter(Boolean),
+  );
+  const allDates = unique([...writtenDates, ...numericDates]);
+
+  const colonTimes = unique(text.match(timePattern) ?? []);
+  const uhrTimes = unique(
+    [...text.matchAll(timeWithUhrPattern)].map((match) => {
+      const hour = match[1].padStart(2, "0");
+      const minute = match[2] ?? "00";
+      return `${hour}:${minute} Uhr`;
+    }),
+  );
+  const times = unique([...uhrTimes, ...colonTimes]);
+
   const deadlineDates = unique(
     [...text.matchAll(deadlineContextPattern)].map((match) =>
       normalizeDate(match[1]),
@@ -94,7 +154,19 @@ function extractSignals(rawText: string): ExtractedSignal[] {
     ),
   );
 
-  const letterDate = allDates[0];
+  const briefDateNumeric = text.match(briefDateContextPattern)?.[1];
+  const briefDateWrittenMatch = text.match(briefDateWrittenContextPattern);
+  const briefDateWritten = briefDateWrittenMatch
+    ? normalizeWrittenDate(
+        briefDateWrittenMatch[1],
+        briefDateWrittenMatch[2],
+        briefDateWrittenMatch[3],
+      )
+    : "";
+  const letterDate =
+    briefDateWritten ||
+    (briefDateNumeric ? normalizeDate(briefDateNumeric) : "") ||
+    allDates[0];
 
   if (letterDate) {
     signals.push({ label: "briefdatum", value: letterDate });
