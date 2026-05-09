@@ -66,12 +66,6 @@ export default async function PricingPage({ searchParams }: PricingPageProps) {
             highlighted
             features={[...t.plans.plus.features]}
           />
-          <PricingCard
-            name={t.plans.premium.name}
-            price={t.plans.premium.price}
-            description={t.plans.premium.description}
-            features={[...t.plans.premium.features]}
-          />
         </div>
 
         <PricingCheckoutButton isLoggedIn={isLoggedIn} language={language} />

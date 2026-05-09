@@ -38,7 +38,7 @@ export const copy = {
     pricingTitle: "3 Briefe kostenlos",
     pricingText:
       "Danach einfacher Monatsplan mit Stripe Checkout.",
-    pricingLink: "Preise ansehen",
+    pricingLink: "Mitgliedschaft ansehen",
     uploadTitle: "Lade deinen Brief hoch",
     uploadIntro:
       "Fotografiere deinen Brief gut lesbar. Achte darauf, dass alle Seiten sichtbar sind.",
@@ -59,7 +59,7 @@ export const copy = {
     security: "Sicherheit",
     privacy: "Datenschutz",
     impressum: "Impressum",
-    pricing: "Preise",
+    pricing: "Mitglied",
     back: "Zurück",
     account: "Konto",
     login: "Login",
@@ -152,7 +152,7 @@ export const copy = {
       "Antwort wird vorbereitet",
     ],
     readError: "Der Brief konnte nicht gelesen werden.",
-    pricingPageTitle: "Einfach starten",
+    pricingPageTitle: "Mitgliedschaft",
     pricingPageIntro:
       "Starte kostenlos. Wenn du mehr Briefe und echte Texterkennung brauchst, kannst du später Plus freischalten.",
     checkoutSuccess: "Danke. Dein Plus-Zugang wird gerade aktiviert.",
@@ -174,16 +174,6 @@ export const copy = {
           "mehr Briefanalysen",
           "gespeicherte Briefe",
           "Antwortentwürfe",
-        ],
-      },
-      premium: {
-        name: "Premium später",
-        price: "39-99 EUR",
-        description: "Platzhalter für geführte Formularhilfe.",
-        features: [
-          "geführte Formularhilfe",
-          "mehr Unterstützung",
-          "später verfügbar",
         ],
       },
     },
@@ -297,7 +287,7 @@ export const copy = {
     pricingTitle: "3 letters free",
     pricingText:
       "After that, a simple monthly plan with Stripe Checkout.",
-    pricingLink: "View pricing",
+    pricingLink: "View membership",
     uploadTitle: "Upload your letter",
     uploadIntro:
       "Take a clear photo of your letter. Make sure all pages are visible.",
@@ -318,7 +308,7 @@ export const copy = {
     security: "Security",
     privacy: "Privacy",
     impressum: "Imprint",
-    pricing: "Pricing",
+    pricing: "Member",
     back: "Back",
     account: "Account",
     login: "Login",
@@ -410,7 +400,7 @@ export const copy = {
       "Reply is being prepared",
     ],
     readError: "The letter could not be read.",
-    pricingPageTitle: "Start simply",
+    pricingPageTitle: "Membership",
     pricingPageIntro:
       "Start for free. If you need more letters and real text recognition, you can unlock Plus later.",
     checkoutSuccess: "Thank you. Your Plus access is being activated.",
@@ -432,12 +422,6 @@ export const copy = {
           "saved letters",
           "reply drafts",
         ],
-      },
-      premium: {
-        name: "Premium later",
-        price: "39-99 EUR",
-        description: "Placeholder for guided form help.",
-        features: ["guided form help", "more support", "available later"],
       },
     },
     startFree: "Try for free first",
