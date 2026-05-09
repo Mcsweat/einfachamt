@@ -5,8 +5,11 @@ import { BottomActionBar } from "@/components/BottomActionBar";
 import { EditableResponse } from "@/components/EditableResponse";
 import { ResponseButton } from "@/components/ResponseButton";
 import { copy, type Language } from "@/lib/i18n";
-
-type ResponseTypeId = keyof typeof copy.de.responseDrafts;
+import type { LetterSignals } from "@/lib/knowledge-base";
+import {
+  buildResponseDraft,
+  type ResponseTypeId,
+} from "@/lib/response-drafts";
 
 const responseTypeIds: ResponseTypeId[] = [
   "extension",
@@ -18,11 +21,17 @@ const responseTypeIds: ResponseTypeId[] = [
 
 type ResponseDraftClientProps = {
   language: Language;
+  documentId: string;
+  signals: LetterSignals;
 };
 
 type Tone = "short" | "polite" | "urgent";
 
-export function ResponseDraftClient({ language }: ResponseDraftClientProps) {
+export function ResponseDraftClient({
+  language,
+  documentId,
+  signals,
+}: ResponseDraftClientProps) {
   const t = copy[language];
   const responseTypes = useMemo(
     () =>
@@ -35,8 +44,8 @@ export function ResponseDraftClient({ language }: ResponseDraftClientProps) {
   const [selectedType, setSelectedType] = useState<ResponseTypeId>(
     responseTypes[0].id,
   );
-  const [draft, setDraft] = useState<string>(
-    t.responseDrafts[responseTypes[0].id],
+  const [draft, setDraft] = useState<string>(() =>
+    buildResponseDraft(responseTypes[0].id, language, signals, documentId),
   );
   const [tone, setTone] = useState<Tone>("polite");
   const [ownSituation, setOwnSituation] = useState("");
@@ -65,7 +74,10 @@ export function ResponseDraftClient({ language }: ResponseDraftClientProps) {
   }
 
   function composeDraft(type: ResponseTypeId, nextTone: Tone, situation: string) {
-    const baseDraft = applyTone(t.responseDrafts[type], nextTone);
+    const baseDraft = applyTone(
+      buildResponseDraft(type, language, signals, documentId),
+      nextTone,
+    );
 
     if (!situation.trim()) {
       return baseDraft;
