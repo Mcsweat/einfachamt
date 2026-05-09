@@ -21,9 +21,10 @@ export function SignOutButton({ label = "Ausloggen" }: SignOutButtonProps) {
     <button
       type="button"
       onClick={signOut}
-      className="mt-5 flex min-h-14 w-full items-center justify-center rounded-full bg-trust-100 px-5 py-4 text-lg font-bold text-trust-700"
+      className="flex min-h-[54px] w-full items-center gap-3 px-5 text-left"
     >
-      {label}
+      <span className="text-xl">🚪</span>
+      <span className="flex-1 text-base font-semibold text-red-500">{label}</span>
     </button>
   );
 }
