@@ -49,6 +49,10 @@ export const copy = {
     uploadUploading: "Dein Brief wird hochgeladen...",
     uploadReading: "Dein Brief wird gelesen...",
     uploadError: "Upload fehlgeschlagen. Bitte versuche es erneut.",
+    uploadPdfBlocked:
+      "PDFs brauchen eine Mitgliedschaft. Teste erst kostenlos mit einem Foto.",
+    uploadTrialUsed:
+      "Du hast deine kostenlose Probe genutzt. Für weitere Briefe brauchst du eine Mitgliedschaft.",
     safeUploadTitle: "Sicher hochladen",
     safeUploadText:
       "Mock-Version: Noch keine echte Speicherung. Später mit Supabase Storage, EU-Standort und geschützten Uploads.",
@@ -298,6 +302,10 @@ export const copy = {
     uploadUploading: "Your letter is uploading...",
     uploadReading: "Your letter is being read...",
     uploadError: "Upload failed. Please try again.",
+    uploadPdfBlocked:
+      "PDFs require a membership. Try for free with a photo first.",
+    uploadTrialUsed:
+      "You've used your free trial. For more letters you need a membership.",
     safeUploadTitle: "Secure upload",
     safeUploadText:
       "Mock version: No real storage yet. Later with Supabase Storage, EU location, and protected uploads.",

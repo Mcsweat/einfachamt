@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { uploadDocument } from "@/lib/upload-document";
 import { copy, type Language } from "@/lib/i18n";
+
+const TRIAL_KEY = "einfachamt:trial-used";
 
 type UploadCardProps = {
   language?: Language;
@@ -15,6 +18,7 @@ export function UploadCard({ language = "de" }: UploadCardProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<string>(t.uploadIdle);
   const [error, setError] = useState("");
+  const [blocked, setBlocked] = useState<"pdf" | "trial" | null>(null);
   const router = useRouter();
 
   async function handleFile(file?: File) {
@@ -22,6 +26,17 @@ export function UploadCard({ language = "de" }: UploadCardProps) {
       return;
     }
 
+    if (file.type === "application/pdf") {
+      setBlocked("pdf");
+      return;
+    }
+
+    if (window.localStorage.getItem(TRIAL_KEY)) {
+      setBlocked("trial");
+      return;
+    }
+
+    setBlocked(null);
     setFileName(file.name);
     setIsLoading(true);
     setError("");
@@ -30,6 +45,7 @@ export function UploadCard({ language = "de" }: UploadCardProps) {
     try {
       const result = await uploadDocument(file);
 
+      window.localStorage.setItem(TRIAL_KEY, "true");
       window.localStorage.setItem(
         "einfachamt:last-upload",
         JSON.stringify({
@@ -96,11 +112,27 @@ export function UploadCard({ language = "de" }: UploadCardProps) {
       <div
         aria-live="polite"
         className={`mt-4 min-h-14 rounded-[1.25rem] p-4 text-base font-semibold leading-6 ${
-          error ? "bg-amber-50 text-amber-900" : "bg-slate-50 text-slate-700"
+          error || blocked
+            ? "bg-amber-50 text-amber-900"
+            : "bg-slate-50 text-slate-700"
         }`}
       >
-        {error || (isLoading ? t.uploadReading : fileName ? message : message)}
+        {blocked === "pdf"
+          ? t.uploadPdfBlocked
+          : blocked === "trial"
+            ? t.uploadTrialUsed
+            : error ||
+              (isLoading ? t.uploadReading : fileName ? message : message)}
       </div>
+
+      {blocked && (
+        <Link
+          href="/pricing"
+          className="mt-3 flex items-center justify-center rounded-[1.25rem] bg-trust-500 px-5 py-4 text-base font-semibold text-white shadow-sm transition hover:bg-trust-700 active:scale-[0.99]"
+        >
+          {t.pricingLink}
+        </Link>
+      )}
     </section>
   );
 }
