@@ -35,9 +35,9 @@ export const copy = {
       "DSGVO-orientiert",
       "Daten geschützt",
     ],
-    pricingTitle: "3 Briefe kostenlos",
+    pricingTitle: "Einmal kostenlos testen",
     pricingText:
-      "Danach einfacher Monatsplan mit Stripe Checkout.",
+      "Ein Brief als Probe – kostenlos, kein Konto nötig. Für weitere Briefe und PDFs gibt es eine einfache Mitgliedschaft.",
     pricingLink: "Mitgliedschaft ansehen",
     uploadTitle: "Lade deinen Brief hoch",
     uploadIntro:
@@ -167,7 +167,7 @@ export const copy = {
         name: "Free",
         price: "0 EUR",
         description: "Zum Ausprobieren.",
-        features: ["3 Briefanalysen", "einfache Erklärung", "Antwortentwurf"],
+        features: ["1 Brief kostenlos", "einfache Erklärung", "Antwortentwurf"],
       },
       plus: {
         name: "Plus",
@@ -288,9 +288,9 @@ export const copy = {
       "GDPR-oriented",
       "Data protected",
     ],
-    pricingTitle: "3 letters free",
+    pricingTitle: "Try once for free",
     pricingText:
-      "After that, a simple monthly plan with Stripe Checkout.",
+      "One letter as a trial – free, no account needed. For more letters and PDFs there is a simple membership.",
     pricingLink: "View membership",
     uploadTitle: "Upload your letter",
     uploadIntro:
@@ -418,7 +418,7 @@ export const copy = {
         name: "Free",
         price: "0 EUR",
         description: "For trying it out.",
-        features: ["3 letter analyses", "simple explanation", "reply draft"],
+        features: ["1 letter free", "simple explanation", "reply draft"],
       },
       plus: {
         name: "Plus",
