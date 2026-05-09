@@ -40,6 +40,12 @@ const dayWindowPattern =
   /\binnerhalb\s+von\s+(\d{1,2})\s+tagen?\b|\bfrist\s+von\s+(\d{1,2})\s+tagen?\b/gi;
 const deadlineContextPattern =
   /\b(?:bis\s+zum|spätestens\s+am|spaetestens\s+am|frist\s+bis|antwort\s+bis|reichen\s+sie.*?bis\s+zum)\s+((?:0?[1-9]|[12][0-9]|3[01])[\s./-](?:0?[1-9]|1[0-2])[\s./-](?:20\d{2}|\d{2}))/gi;
+const kundennummerPattern = /Kundennummer[:\s]+([A-Z0-9]{4,})/i;
+const aktenzeichenPattern =
+  /(?:Aktenzeichen|Az\.?)[:\s]+([A-Z0-9\-/.]{3,})/i;
+const meinZeichenPattern = /Mein[\s_]?Zeichen[:\s]+([A-Z0-9\-/.]{2,})/i;
+const sachbearbeiterPattern =
+  /Name[:\s]+((?:Herr|Frau|Dr\.|Prof\.)[\s.]*[A-ZÄÖÜ][a-zäöüß]+(?:\s+[A-ZÄÖÜ][a-zäöüß]+)?)/;
 
 function getSignal(signals: ExtractedSignal[], label: string) {
   return signals.find((signal) => signal.label === label)?.value;
@@ -105,7 +111,54 @@ function extractSignals(rawText: string): ExtractedSignal[] {
     signals.push({ label: "uhrzeit", value: times[0] });
   }
 
+  const kundennummer = text.match(kundennummerPattern)?.[1]?.trim();
+  if (kundennummer) {
+    signals.push({ label: "kundennummer", value: kundennummer });
+  }
+
+  const aktenzeichen = text.match(aktenzeichenPattern)?.[1]?.trim();
+  if (aktenzeichen) {
+    signals.push({ label: "aktenzeichen", value: aktenzeichen });
+  }
+
+  const meinZeichen = text.match(meinZeichenPattern)?.[1]?.trim();
+  if (meinZeichen) {
+    signals.push({ label: "mein_zeichen", value: meinZeichen });
+  }
+
+  const sachbearbeiter = text.match(sachbearbeiterPattern)?.[1]?.trim();
+  if (sachbearbeiter) {
+    signals.push({ label: "sachbearbeiter", value: sachbearbeiter });
+  }
+
   return signals;
+}
+
+export type LetterSignals = {
+  briefdatum?: string;
+  fristdatum?: string;
+  fristfenster?: string;
+  uhrzeit?: string;
+  kundennummer?: string;
+  aktenzeichen?: string;
+  meinZeichen?: string;
+  sachbearbeiter?: string;
+};
+
+export function extractLetterSignals(text: string): LetterSignals {
+  const signals = extractSignals(text);
+  const get = (label: string) =>
+    signals.find((signal) => signal.label === label)?.value;
+  return {
+    briefdatum: get("briefdatum"),
+    fristdatum: get("fristdatum"),
+    fristfenster: get("fristfenster"),
+    uhrzeit: get("uhrzeit"),
+    kundennummer: get("kundennummer"),
+    aktenzeichen: get("aktenzeichen"),
+    meinZeichen: get("mein_zeichen"),
+    sachbearbeiter: get("sachbearbeiter"),
+  };
 }
 
 function buildDeadlineList(signals: ExtractedSignal[], fallback: string) {
