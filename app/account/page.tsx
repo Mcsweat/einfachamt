@@ -3,17 +3,14 @@ import { FooterDisclaimer } from "@/components/FooterDisclaimer";
 import { MobileHeader } from "@/components/MobileHeader";
 import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
-import { createClient } from "@/lib/supabase/server";
+import { getSafeUser } from "@/lib/supabase/safe-auth";
 import { getCurrentUserSubscription } from "@/lib/subscription";
 import { SignOutButton } from "./AccountActions";
 
 export default async function AccountPage() {
   const language = await getLanguage();
   const t = copy[language];
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getSafeUser();
   const subscription = await getCurrentUserSubscription();
 
   return (

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { Logo } from "@/components/Logo";
 import { type Language } from "@/lib/i18n";
-import { createClient } from "@/lib/supabase/server";
+import { getSafeUser } from "@/lib/supabase/safe-auth";
 
 type MobileHeaderProps = {
   title?: string;
@@ -23,10 +23,7 @@ export async function MobileHeader({
   accountLabel = "Konto",
   loginLabel = "Login",
 }: MobileHeaderProps) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getSafeUser();
   const isEmailUser = Boolean(user && !user.is_anonymous);
 
   return (

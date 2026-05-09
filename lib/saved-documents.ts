@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { getSafeUser } from "@/lib/supabase/safe-auth";
 
 export type SavedDocument = {
   id: string;
@@ -17,9 +18,7 @@ function formatDate(value: string, locale: string) {
 
 export async function getSavedDocuments(locale = "de-DE") {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getSafeUser();
 
   if (!user) {
     return {

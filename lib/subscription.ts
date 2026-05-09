@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { getSafeUser } from "@/lib/supabase/safe-auth";
 
 export type SubscriptionStatus =
   | "active"
@@ -14,9 +15,7 @@ export function isPaidSubscription(status?: string | null) {
 
 export async function getCurrentUserSubscription() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getSafeUser();
 
   if (!user) {
     return {

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { getSafeUser } from "@/lib/supabase/safe-auth";
 import { getStripe } from "@/lib/stripe";
 
 function getSiteUrl() {
@@ -25,9 +26,7 @@ export async function POST() {
     }
 
     const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const user = await getSafeUser();
 
     if (!user) {
       return NextResponse.json(

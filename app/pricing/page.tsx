@@ -4,7 +4,7 @@ import { MobileHeader } from "@/components/MobileHeader";
 import { PricingCard } from "@/components/PricingCard";
 import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
-import { createClient } from "@/lib/supabase/server";
+import { getSafeUser } from "@/lib/supabase/safe-auth";
 import { PricingCheckoutButton } from "./PricingCheckoutButton";
 
 type PricingPageProps = {
@@ -18,10 +18,7 @@ export default async function PricingPage({ searchParams }: PricingPageProps) {
   const checkout = params?.checkout;
   const language = await getLanguage();
   const t = copy[language];
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getSafeUser();
   const isLoggedIn = Boolean(user && !user.is_anonymous);
 
   return (

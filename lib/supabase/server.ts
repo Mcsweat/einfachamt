@@ -16,7 +16,12 @@ export async function createClient() {
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value, options }) => {
-            cookieStore.set(name, value, options);
+            try {
+              cookieStore.set(name, value, options);
+            } catch {
+              // Server Components cannot always write cookies. Ignore here so
+              // stale auth cookies do not crash a page render.
+            }
           });
         },
       },

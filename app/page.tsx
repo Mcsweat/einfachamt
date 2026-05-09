@@ -5,15 +5,12 @@ import { Logo } from "@/components/Logo";
 import { SimpleListCard } from "@/components/SimpleListCard";
 import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
-import { createClient } from "@/lib/supabase/server";
+import { getSafeUser } from "@/lib/supabase/safe-auth";
 
 export default async function LandingPage() {
   const language = await getLanguage();
   const t = copy[language];
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getSafeUser();
   const isEmailUser = Boolean(user && !user.is_anonymous);
 
   return (
