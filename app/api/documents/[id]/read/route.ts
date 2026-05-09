@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { buildAnalysisFromText } from "@/lib/knowledge-base";
+import { analyzeLetterWithAi } from "@/lib/ai-analysis";
 import { getOcrAccess } from "@/lib/ocr-access";
 import { extractTextWithOcr } from "@/lib/ocr";
 import { getCurrentUserSubscription } from "@/lib/subscription";
@@ -108,7 +109,8 @@ export async function POST(_request: Request, { params }: ReadRouteProps) {
     .select("id")
     .eq("document_id", id)
     .maybeSingle();
-  const matchedAnalysis = buildAnalysisFromText(ocrResult.text);
+  const aiAnalysis = await analyzeLetterWithAi(ocrResult.text);
+  const matchedAnalysis = aiAnalysis ?? buildAnalysisFromText(ocrResult.text);
 
   if (!existingAnalysis) {
     const { error: analysisError } = await supabase.from("analyses").insert({
