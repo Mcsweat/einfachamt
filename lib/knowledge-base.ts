@@ -35,7 +35,7 @@ const sharedReferences = [
 
 const datePattern =
   /\b(?:0?[1-9]|[12][0-9]|3[01])[\s./-](?:0?[1-9]|1[0-2])[\s./-](?:20\d{2}|\d{2})\b/g;
-const timePattern = /\b(?:[01]?\d|2[0-3])[:.][0-5]\d\s*(?:uhr)?\b/gi;
+const timePattern = /\b(?:[01]?\d|2[0-3]):[0-5]\d\s*(?:uhr)?\b/gi;
 const dayWindowPattern =
   /\binnerhalb\s+von\s+(\d{1,2})\s+tagen?\b|\bfrist\s+von\s+(\d{1,2})\s+tagen?\b/gi;
 const deadlineContextPattern =
@@ -203,6 +203,51 @@ export const knowledgeRules: KnowledgeRule[] = [
     risks:
       "Wenn du nicht antwortest, entscheidet das Jobcenter moeglicherweise ohne deine Erklaerung.",
     responseHint: "Stellungnahme abgeben",
+    references: sharedReferences,
+  },
+  {
+    id: "phone-appointment",
+    letterType: "Telefonischer Beratungstermin",
+    keywords: [
+      "telefonisch",
+      "telefonischen",
+      "telefonischer",
+      "beratungstermin",
+      "anrufen",
+      "werde sie anrufen",
+      "rufe ich sie an",
+    ],
+    strongKeywords: ["telefonisch", "beratungstermin", "werde sie anrufen"],
+    summary: (signals) => {
+      const date = getSignal(signals, "fristdatum") ?? getSignal(signals, "briefdatum");
+      const time = getSignal(signals, "uhrzeit");
+      if (date && time) {
+        return `Das Jobcenter hat einen telefonischen Beratungstermin fuer dich eingetragen. Am ${date} um ${time} wirst du angerufen. Sei zu diesem Zeitpunkt erreichbar.`;
+      }
+      if (date) {
+        return `Das Jobcenter hat einen telefonischen Beratungstermin fuer dich eingetragen am ${date}. Pruefe die genaue Uhrzeit im Brief und sei erreichbar.`;
+      }
+      return "Das Jobcenter moechte dich telefonisch beraten. Pruefe Datum und Uhrzeit im Brief und stelle sicher, dass du erreichbar bist.";
+    },
+    authorityRequest: () =>
+      "Das Amt moechte deine aktuelle Situation telefonisch besprechen. Du wirst angerufen – du musst selbst nichts veranlassen.",
+    todos: (signals) => {
+      const date = getSignal(signals, "fristdatum") ?? getSignal(signals, "briefdatum");
+      const time = getSignal(signals, "uhrzeit");
+      const calendarEntry = date
+        ? `Telefontermin ${date}${time ? ` um ${time}` : ""} in Kalender eintragen`
+        : "Datum und Uhrzeit des Termins im Brief notieren";
+      return [
+        calendarEntry,
+        "Handy aufladen und erreichbar sein",
+        "Renten- oder Sozialversicherungsnummer bereitlegen",
+        "Einladungsschreiben mit Kundennummer griffbereit haben",
+        "Bei Verhinderung rechtzeitig beim Jobcenter absagen",
+      ];
+    },
+    risks:
+      "Wenn du beim Anruf nicht erreichbar bist, kann das Jobcenter ein Meldeversaeumnis vermerken. Melde dich im Voraus, falls du verhindert bist.",
+    responseHint: "Termin absagen oder verschieben",
     references: sharedReferences,
   },
   {
