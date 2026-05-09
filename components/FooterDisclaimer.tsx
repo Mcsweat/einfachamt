@@ -15,6 +15,7 @@ export function FooterDisclaimer({ language = "de" }: FooterDisclaimerProps) {
     <footer className="mx-auto w-full max-w-[430px] px-4 pb-8">
       <section className="flex flex-wrap justify-center gap-4 text-sm font-bold text-trust-500">
         <Link href="/privacy">{t.privacy}</Link>
+        <Link href="/security">{t.security}</Link>
         <Link href="/impressum">{t.impressum}</Link>
         <Link href="/pricing">{t.pricing}</Link>
       </section>

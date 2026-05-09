@@ -5,6 +5,7 @@ export type SavedDocument = {
   id: string;
   fileName: string;
   status: string;
+  fileUrl: string;
   createdAt: string;
 };
 
@@ -29,7 +30,7 @@ export async function getSavedDocuments(locale = "de-DE") {
 
   const { data } = await supabase
     .from("documents")
-    .select("id, file_name, status, created_at")
+    .select("id, file_name, file_url, status, created_at")
     .order("created_at", { ascending: false })
     .limit(25);
 
@@ -38,6 +39,7 @@ export async function getSavedDocuments(locale = "de-DE") {
     documents: (data ?? []).map((document) => ({
       id: document.id,
       fileName: document.file_name,
+      fileUrl: document.file_url,
       status: document.status,
       createdAt: formatDate(document.created_at, locale),
     })),

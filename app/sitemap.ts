@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/upload",
     "/pricing",
     "/login",
+    "/security",
     "/privacy",
     "/impressum",
   ];

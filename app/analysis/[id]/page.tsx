@@ -47,7 +47,37 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
           {t.analysisIntro}
         </p>
 
-        <div className="mt-7 space-y-4">
+        <section className="mt-7 rounded-[1.75rem] bg-white/95 p-5 shadow-soft">
+          <p className="text-base font-bold text-trust-700">
+            {t.mainActionTitle}
+          </p>
+          <h2 className="mt-2 text-3xl font-bold leading-tight text-ink">
+            {analysis.summary}
+          </h2>
+          <p className="mt-4 text-lg leading-8 text-slate-700">
+            {t.mainActionText}
+          </p>
+          <div
+            className={`mt-4 rounded-[1.2rem] p-4 ${
+              analysis.hasDetectedDeadline
+                ? "bg-amber-50 text-amber-950"
+                : "bg-slate-50 text-slate-800"
+            }`}
+          >
+            <p className="text-sm font-black uppercase tracking-normal">
+              {analysis.hasDetectedDeadline
+                ? t.deadlineFound
+                : t.deadlineUnclear}
+            </p>
+            <p className="mt-1 text-lg font-bold leading-7">
+              {analysis.hasDetectedDeadline
+                ? analysis.deadlines[0]
+                : t.deadlineUnclearHint}
+            </p>
+          </div>
+        </section>
+
+        <div className="mt-5 space-y-4">
           <AnalysisCard title={t.shortSaid} icon="i">
             <p>{analysis.summary}</p>
           </AnalysisCard>

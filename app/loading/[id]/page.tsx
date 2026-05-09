@@ -36,6 +36,23 @@ export default async function LoadingPage({ params }: LoadingPageProps) {
             {t.loadingTitle}
           </h1>
         </div>
+        <section className="mt-6 rounded-[1.55rem] bg-white/95 p-5 shadow-sm">
+          <div className="space-y-4">
+            {t.loadingSteps.map((step, index) => (
+              <div key={step} className="flex items-center gap-3">
+                <span
+                  aria-hidden="true"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-trust-100 text-base font-black text-trust-600"
+                >
+                  {index + 1}
+                </span>
+                <span className="text-lg font-bold leading-7 text-ink">
+                  {step}
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
         <div className="mt-6">
           <LoadingSkeleton />
         </div>

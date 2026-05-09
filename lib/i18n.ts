@@ -56,6 +56,7 @@ export const copy = {
       "EinfachAmt ist kein offizieller Behördendienst und bietet keine Rechtsberatung.",
     legalHelp:
       "Bei ernsten rechtlichen Problemen bitte Sozialberatung oder Anwalt kontaktieren.",
+    security: "Sicherheit",
     privacy: "Datenschutz",
     impressum: "Impressum",
     pricing: "Preise",
@@ -65,13 +66,23 @@ export const copy = {
     dashboardCta: "Meine Briefe",
     dashboardTitle: "Deine Briefe",
     dashboardIntro: "Hier findest du deine hochgeladenen Briefe wieder.",
+    dashboardSavePrompt: "Möchtest du deine Briefe speichern?",
+    dashboardSaveText:
+      "Mit einem kostenlosen Konto findest du deine Uploads später auf jedem Gerät wieder.",
     useEverywhereTitle: "Auf allen Geräten nutzen",
     useEverywhereText:
       "Logge dich mit E-Mail ein, damit deine Briefe und dein Plus-Zugang auch auf einem anderen Handy oder Browser verfügbar sind.",
     emailLogin: "Mit E-Mail einloggen",
     noLettersTitle: "Noch keine Briefe",
-    noLettersText: "Lade deinen ersten Brief hoch. Danach erscheint er hier.",
+    noLettersText:
+      "Hier findest du später deine hochgeladenen Briefe. Starte mit einem Foto oder PDF.",
+    firstUpload: "Ersten Brief hochladen",
     openAnalysis: "Analyse öffnen",
+    deleteLetter: "Brief löschen",
+    deletingLetter: "Wird gelöscht...",
+    deleteLetterConfirm:
+      "Diesen Brief wirklich löschen? Die gespeicherten Daten werden entfernt.",
+    deleteLetterError: "Der Brief konnte nicht gelöscht werden.",
     newUpload: "Neuen Brief hochladen",
     statusAnalyzed: "Analysiert",
     statusReading: "Wird gelesen",
@@ -85,6 +96,13 @@ export const copy = {
     analysisTitle: "Das ist wichtig",
     analysisIntro:
       "Kurz und einfach. Danach kannst du direkt eine Antwort erstellen.",
+    mainActionTitle: "Das musst du jetzt tun",
+    mainActionText:
+      "Prüfe die Frist, sammle die Unterlagen und bereite heute eine kurze Antwort vor.",
+    deadlineFound: "Gefundene Frist",
+    deadlineUnclear: "Keine klare Frist erkannt",
+    deadlineUnclearHint:
+      "Bitte prüfe den Brief. Wenn du unsicher bist, antworte lieber kurz.",
     shortSaid: "Kurz gesagt",
     authorityWants: "Was möchte das Amt?",
     importantDeadline: "Wichtige Frist",
@@ -96,6 +114,13 @@ export const copy = {
     responseHeader: "Antwort",
     responseTitle: "Was möchtest du sagen?",
     responseIntro: "Wähle eine Vorlage. Du kannst alles ändern.",
+    toneTitle: "Ton",
+    toneShort: "Kurz",
+    tonePolite: "Sehr höflich",
+    toneUrgent: "Dringend",
+    ownSituation: "Eigene Situation hinzufügen",
+    ownSituationPlaceholder:
+      "Zum Beispiel: Ich war krank oder warte noch auf Unterlagen.",
     draftTitle: "Dein Entwurf",
     copied: "Kopiert",
     copyText: "Text kopieren",
@@ -121,10 +146,15 @@ export const copy = {
     },
     loadingHeader: "Brief wird gelesen",
     loadingTitle: "Dein Brief wird gelesen...",
+    loadingSteps: [
+      "Brief wird gelesen",
+      "Frist wird gesucht",
+      "Antwort wird vorbereitet",
+    ],
     readError: "Der Brief konnte nicht gelesen werden.",
     pricingPageTitle: "Einfach starten",
     pricingPageIntro:
-      "Starte kostenlos. Mit Plus werden echte OCR-Lesung und mehr Briefe freigeschaltet.",
+      "Starte kostenlos. Wenn du mehr Briefe und echte Texterkennung brauchst, kannst du später Plus freischalten.",
     checkoutSuccess: "Danke. Dein Plus-Zugang wird gerade aktiviert.",
     checkoutCancelled:
       "Checkout wurde abgebrochen. Du kannst jederzeit neu starten.",
@@ -208,6 +238,27 @@ export const copy = {
         "EinfachAmt ist kein offizieller Behördendienst und bietet keine Rechtsberatung.",
       ],
     ],
+    securityTitle: "Sicherheit",
+    securityIntro:
+      "Kurz und klar: Du sollst verstehen, was mit deinen Daten passiert.",
+    securityCards: [
+      [
+        "Wo werden meine Daten gespeichert?",
+        "Uploads und Analysen werden in Supabase gespeichert. Für den Betrieb nutzen wir Anbieter, die moderne Sicherheitsstandards unterstützen.",
+      ],
+      [
+        "Wer kann meine Briefe sehen?",
+        "Deine Briefe sind deinem Konto zugeordnet. Wir bauen die App so, dass nur dein Konto Zugriff auf deine gespeicherten Uploads hat.",
+      ],
+      [
+        "Kann ich alles löschen?",
+        "Ja. Im Bereich Meine Briefe kannst du einzelne Uploads löschen. Weitere Löschoptionen bauen wir aus.",
+      ],
+      [
+        "Wichtig",
+        "EinfachAmt ist kein offizieller Behördendienst und bietet keine Rechtsberatung.",
+      ],
+    ],
   },
   en: {
     languageLabel: "Choose language",
@@ -264,6 +315,7 @@ export const copy = {
       "EinfachAmt is not an official government service and does not provide legal advice.",
     legalHelp:
       "For serious legal issues, please contact social counseling or a lawyer.",
+    security: "Security",
     privacy: "Privacy",
     impressum: "Imprint",
     pricing: "Pricing",
@@ -273,13 +325,23 @@ export const copy = {
     dashboardCta: "My letters",
     dashboardTitle: "Your letters",
     dashboardIntro: "Here you can find your uploaded letters again.",
+    dashboardSavePrompt: "Do you want to save your letters?",
+    dashboardSaveText:
+      "With a free account, you can find your uploads again on any device.",
     useEverywhereTitle: "Use it on all devices",
     useEverywhereText:
       "Log in with email so your letters and Plus access are available on another phone or browser too.",
     emailLogin: "Log in with email",
     noLettersTitle: "No letters yet",
-    noLettersText: "Upload your first letter. It will appear here afterwards.",
+    noLettersText:
+      "Your uploaded letters will appear here later. Start with a photo or PDF.",
+    firstUpload: "Upload first letter",
     openAnalysis: "Open analysis",
+    deleteLetter: "Delete letter",
+    deletingLetter: "Deleting...",
+    deleteLetterConfirm:
+      "Really delete this letter? The saved data will be removed.",
+    deleteLetterError: "The letter could not be deleted.",
     newUpload: "Upload new letter",
     statusAnalyzed: "Analyzed",
     statusReading: "Being read",
@@ -293,6 +355,12 @@ export const copy = {
     analysisTitle: "This is important",
     analysisIntro:
       "Short and simple. After this you can create a reply right away.",
+    mainActionTitle: "What you should do now",
+    mainActionText:
+      "Check the deadline, collect the documents and prepare a short reply today.",
+    deadlineFound: "Detected deadline",
+    deadlineUnclear: "No clear deadline detected",
+    deadlineUnclearHint: "Please check the letter. If unsure, send a short reply.",
     shortSaid: "In short",
     authorityWants: "What does the office want?",
     importantDeadline: "Important deadline",
@@ -304,6 +372,13 @@ export const copy = {
     responseHeader: "Reply",
     responseTitle: "What do you want to say?",
     responseIntro: "Choose a template. You can edit everything.",
+    toneTitle: "Tone",
+    toneShort: "Short",
+    tonePolite: "Very polite",
+    toneUrgent: "Urgent",
+    ownSituation: "Add your own situation",
+    ownSituationPlaceholder:
+      "For example: I was sick or I am still waiting for documents.",
     draftTitle: "Your draft",
     copied: "Copied",
     copyText: "Copy text",
@@ -329,10 +404,15 @@ export const copy = {
     },
     loadingHeader: "Letter is being read",
     loadingTitle: "Your letter is being read...",
+    loadingSteps: [
+      "Letter is being read",
+      "Deadline is being searched",
+      "Reply is being prepared",
+    ],
     readError: "The letter could not be read.",
     pricingPageTitle: "Start simply",
     pricingPageIntro:
-      "Start for free. Plus unlocks real OCR reading and more letters.",
+      "Start for free. If you need more letters and real text recognition, you can unlock Plus later.",
     checkoutSuccess: "Thank you. Your Plus access is being activated.",
     checkoutCancelled: "Checkout was cancelled. You can start again anytime.",
     plans: {
@@ -406,6 +486,27 @@ export const copy = {
       ],
       [
         "Notice",
+        "EinfachAmt is not an official government service and does not provide legal advice.",
+      ],
+    ],
+    securityTitle: "Security",
+    securityIntro:
+      "Short and clear: you should understand what happens with your data.",
+    securityCards: [
+      [
+        "Where is my data stored?",
+        "Uploads and analyses are stored in Supabase. For operations we use providers that support modern security standards.",
+      ],
+      [
+        "Who can see my letters?",
+        "Your letters are linked to your account. We build the app so only your account can access your saved uploads.",
+      ],
+      [
+        "Can I delete everything?",
+        "Yes. In My letters you can delete individual uploads. More deletion options will be added.",
+      ],
+      [
+        "Important",
         "EinfachAmt is not an official government service and does not provide legal advice.",
       ],
     ],
