@@ -4,10 +4,12 @@ import { TrustSignalList } from "@/components/TrustSignalList";
 import { UploadCard } from "@/components/UploadCard";
 import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
+import { getCurrentUserSubscription } from "@/lib/subscription";
 
 export default async function UploadPage() {
   const language = await getLanguage();
   const t = copy[language];
+  const subscription = await getCurrentUserSubscription();
 
   return (
     <main className="min-h-svh bg-trust-50">
@@ -28,7 +30,7 @@ export default async function UploadPage() {
           {t.uploadIntro}
         </p>
         <div className="mt-7">
-          <UploadCard language={language} />
+          <UploadCard language={language} isPaid={subscription.isPaid} />
         </div>
         <div className="mt-5 rounded-[1.4rem] bg-white/95 p-5 shadow-sm">
           <h2 className="text-xl font-bold text-ink">{t.safeUploadTitle}</h2>

@@ -10,9 +10,10 @@ const TRIAL_KEY = "einfachamt:trial-used";
 
 type UploadCardProps = {
   language?: Language;
+  isPaid?: boolean;
 };
 
-export function UploadCard({ language = "de" }: UploadCardProps) {
+export function UploadCard({ language = "de", isPaid = false }: UploadCardProps) {
   const t = copy[language];
   const [fileName, setFileName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -26,14 +27,16 @@ export function UploadCard({ language = "de" }: UploadCardProps) {
       return;
     }
 
-    if (file.type === "application/pdf") {
-      setBlocked("pdf");
-      return;
-    }
+    if (!isPaid) {
+      if (file.type === "application/pdf") {
+        setBlocked("pdf");
+        return;
+      }
 
-    if (window.localStorage.getItem(TRIAL_KEY)) {
-      setBlocked("trial");
-      return;
+      if (window.localStorage.getItem(TRIAL_KEY)) {
+        setBlocked("trial");
+        return;
+      }
     }
 
     setBlocked(null);
