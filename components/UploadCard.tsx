@@ -11,19 +11,33 @@ const TRIAL_KEY = "einfachamt:trial-used";
 type UploadCardProps = {
   language?: Language;
   isPaid?: boolean;
+  monthlyCount?: number;
+  monthlyLimit?: number;
 };
 
-export function UploadCard({ language = "de", isPaid = false }: UploadCardProps) {
+export function UploadCard({
+  language = "de",
+  isPaid = false,
+  monthlyCount = 0,
+  monthlyLimit = 50,
+}: UploadCardProps) {
   const t = copy[language];
   const [fileName, setFileName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<string>(t.uploadIdle);
   const [error, setError] = useState("");
-  const [blocked, setBlocked] = useState<"pdf" | "trial" | null>(null);
+  const [blocked, setBlocked] = useState<"pdf" | "trial" | "monthly" | null>(
+    isPaid && monthlyCount >= monthlyLimit ? "monthly" : null,
+  );
   const router = useRouter();
 
   async function handleFile(file?: File) {
     if (!file) {
+      return;
+    }
+
+    if (isPaid && monthlyCount >= monthlyLimit) {
+      setBlocked("monthly");
       return;
     }
 
@@ -120,12 +134,14 @@ export function UploadCard({ language = "de", isPaid = false }: UploadCardProps)
             : "bg-slate-50 text-slate-700"
         }`}
       >
-        {blocked === "pdf"
-          ? t.uploadPdfBlocked
-          : blocked === "trial"
-            ? t.uploadTrialUsed
-            : error ||
-              (isLoading ? t.uploadReading : fileName ? message : message)}
+        {blocked === "monthly"
+          ? t.uploadMonthlyLimit
+          : blocked === "pdf"
+            ? t.uploadPdfBlocked
+            : blocked === "trial"
+              ? t.uploadTrialUsed
+              : error ||
+                (isLoading ? t.uploadReading : fileName ? message : message)}
       </div>
 
       {blocked && (

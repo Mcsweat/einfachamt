@@ -49,6 +49,8 @@ export const copy = {
     uploadUploading: "Dein Brief wird hochgeladen...",
     uploadReading: "Dein Brief wird gelesen...",
     uploadError: "Upload fehlgeschlagen. Bitte versuche es erneut.",
+    uploadMonthlyLimit:
+      "Du hast dein Monatslimit von 50 Briefen erreicht. Dein Limit wird am 1. des nächsten Monats zurückgesetzt.",
     uploadPdfBlocked:
       "PDFs brauchen eine Mitgliedschaft. Teste erst kostenlos mit einem Foto.",
     uploadTrialUsed:
@@ -312,6 +314,8 @@ export const copy = {
     uploadUploading: "Your letter is uploading...",
     uploadReading: "Your letter is being read...",
     uploadError: "Upload failed. Please try again.",
+    uploadMonthlyLimit:
+      "You have reached your monthly limit of 50 letters. Your limit resets on the 1st of next month.",
     uploadPdfBlocked:
       "PDFs require a membership. Try for free with a photo first.",
     uploadTrialUsed:

@@ -17,6 +17,25 @@ function formatDate(value: string, locale: string) {
   }).format(new Date(value));
 }
 
+export async function getMonthlyUploadCount(): Promise<number> {
+  const supabase = await createClient();
+  const user = await getSafeUser();
+
+  if (!user) return 0;
+
+  const startOfMonth = new Date();
+  startOfMonth.setDate(1);
+  startOfMonth.setHours(0, 0, 0, 0);
+
+  const { count } = await supabase
+    .from("documents")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .gte("created_at", startOfMonth.toISOString());
+
+  return count ?? 0;
+}
+
 export async function getSavedDocuments(locale = "de-DE") {
   const supabase = await createClient();
   const user = await getSafeUser();

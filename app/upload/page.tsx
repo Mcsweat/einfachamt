@@ -5,11 +5,15 @@ import { UploadCard } from "@/components/UploadCard";
 import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
 import { getCurrentUserSubscription } from "@/lib/subscription";
+import { getMonthlyUploadCount } from "@/lib/saved-documents";
+
+const MONTHLY_LIMIT = 50;
 
 export default async function UploadPage() {
   const language = await getLanguage();
   const t = copy[language];
   const subscription = await getCurrentUserSubscription();
+  const monthlyCount = subscription.isPaid ? await getMonthlyUploadCount() : 0;
 
   return (
     <main className="min-h-svh bg-trust-50">
@@ -30,7 +34,12 @@ export default async function UploadPage() {
           {t.uploadIntro}
         </p>
         <div className="mt-7">
-          <UploadCard language={language} isPaid={subscription.isPaid} />
+          <UploadCard
+            language={language}
+            isPaid={subscription.isPaid}
+            monthlyCount={monthlyCount}
+            monthlyLimit={MONTHLY_LIMIT}
+          />
         </div>
         <div className="mt-5 rounded-[1.4rem] bg-white/95 p-5 shadow-sm">
           <h2 className="text-xl font-bold text-ink">{t.safeUploadTitle}</h2>
