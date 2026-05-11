@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { type Language, copy } from "@/lib/i18n";
+import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 
 type Props = { language: Language };
 
@@ -82,6 +83,7 @@ export function WiderspruchWizard({ language }: Props) {
     setData((prev) => ({ ...prev, [key]: value }));
   }
 
+  const [pdfLoading, setPdfLoading] = useState(false);
   const typeKeys: WizardData["type"][] = ["kuerzung", "ablehnung", "sanktion", "sonstig"];
   const letter = buildLetter(data);
 
@@ -89,6 +91,93 @@ export function WiderspruchWizard({ language }: Props) {
     await navigator.clipboard.writeText(letter);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
+  }
+
+  async function downloadPdf() {
+    setPdfLoading(true);
+    try {
+      const pdfDoc = await PDFDocument.create();
+      const page = pdfDoc.addPage([595.28, 841.89]); // A4
+
+      const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+      const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+
+      const margin = 72;
+      const contentWidth = page.getWidth() - margin * 2;
+      const fontSize = 11;
+      const lineHeight = 18;
+      const blue = rgb(0.04, 0.52, 1);
+      const ink = rgb(0.07, 0.09, 0.15);
+      const muted = rgb(0.5, 0.5, 0.55);
+      const rule = rgb(0.84, 0.84, 0.88);
+
+      function wrapLine(text: string, maxWidth: number): string[] {
+        const words = text.split(" ");
+        const lines: string[] = [];
+        let current = "";
+        for (const word of words) {
+          const test = current ? `${current} ${word}` : word;
+          if (font.widthOfTextAtSize(test, fontSize) > maxWidth && current) {
+            lines.push(current);
+            current = word;
+          } else {
+            current = test;
+          }
+        }
+        if (current) lines.push(current);
+        return lines.length ? lines : [""];
+      }
+
+      let y = page.getHeight() - margin;
+
+      // ── Header ──
+      page.drawText("EinfachAmt", { x: margin, y, font: boldFont, size: 10, color: blue });
+      const today = new Date().toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" });
+      const dateW = font.widthOfTextAtSize(today, 10);
+      page.drawText(today, { x: page.getWidth() - margin - dateW, y, font, size: 10, color: muted });
+      y -= 16;
+      page.drawLine({ start: { x: margin, y }, end: { x: page.getWidth() - margin, y }, thickness: 0.5, color: rule });
+      y -= 28;
+
+      // ── Title ──
+      page.drawText("Widerspruch", { x: margin, y, font: boldFont, size: 20, color: ink });
+      y -= 36;
+
+      // ── Letter body ──
+      const paragraphs = letter.split("\n");
+      for (const para of paragraphs) {
+        if (y < 80) break;
+        if (!para.trim()) {
+          y -= lineHeight * 0.65;
+          continue;
+        }
+        const lines = wrapLine(para, contentWidth);
+        for (const line of lines) {
+          if (y < 80) break;
+          page.drawText(line, { x: margin, y, font, size: fontSize, color: ink });
+          y -= lineHeight;
+        }
+      }
+
+      // ── Footer ──
+      const footerY = 44;
+      page.drawLine({ start: { x: margin, y: footerY + 14 }, end: { x: page.getWidth() - margin, y: footerY + 14 }, thickness: 0.5, color: rule });
+      page.drawText(
+        "Erstellt mit EinfachAmt · einfachamt.com · Kein offizieller Behördendienst · Keine Rechtsberatung",
+        { x: margin, y: footerY, font, size: 8, color: muted },
+      );
+
+      const bytes = await pdfDoc.save();
+      const blob = new Blob([bytes], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `widerspruch${data.name ? `-${data.name.toLowerCase().replace(/\s+/g, "-")}` : ""}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } finally {
+      setPdfLoading(false);
+    }
   }
 
   const steps = [
@@ -157,13 +246,16 @@ export function WiderspruchWizard({ language }: Props) {
         {copied ? t.widerspruchCopied : `📋 ${t.widerspruchCopy}`}
       </button>
 
-      {/* Print */}
+      {/* PDF download */}
       <button
         type="button"
-        onClick={() => window.print()}
-        className="flex min-h-12 w-full items-center justify-center rounded-full bg-trust-100 px-5 text-base font-bold text-trust-700 transition active:scale-[0.98]"
+        onClick={downloadPdf}
+        disabled={pdfLoading}
+        className="flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-slate-800 px-5 text-base font-bold text-white transition active:scale-[0.98] disabled:opacity-60"
       >
-        🖨 {language === "de" ? "Als PDF speichern" : "Save as PDF"}
+        {pdfLoading
+          ? (language === "de" ? "PDF wird erstellt…" : "Creating PDF…")
+          : `⬇ ${language === "de" ? "Als PDF herunterladen" : "Download as PDF"}`}
       </button>
 
       {/* Disclaimer */}

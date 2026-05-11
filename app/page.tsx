@@ -5,6 +5,7 @@ import { Logo } from "@/components/Logo";
 import { copy, type Language } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
 import { getSafeUser } from "@/lib/supabase/safe-auth";
+import { ogImage } from "@/lib/og";
 
 function LetterPreview({ language }: { language: Language }) {
   const isDe = language === "de";
@@ -109,6 +110,7 @@ export async function generateMetadata() {
       url: "https://einfachamt.com",
       siteName: "EinfachAmt",
       locale: isDe ? "de_DE" : "en_GB",
+      images: ogImage,
     },
   };
 }

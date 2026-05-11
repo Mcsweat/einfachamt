@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { FooterDisclaimer } from "@/components/FooterDisclaimer";
 import { MobileHeader } from "@/components/MobileHeader";
-import { DeleteDocumentButton } from "@/components/DeleteDocumentButton";
+import { DocumentCard } from "@/components/DocumentCard";
 import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
 import { getSafeUser } from "@/lib/supabase/safe-auth";
 import { getCurrentUserSubscription } from "@/lib/subscription";
-import { getSavedDocuments } from "@/lib/saved-documents";
+import { getSavedDocuments, getMonthlyUploadCount } from "@/lib/saved-documents";
 import { getCurrentUserAntragSubscription } from "@/lib/subscription";
+import { UsagePill } from "@/components/UsagePill";
 import { SignOutButton } from "./AccountActions";
 import { ManageSubscriptionButton } from "@/components/ManageSubscriptionButton";
 
@@ -60,10 +61,11 @@ export default async function AccountPage() {
   const language = await getLanguage();
   const t = copy[language];
   const user = await getSafeUser();
-  const [subscription, antragSubscription, { documents }] = await Promise.all([
+  const [subscription, antragSubscription, { documents }, monthlyCount] = await Promise.all([
     getCurrentUserSubscription(),
     getCurrentUserAntragSubscription(),
     getSavedDocuments(language === "de" ? "de-DE" : "en-US"),
+    getMonthlyUploadCount(),
   ]);
   const isEmailUser = Boolean(user && !user.is_anonymous);
   const initial = user?.email?.charAt(0).toUpperCase() ?? "?";
@@ -125,6 +127,17 @@ export default async function AccountPage() {
               )}
             </div>
 
+            {/* Usage counter */}
+            <div className="mt-4">
+              <UsagePill
+                isPaid={subscription.isPaid}
+                isLoggedIn={isEmailUser}
+                monthlyCount={monthlyCount}
+                limit={subscription.isPaid ? 50 : 1}
+                language={language}
+              />
+            </div>
+
             {/* Tools / Dienste section */}
             <SectionLabel>{t.toolsSection}</SectionLabel>
             <Link
@@ -168,60 +181,39 @@ export default async function AccountPage() {
 
             {/* Briefe section */}
             <SectionLabel>{t.dashboardTitle}</SectionLabel>
-            <div className="overflow-hidden rounded-[1.55rem] bg-white/95 shadow-sm">
-              {documents.length > 0 ? (
-                documents.map((doc, index) => (
-                  <div
+            {documents.length > 0 ? (
+              <div className="space-y-3">
+                {documents.map((doc) => (
+                  <DocumentCard
                     key={doc.id}
-                    className={index < documents.length - 1 ? "border-b border-slate-100" : ""}
-                  >
-                    <Link
-                      href={`/analysis/${doc.id}`}
-                      className="flex min-h-[64px] items-center gap-3 px-5 py-3"
-                    >
-                      <span className="text-xl">📄</span>
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-base font-semibold text-ink">
-                          {doc.fileName}
-                        </p>
-                        <p className="mt-0.5 text-sm text-slate-400">
-                          {doc.status === "analyzed"
-                            ? t.statusAnalyzed
-                            : doc.status === "reading"
-                              ? t.statusReading
-                              : t.statusUploaded}{" "}
-                          · {doc.createdAt}
-                        </p>
-                      </div>
-                      <span className="text-lg font-semibold text-slate-300">›</span>
-                    </Link>
-                    <div className="px-5 pb-3">
-                      <DeleteDocumentButton
-                        documentId={doc.id}
-                        fileUrl={doc.fileUrl}
-                        labels={{
-                          idle: t.deleteLetter,
-                          loading: t.deletingLetter,
-                          confirm: t.deleteLetterConfirm,
-                          error: t.deleteLetterError,
-                        }}
-                      />
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="flex flex-col items-center px-5 py-8 text-center">
-                  <span className="text-4xl">📭</span>
-                  <p className="mt-3 text-base text-slate-500">{t.noLettersText}</p>
-                  <Link
-                    href="/upload"
-                    className="mt-4 inline-flex min-h-11 items-center rounded-full bg-trust-500 px-5 py-2 text-sm font-bold text-white shadow-soft"
-                  >
-                    {t.firstUpload}
-                  </Link>
-                </div>
-              )}
-            </div>
+                    doc={doc}
+                    labels={{
+                      renameLetter: t.renameLetter,
+                      renameLetterSave: t.renameLetterSave,
+                      renameLetterCancel: t.renameLetterCancel,
+                      deleteLetter: t.deleteLetter,
+                      deletingLetter: t.deletingLetter,
+                      deleteLetterConfirm: t.deleteLetterConfirm,
+                      deleteLetterError: t.deleteLetterError,
+                      statusAnalyzed: t.statusAnalyzed,
+                      statusReading: t.statusReading,
+                      statusUploaded: t.statusUploaded,
+                    }}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center rounded-[1.55rem] bg-white/95 px-5 py-8 text-center shadow-sm">
+                <span className="text-4xl">📭</span>
+                <p className="mt-3 text-base text-slate-500">{t.noLettersText}</p>
+                <Link
+                  href="/upload"
+                  className="mt-4 inline-flex min-h-11 items-center rounded-full bg-trust-500 px-5 py-2 text-sm font-bold text-white shadow-soft"
+                >
+                  {t.firstUpload}
+                </Link>
+              </div>
+            )}
 
             {/* App section */}
             <SectionLabel>{t.accountAppSection}</SectionLabel>

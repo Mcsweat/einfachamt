@@ -3,6 +3,7 @@ import { MobileHeader } from "@/components/MobileHeader";
 import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
 import { siteConfig } from "@/lib/site-config";
+import { ogImage } from "@/lib/og";
 
 function Section({
   title,
@@ -41,6 +42,7 @@ export async function generateMetadata() {
       url: "https://einfachamt.com/impressum",
       siteName: "EinfachAmt",
       locale: "de_DE",
+      images: ogImage,
     },
   };
 }

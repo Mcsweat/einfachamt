@@ -2,18 +2,26 @@ import { FooterDisclaimer } from "@/components/FooterDisclaimer";
 import { MobileHeader } from "@/components/MobileHeader";
 import { TrustSignalList } from "@/components/TrustSignalList";
 import { UploadCard } from "@/components/UploadCard";
+import { UsagePill } from "@/components/UsagePill";
 import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
 import { getCurrentUserSubscription } from "@/lib/subscription";
 import { getMonthlyUploadCount } from "@/lib/saved-documents";
+import { getSafeUser } from "@/lib/supabase/safe-auth";
 
 const MONTHLY_LIMIT = 50;
+const FREE_LIMIT = 1;
 
 export default async function UploadPage() {
   const language = await getLanguage();
   const t = copy[language];
-  const subscription = await getCurrentUserSubscription();
-  const monthlyCount = subscription.isPaid ? await getMonthlyUploadCount() : 0;
+  const [subscription, user] = await Promise.all([
+    getCurrentUserSubscription(),
+    getSafeUser(),
+  ]);
+  const isLoggedIn = Boolean(user && !user.is_anonymous);
+  const monthlyCount = isLoggedIn ? await getMonthlyUploadCount() : 0;
+  const limit = subscription.isPaid ? MONTHLY_LIMIT : FREE_LIMIT;
 
   return (
     <main className="min-h-svh bg-trust-50">
@@ -34,11 +42,19 @@ export default async function UploadPage() {
           {t.uploadIntro}
         </p>
         <div className="mt-7">
+          <UsagePill
+            isPaid={subscription.isPaid}
+            isLoggedIn={isLoggedIn}
+            monthlyCount={monthlyCount}
+            limit={limit}
+            language={language}
+          />
           <UploadCard
             language={language}
             isPaid={subscription.isPaid}
             monthlyCount={monthlyCount}
             monthlyLimit={MONTHLY_LIMIT}
+            serverTrialUsed={!subscription.isPaid && isLoggedIn && monthlyCount >= FREE_LIMIT}
           />
         </div>
         <div className="mt-5 rounded-[1.4rem] bg-white/95 p-5 shadow-sm">

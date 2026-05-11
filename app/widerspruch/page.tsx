@@ -3,6 +3,7 @@ import { FooterDisclaimer } from "@/components/FooterDisclaimer";
 import { MobileHeader } from "@/components/MobileHeader";
 import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
+import { ogImage } from "@/lib/og";
 import { WiderspruchWizard } from "./WiderspruchWizard";
 
 export async function generateMetadata() {
@@ -23,6 +24,7 @@ export async function generateMetadata() {
       url: "https://einfachamt.com/widerspruch",
       siteName: "EinfachAmt",
       locale: isDe ? "de_DE" : "en_GB",
+      images: ogImage,
     },
   };
 }

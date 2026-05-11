@@ -5,6 +5,7 @@ import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
 import { getCurrentUserAntragSubscription } from "@/lib/subscription";
 import { getSafeUser } from "@/lib/supabase/safe-auth";
+import { ogImage } from "@/lib/og";
 import { BuergergeldWizard } from "./BuergergeldWizard";
 import { AntragCheckoutButton } from "./AntragCheckoutButton";
 
@@ -30,6 +31,7 @@ export async function generateMetadata() {
       url: "https://einfachamt.com/antrag",
       siteName: "EinfachAmt",
       locale: isDe ? "de_DE" : "en_GB",
+      images: ogImage,
     },
   };
 }

@@ -2,6 +2,7 @@ import { FooterDisclaimer } from "@/components/FooterDisclaimer";
 import { MobileHeader } from "@/components/MobileHeader";
 import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
+import { ogImage } from "@/lib/og";
 
 // Datenschutzerklärung is a German legal requirement and is always in German.
 
@@ -43,6 +44,7 @@ export async function generateMetadata() {
       url: "https://einfachamt.com/datenschutz",
       siteName: "EinfachAmt",
       locale: "de_DE",
+      images: ogImage,
     },
   };
 }

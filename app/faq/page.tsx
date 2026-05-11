@@ -2,6 +2,7 @@ import { FooterDisclaimer } from "@/components/FooterDisclaimer";
 import { MobileHeader } from "@/components/MobileHeader";
 import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
+import { ogImage } from "@/lib/og";
 import { faqData } from "@/lib/faqData";
 
 export async function generateMetadata() {
@@ -22,6 +23,7 @@ export async function generateMetadata() {
       url: "https://einfachamt.com/faq",
       siteName: "EinfachAmt",
       locale: isDe ? "de_DE" : "en_GB",
+      images: ogImage,
     },
   };
 }

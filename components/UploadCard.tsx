@@ -13,6 +13,7 @@ type UploadCardProps = {
   isPaid?: boolean;
   monthlyCount?: number;
   monthlyLimit?: number;
+  serverTrialUsed?: boolean;
 };
 
 export function UploadCard({
@@ -20,6 +21,7 @@ export function UploadCard({
   isPaid = false,
   monthlyCount = 0,
   monthlyLimit = 50,
+  serverTrialUsed = false,
 }: UploadCardProps) {
   const t = copy[language];
   const [fileName, setFileName] = useState("");
@@ -27,7 +29,11 @@ export function UploadCard({
   const [message, setMessage] = useState<string>(t.uploadIdle);
   const [error, setError] = useState("");
   const [blocked, setBlocked] = useState<"pdf" | "trial" | "monthly" | null>(
-    isPaid && monthlyCount >= monthlyLimit ? "monthly" : null,
+    isPaid && monthlyCount >= monthlyLimit
+      ? "monthly"
+      : serverTrialUsed
+        ? "trial"
+        : null,
   );
   const router = useRouter();
 
@@ -47,6 +53,13 @@ export function UploadCard({
         return;
       }
 
+      // Server-side: logged-in free user already used their trial
+      if (serverTrialUsed) {
+        setBlocked("trial");
+        return;
+      }
+
+      // Client-side: anonymous user localStorage check
       if (window.localStorage.getItem(TRIAL_KEY)) {
         setBlocked("trial");
         return;

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { LanguageGate } from "@/components/LanguageGate";
 import { getLanguage } from "@/lib/i18n-server";
 import { languageMeta } from "@/lib/i18n";
+import { ogImage } from "@/lib/og";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,12 +18,14 @@ export const metadata: Metadata = {
     siteName: "EinfachAmt",
     type: "website",
     locale: "de_DE",
+    images: ogImage,
   },
   twitter: {
     card: "summary_large_image",
     title: "EinfachAmt – Behördenbriefe verstehen",
     description:
       "Brief hochladen, Erklärung bekommen, Antwort vorbereiten. Kostenlos testen.",
+    images: ogImage,
   },
   robots: {
     index: true,
