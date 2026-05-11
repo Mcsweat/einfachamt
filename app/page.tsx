@@ -220,6 +220,57 @@ export default async function LandingPage() {
           </Link>
         </section>
 
+        {/* Tools */}
+        <section className="mt-5 space-y-3">
+          <h2 className="text-2xl font-bold text-ink">
+            {language === "de" ? "Weitere Werkzeuge" : language === "ar" ? "أدوات إضافية" : language === "tr" ? "Diğer araçlar" : language === "uk" ? "Інші інструменти" : language === "ru" ? "Другие инструменты" : "More tools"}
+          </h2>
+
+          {/* Widerspruch */}
+          <Link
+            href="/widerspruch"
+            className="flex items-center gap-4 rounded-[1.55rem] bg-white/95 p-5 shadow-sm transition active:scale-[0.98]"
+          >
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-amber-100 text-2xl">
+              ✊
+            </span>
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <p className="text-base font-bold text-ink">{language === "de" ? "Widerspruch einlegen" : language === "ar" ? "تقديم اعتراض" : language === "tr" ? "İtiraz et" : language === "uk" ? "Подати скаргу" : language === "ru" ? "Подать жалобу" : "File an appeal"}</p>
+                <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-black uppercase tracking-wide text-amber-800">
+                  {language === "de" ? "Kostenlos" : "Free"}
+                </span>
+              </div>
+              <p className="mt-0.5 text-sm leading-5 text-slate-600">
+                {language === "de" ? "Widerspruchsbrief in 3 Schritten erstellen" : language === "ar" ? "إنشاء خطاب اعتراض في 3 خطوات" : language === "tr" ? "3 adımda itiraz mektubu oluştur" : language === "uk" ? "Створіть лист-скаргу за 3 кроки" : language === "ru" ? "Создайте письмо-жалобу за 3 шага" : "Create an appeal letter in 3 steps"}
+              </p>
+            </div>
+            <span className="text-slate-300">›</span>
+          </Link>
+
+          {/* Antrag */}
+          <Link
+            href="/antrag"
+            className="flex items-center gap-4 rounded-[1.55rem] bg-white/95 p-5 shadow-sm transition active:scale-[0.98]"
+          >
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-trust-100 text-2xl">
+              📄
+            </span>
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <p className="text-base font-bold text-ink">{language === "de" ? "Bürgergeld-Antrag ausfüllen" : language === "ar" ? "ملء طلب Bürgergeld" : language === "tr" ? "Bürgergeld başvurusunu doldur" : language === "uk" ? "Заповнити заяву Bürgergeld" : language === "ru" ? "Заполнить заявку Bürgergeld" : "Fill Bürgergeld application"}</p>
+                <span className="rounded-full bg-trust-100 px-2 py-0.5 text-xs font-black uppercase tracking-wide text-trust-700">
+                  39,99 €
+                </span>
+              </div>
+              <p className="mt-0.5 text-sm leading-5 text-slate-600">
+                {language === "de" ? "Formular automatisch ausfüllen — als PDF herunterladen" : language === "ar" ? "ملء النموذج تلقائياً وتنزيله كـ PDF" : language === "tr" ? "Formu otomatik doldur — PDF olarak indir" : language === "uk" ? "Автоматично заповнити та завантажити PDF" : language === "ru" ? "Автозаполнение и скачивание PDF" : "Auto-fill the form — download as PDF"}
+              </p>
+            </div>
+            <span className="text-slate-300">›</span>
+          </Link>
+        </section>
+
         {/* Pricing */}
         <section className="mt-5 rounded-[1.65rem] bg-white/95 p-5 shadow-sm">
           <h2 className="text-2xl font-bold text-ink">{t.pricingTitle}</h2>
