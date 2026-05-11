@@ -168,7 +168,7 @@ export function WiderspruchWizard({ language }: Props) {
       );
 
       const bytes = await pdfDoc.save();
-      const blob = new Blob([bytes], { type: "application/pdf" });
+      const blob = new Blob([bytes.buffer as ArrayBuffer], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
