@@ -17,6 +17,7 @@ export function FooterDisclaimer({ language = "de" }: FooterDisclaimerProps) {
         <Link href="/privacy">{t.privacy}</Link>
         <Link href="/security">{t.security}</Link>
         <Link href="/impressum">{t.impressum}</Link>
+        <Link href="/kontakt">{t.contact}</Link>
         <Link href="/pricing">{t.pricing}</Link>
       </section>
     </footer>
