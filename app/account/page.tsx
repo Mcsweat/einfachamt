@@ -116,6 +116,43 @@ export default async function AccountPage() {
               />
             </div>
 
+            {/* Tools / Dienste section */}
+            <SectionLabel>{t.toolsSection}</SectionLabel>
+            <Link
+              href={subscription.isPaid ? "/antrag" : "/pricing"}
+              className={`flex items-center gap-4 overflow-hidden rounded-[1.55rem] p-5 shadow-sm transition active:scale-[0.98] ${
+                subscription.isPaid
+                  ? "bg-trust-500 text-white"
+                  : "bg-white/95 text-ink"
+              }`}
+            >
+              <div
+                className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-[0.9rem] text-2xl ${
+                  subscription.isPaid ? "bg-white/20" : "bg-trust-100"
+                }`}
+              >
+                📋
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <p className={`text-base font-bold ${subscription.isPaid ? "text-white" : "text-ink"}`}>
+                    {t.antrag.title}
+                  </p>
+                  {!subscription.isPaid && (
+                    <span className="rounded-full bg-amber-400 px-2 py-0.5 text-xs font-black text-amber-900">
+                      Plus
+                    </span>
+                  )}
+                </div>
+                <p className={`mt-0.5 text-sm leading-5 ${subscription.isPaid ? "text-white/75" : "text-slate-500"}`}>
+                  {t.antrag.intro}
+                </p>
+              </div>
+              <span className={`shrink-0 text-xl font-semibold ${subscription.isPaid ? "text-white/60" : "text-slate-300"}`}>
+                ›
+              </span>
+            </Link>
+
             {/* Briefe section */}
             <SectionLabel>{t.dashboardTitle}</SectionLabel>
             <div className="overflow-hidden rounded-[1.55rem] bg-white/95 shadow-sm">
