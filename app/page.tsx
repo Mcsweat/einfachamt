@@ -170,6 +170,30 @@ export default async function LandingPage() {
           </div>
         </div>
 
+        {/* Bürgergeld Antrag — featured tool card */}
+        <Link
+          href="/antrag"
+          className="mt-3 flex items-center gap-4 overflow-hidden rounded-[1.55rem] bg-trust-500 px-5 py-4 shadow-soft transition active:scale-[0.98]"
+        >
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-2xl">
+            📋
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2">
+              <p className="text-base font-bold text-white">
+                {language === "de" ? "Bürgergeld-Antrag" : language === "ar" ? "طلب Bürgergeld" : language === "tr" ? "Bürgergeld Başvurusu" : language === "uk" ? "Заява Bürgergeld" : language === "ru" ? "Заявка Bürgergeld" : "Bürgergeld Application"}
+              </p>
+              <span className="shrink-0 rounded-full bg-white/25 px-2 py-0.5 text-xs font-black text-white">
+                39,99 €/Mo
+              </span>
+            </div>
+            <p className="mt-0.5 text-sm leading-5 text-white/80">
+              {language === "de" ? "Formular automatisch ausfüllen · PDF herunterladen" : language === "ar" ? "ملء النموذج تلقائياً · تنزيل PDF" : language === "tr" ? "Formu otomatik doldur · PDF indir" : language === "uk" ? "Автозаповнення · PDF завантажити" : language === "ru" ? "Автозаполнение · Скачать PDF" : "Auto-fill form · Download PDF"}
+            </p>
+          </div>
+          <span className="shrink-0 text-xl font-semibold text-white/60">›</span>
+        </Link>
+
         {/* Letter preview mockup */}
         <LetterPreview language={language} />
 
