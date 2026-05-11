@@ -7,6 +7,8 @@ export type SavedDocument = {
   status: string;
   fileUrl: string;
   createdAt: string;
+  summary: string | null;
+  deadline: string | null;
 };
 
 function formatDate(value: string, locale: string) {
@@ -49,18 +51,32 @@ export async function getSavedDocuments(locale = "de-DE") {
 
   const { data } = await supabase
     .from("documents")
-    .select("id, file_name, file_url, status, created_at")
+    .select("id, file_name, file_url, status, created_at, analyses(summary, deadlines)")
     .order("created_at", { ascending: false })
     .limit(25);
 
   return {
     user,
-    documents: (data ?? []).map((document) => ({
-      id: document.id,
-      fileName: document.file_name,
-      fileUrl: document.file_url,
-      status: document.status,
-      createdAt: formatDate(document.created_at, locale),
-    })),
+    documents: (data ?? []).map((document) => {
+      const analysis = Array.isArray(document.analyses)
+        ? document.analyses[0]
+        : (document.analyses as { summary?: string; deadlines?: string[] } | null);
+      const deadlines: string[] = Array.isArray(analysis?.deadlines)
+        ? (analysis.deadlines as string[])
+        : [];
+      const deadline = deadlines.find((d) =>
+        /(\d{1,2}[./-]\d{1,2}(?:[./-]\d{2,4})?|\d+\s+tage|bis\s+zum)/i.test(d),
+      ) ?? null;
+
+      return {
+        id: document.id,
+        fileName: document.file_name,
+        fileUrl: document.file_url,
+        status: document.status,
+        createdAt: formatDate(document.created_at, locale),
+        summary: analysis?.summary ?? null,
+        deadline,
+      };
+    }),
   };
 }
