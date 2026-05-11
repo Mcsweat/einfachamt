@@ -52,8 +52,8 @@ export function LanguageSelector({ active, onClose }: LanguageSelectorProps) {
       <div
         ref={sheetRef}
         tabIndex={-1}
-        className="w-full max-w-[390px] rounded-[2rem] bg-white p-5 shadow-soft outline-none"
-        style={{ animation: "sheetSlideUp 0.28s cubic-bezier(0.32,0.72,0,1) both" }}
+        className="w-full max-w-[390px] overflow-y-auto rounded-[2rem] bg-white p-5 shadow-soft outline-none"
+        style={{ maxHeight: "85svh", animation: "sheetSlideUp 0.28s cubic-bezier(0.32,0.72,0,1) both" }}
       >
         {/* Handle bar */}
         <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-slate-200" />
@@ -91,9 +91,6 @@ export function LanguageSelector({ active, onClose }: LanguageSelectorProps) {
                 <div className="min-w-0 flex-1">
                   <p className={`text-sm font-bold leading-tight ${isActive ? "text-white" : "text-ink"}`}>
                     {name}
-                  </p>
-                  <p className={`text-xs leading-tight mt-0.5 ${isActive ? "text-white/70" : "text-slate-400"}`}>
-                    {lang.toUpperCase()}
                   </p>
                 </div>
                 {isActive && (
