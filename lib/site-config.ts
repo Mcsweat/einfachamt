@@ -8,7 +8,7 @@ export const siteConfig = {
   productName: "EinfachAmt",
   domain: "einfachamt.com",
   siteUrl: "https://einfachamt.com",
-  contactEmail: "support@einfachamt.com",
+  contactEmail: "Einfachamt@gmail.com",
   operator: {
     // TODO: vor Launch ausfüllen — gesetzliche Pflicht laut §5 TMG
     name: null as string | null,
