@@ -182,9 +182,10 @@ export function ResponseDraftClient({
         </button>
         <button
           type="button"
+          onClick={() => window.print()}
           className="min-h-12 rounded-full bg-trust-100 px-5 py-3 font-bold text-trust-500 transition active:scale-[0.99]"
         >
-          {t.savePdfSoon}
+          {t.savePdf}
         </button>
       </BottomActionBar>
     </>

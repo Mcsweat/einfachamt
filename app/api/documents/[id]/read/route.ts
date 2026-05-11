@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { buildAnalysisFromText } from "@/lib/knowledge-base";
 import { analyzeLetterWithAi } from "@/lib/ai-analysis";
+import { sendAnalysisEmail } from "@/lib/email";
 import { getOcrAccess } from "@/lib/ocr-access";
 import { extractTextWithOcr } from "@/lib/ocr";
 import { getCurrentUserSubscription } from "@/lib/subscription";
@@ -15,7 +16,7 @@ type ReadRouteProps = {
 };
 
 const fallbackOcrText =
-  "Mock OCR: Das Jobcenter möchte Unterlagen. Bitte rechtzeitig antworten.";
+  "Das Jobcenter möchte Unterlagen. Bitte rechtzeitig antworten.";
 
 function getErrorMessage(error: unknown) {
   if (error instanceof Error) {
@@ -144,6 +145,22 @@ export async function POST(_request: Request, { params }: ReadRouteProps) {
       { ok: false, error: updateError.message },
       { status: 500 },
     );
+  }
+
+  // Send email notification (fire-and-forget, never blocks the response)
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user?.email) {
+      void sendAnalysisEmail({
+        to: user.email,
+        language: "de",
+        documentId: id,
+        summary: matchedAnalysis.summary,
+        deadline: matchedAnalysis.deadlines[0],
+      });
+    }
+  } catch {
+    // Email errors are non-fatal
   }
 
   return NextResponse.json({

@@ -73,22 +73,19 @@ export function UploadCard({
         }),
       );
 
-      if (result.mode === "mock") {
-        setMessage(result.reason);
-      } else {
-        setMessage(t.uploadReading);
-      }
+      setMessage(t.uploadReading);
 
       window.setTimeout(() => {
         router.push(`/loading/${result.documentId}`);
       }, 650);
     } catch (uploadError) {
-      setError(
-        uploadError instanceof Error
+      const msg =
+        uploadError instanceof Error && uploadError.message.length < 200
           ? uploadError.message
-          : t.uploadError,
-      );
+          : t.uploadError;
+      setError(msg);
       setIsLoading(false);
+      setFileName("");
       setMessage(t.uploadIdle);
     }
   }
@@ -151,6 +148,16 @@ export function UploadCard({
         >
           {t.pricingLink}
         </Link>
+      )}
+
+      {error && !blocked && (
+        <button
+          type="button"
+          onClick={() => { setError(""); setMessage(t.uploadIdle); }}
+          className="mt-3 flex w-full items-center justify-center rounded-[1.25rem] bg-trust-100 px-5 py-3 text-base font-semibold text-trust-700 transition active:scale-[0.99]"
+        >
+          {language === "de" ? "Nochmal versuchen" : "Try again"}
+        </button>
       )}
     </section>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -56,8 +57,23 @@ export function LoadingRedirect({
   }
 
   return (
-    <div className="fixed inset-x-4 bottom-5 z-30 mx-auto max-w-[430px] rounded-[1.4rem] bg-amber-50 p-4 text-base font-semibold leading-6 text-amber-900 shadow-soft">
-      {error}
+    <div className="fixed inset-x-4 bottom-5 z-30 mx-auto max-w-[430px] rounded-[1.4rem] bg-amber-50 p-4 shadow-soft">
+      <p className="text-base font-semibold leading-6 text-amber-900">{error}</p>
+      <div className="mt-3 flex gap-2">
+        <button
+          type="button"
+          onClick={() => window.location.reload()}
+          className="rounded-full bg-amber-900/10 px-4 py-2 text-sm font-bold text-amber-900 transition active:scale-[0.97]"
+        >
+          Nochmal versuchen
+        </button>
+        <Link
+          href="/kontakt"
+          className="rounded-full bg-amber-900/10 px-4 py-2 text-sm font-bold text-amber-900 transition active:scale-[0.97]"
+        >
+          Hilfe
+        </Link>
+      </div>
     </div>
   );
 }
