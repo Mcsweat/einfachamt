@@ -14,28 +14,46 @@ async function upsertSubscription({
   customerId,
   subscriptionId,
   status,
+  productType = "plus",
 }: {
   userId: string;
   customerId: string;
   subscriptionId: string;
   status: Stripe.Subscription.Status;
+  productType?: "plus" | "antrag";
 }) {
   const supabase = createAdminClient();
-  const { error } = await supabase.from("profiles").upsert(
-    {
-      user_id: userId,
-      stripe_customer_id: customerId,
-      stripe_subscription_id: subscriptionId,
-      subscription_status: subscriptionStatus(status),
-      plan: status === "active" || status === "trialing" ? "plus" : "free",
-      updated_at: new Date().toISOString(),
-    },
-    { onConflict: "user_id" },
-  );
 
-  if (error) {
-    throw new Error(error.message);
+  if (productType === "antrag") {
+    const { error } = await supabase.from("profiles").upsert(
+      {
+        user_id: userId,
+        stripe_customer_id: customerId,
+        antrag_stripe_subscription_id: subscriptionId,
+        antrag_subscription_status: subscriptionStatus(status),
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "user_id" },
+    );
+    if (error) throw new Error(error.message);
+  } else {
+    const { error } = await supabase.from("profiles").upsert(
+      {
+        user_id: userId,
+        stripe_customer_id: customerId,
+        stripe_subscription_id: subscriptionId,
+        subscription_status: subscriptionStatus(status),
+        plan: status === "active" || status === "trialing" ? "plus" : "free",
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "user_id" },
+    );
+    if (error) throw new Error(error.message);
   }
+}
+
+function detectProductType(metadata?: Stripe.Metadata | null): "plus" | "antrag" {
+  return metadata?.product === "einfachamt_antrag" ? "antrag" : "plus";
 }
 
 async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
@@ -57,12 +75,14 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 
   const stripe = getStripe();
   const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+  const productType = detectProductType(session.metadata);
 
   await upsertSubscription({
     userId,
     customerId,
     subscriptionId,
     status: subscription.status,
+    productType,
   });
 }
 
@@ -77,11 +97,14 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
     return;
   }
 
+  const productType = detectProductType(subscription.metadata);
+
   await upsertSubscription({
     userId,
     customerId,
     subscriptionId: subscription.id,
     status: subscription.status,
+    productType,
   });
 }
 
