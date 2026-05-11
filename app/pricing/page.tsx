@@ -5,6 +5,7 @@ import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
 import { getSafeUser } from "@/lib/supabase/safe-auth";
 import { PricingCheckoutButton } from "./PricingCheckoutButton";
+import { AntragCheckoutButton } from "@/app/antrag/AntragCheckoutButton";
 
 type PricingPageProps = {
   searchParams?: Promise<{
@@ -182,6 +183,74 @@ export default async function PricingPage({ searchParams }: PricingPageProps) {
             ? "Zahlung via Stripe · Jederzeit kündbar · DSGVO-konform"
             : "Powered by Stripe · Cancel anytime · GDPR compliant"}
         </p>
+
+        {/* Antrag Service */}
+        <div className="mt-10">
+          <h2 className="text-2xl font-bold text-ink">
+            {isDe ? "Bürgergeld-Antrag Service" : "Bürgergeld Application Service"}
+          </h2>
+          <p className="mt-2 text-base leading-7 text-slate-600">
+            {isDe
+              ? "Wir füllen das offizielle Bürgergeld-Formular automatisch für dich aus. Du beantwortest ein paar Fragen — wir erstellen das fertige PDF."
+              : "We automatically fill in the official Bürgergeld form for you. Answer a few questions — we generate the completed PDF."}
+          </p>
+
+          <article className="mt-4 overflow-hidden rounded-[1.65rem] bg-trust-500 shadow-sm">
+            <div className="p-5">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-sm font-bold text-white/80">
+                    {isDe ? "Antrag-Service" : "Application Service"}
+                  </p>
+                  <p className="mt-1 text-4xl font-black text-white">39,99 €</p>
+                  <p className="text-base font-semibold text-white/70">
+                    {isDe ? "/ Monat" : "/ month"}
+                  </p>
+                </div>
+                <span className="rounded-2xl bg-white/20 px-3 py-1.5 text-xs font-black uppercase tracking-wide text-white">
+                  PDF
+                </span>
+              </div>
+
+              <ul className="mt-4 space-y-2">
+                {(isDe
+                  ? [
+                      "Hauptantrag HA automatisch ausfüllen",
+                      "PDF herunterladen, ausdrucken & einreichen",
+                      "Geführter 5-Schritt-Assistent",
+                      "Unbegrenzte Nutzung",
+                    ]
+                  : [
+                      "Auto-fill the Hauptantrag HA form",
+                      "Download, print & submit the PDF",
+                      "Guided 5-step wizard",
+                      "Unlimited use",
+                    ]
+                ).map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-sm font-semibold text-white">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/25 text-xs">✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="bg-white/10 px-5 pb-5 pt-4">
+              <AntragCheckoutButton
+                isLoggedIn={isLoggedIn}
+                ctaLabel={isDe ? "Jetzt freischalten →" : "Get access →"}
+                loadingLabel={isDe ? "Weiterleitung…" : "Redirecting…"}
+                errorLabel={isDe ? "Fehler beim Checkout." : "Checkout error."}
+              />
+            </div>
+          </article>
+
+          <p className="mt-3 text-center text-sm text-slate-500">
+            {isDe
+              ? "Zahlung via Stripe · Jederzeit kündbar · DSGVO-konform"
+              : "Powered by Stripe · Cancel anytime · GDPR compliant"}
+          </p>
+        </div>
       </section>
       <FooterDisclaimer language={language} />
     </main>
