@@ -1,0 +1,66 @@
+import { type Language } from "@/lib/i18n";
+
+export type FaqItem = { q: string; a: string };
+
+export const faqData: Record<Language, FaqItem[]> = {
+  de: [
+    { q: "Was ist EinfachAmt?", a: "EinfachAmt ist ein privater Hilfsdienst, der dir dabei hilft, Briefe vom Jobcenter oder Bürgergeld-Bescheide in einfacher Sprache zu verstehen und zu beantworten. EinfachAmt ist kein offizieller Behördendienst." },
+    { q: "Wie funktioniert die Texterkennung?", a: "Du fotografierst deinen Brief oder lädst ein PDF hoch. EinfachAmt liest den Text automatisch (OCR) und erklärt dir den Inhalt — welche Frist wichtig ist, was du tun musst und wie du antworten kannst." },
+    { q: "Sind meine Dokumente sicher?", a: "Ja. Alle Dokumente werden verschlüsselt auf EU-Servern in Frankfurt gespeichert (Supabase). Kein Werbe-Tracking, keine Datenweitergabe an Dritte. Du kannst deine Daten jederzeit im Konto-Bereich löschen." },
+    { q: "Was kostet EinfachAmt?", a: "Der erste Brief ist kostenlos — kein Konto nötig. Das Plus-Abo kostet 9 €/Monat (50 Briefe, PDF-Upload, echte Texterkennung). Der Antragsservice für automatisches Ausfüllen des Bürgergeld-Formulars kostet 39,99 €/Monat." },
+    { q: "Was ist der Antragsservice?", a: "Für 39,99 €/Monat füllen wir das offizielle Bürgergeld-Formular (Hauptantrag HA) automatisch für dich aus. Du beantwortest ein paar Fragen — wir erstellen das fertige PDF zum Herunterladen, Ausdrucken und Einreichen." },
+    { q: "Was ist ein Widerspruch und wie hilft EinfachAmt?", a: "Ein Widerspruch ist ein formeller Einspruch gegen einen Behördenbescheid. Mit dem kostenlosen Widerspruchs-Generator erstellt EinfachAmt einen Briefentwurf, den du anpassen und einreichen kannst." },
+    { q: "Kann ich mein Abo jederzeit kündigen?", a: "Ja, jederzeit ohne Kündigungsfrist. Die Abrechnung läuft über Stripe. Du kannst kündigen über: Konto → Abonnement → Kündigen, oder direkt beim Stripe Kundenportal." },
+    { q: "Für welche Briefe funktioniert EinfachAmt?", a: "Hauptsächlich für Jobcenter- und Bürgergeld-Bescheide. EinfachAmt kann aber grundsätzlich jeden deutschen Behördenbrief lesen, erklären und bei der Antwort helfen." },
+  ],
+  en: [
+    { q: "What is EinfachAmt?", a: "EinfachAmt is a private assistance service that helps you understand letters from the Jobcenter or Bürgergeld office in plain language and draft a reply. EinfachAmt is not an official government service." },
+    { q: "How does the text recognition work?", a: "Take a photo of your letter or upload a PDF. EinfachAmt reads the text automatically (OCR) and explains the content — what deadline matters, what you need to do, and how to reply." },
+    { q: "Are my documents safe?", a: "Yes. All documents are encrypted and stored on EU servers in Frankfurt (Supabase). No ad tracking, no data sharing with third parties. You can delete your data at any time in the account section." },
+    { q: "How much does EinfachAmt cost?", a: "The first letter is free — no account needed. The Plus plan costs €9/month (50 letters, PDF upload, real text recognition). The Application Service for auto-filling the Bürgergeld form costs €39.99/month." },
+    { q: "What is the Application Service?", a: "For €39.99/month, we automatically fill in the official Bürgergeld application form (Hauptantrag HA). You answer a few questions — we generate the completed PDF to download, print, and submit." },
+    { q: "What is a Widerspruch and how does EinfachAmt help?", a: "A Widerspruch is a formal appeal against a government decision. With the free Widerspruch generator, EinfachAmt creates a letter draft that you can adapt and submit." },
+    { q: "Can I cancel my subscription anytime?", a: "Yes, at any time with no notice period. Billing is handled by Stripe. You can cancel via: Account → Subscription → Cancel, or directly through the Stripe customer portal." },
+    { q: "Which letters does EinfachAmt support?", a: "Mainly Jobcenter and Bürgergeld notices. But EinfachAmt can generally read, explain, and help with any German government letter." },
+  ],
+  uk: [
+    { q: "Що таке EinfachAmt?", a: "EinfachAmt — це приватний сервіс допомоги, який допомагає вам зрозуміти листи від Jobcenter або Bürgergeld простою мовою та підготувати відповідь. EinfachAmt не є офіційним державним сервісом." },
+    { q: "Як працює розпізнавання тексту?", a: "Сфотографуйте лист або завантажте PDF. EinfachAmt автоматично читає текст (OCR) та пояснює зміст — яка дата важлива, що потрібно зробити та як відповісти." },
+    { q: "Чи безпечні мої документи?", a: "Так. Усі документи зашифровані та зберігаються на серверах ЄС у Франкфурті (Supabase). Без реклами, без передачі даних третім особам. Ви можете видалити свої дані будь-коли." },
+    { q: "Скільки коштує EinfachAmt?", a: "Перший лист безкоштовний — без реєстрації. Підписка Plus коштує 9 €/міс (50 листів, PDF, OCR). Сервіс заповнення форм Bürgergeld коштує 39,99 €/міс." },
+    { q: "Що таке Antragsservice?", a: "За 39,99 €/міс ми автоматично заповнюємо офіційну форму Bürgergeld (Hauptantrag HA). Ви відповідаєте на кілька запитань — ми створюємо готовий PDF для завантаження та подачі." },
+    { q: "Що таке Widerspruch і як допомагає EinfachAmt?", a: "Widerspruch — це формальна апеляція проти рішення органу влади. За допомогою безкоштовного генератора EinfachAmt створює проект листа, який ви можете адаптувати та подати." },
+    { q: "Чи можу я скасувати підписку будь-коли?", a: "Так, будь-коли без попередження. Оплата через Stripe. Скасувати можна в розділі Акаунт → Підписка, або через Stripe." },
+    { q: "Для яких листів підходить EinfachAmt?", a: "Головним чином для листів Jobcenter та Bürgergeld. Але EinfachAmt може читати та пояснювати будь-який офіційний лист від німецьких органів влади." },
+  ],
+  ru: [
+    { q: "Что такое EinfachAmt?", a: "EinfachAmt — частный сервис помощи, который помогает понять письма от Jobcenter или Bürgergeld простым языком и подготовить ответ. EinfachAmt не является официальным государственным сервисом." },
+    { q: "Как работает распознавание текста?", a: "Сфотографируйте письмо или загрузите PDF. EinfachAmt автоматически читает текст (OCR) и объясняет содержание — какой срок важен, что нужно сделать и как ответить." },
+    { q: "Безопасны ли мои документы?", a: "Да. Все документы зашифрованы и хранятся на серверах ЕС во Франкфурте (Supabase). Без рекламы, без передачи данных третьим лицам. Вы можете удалить данные в любое время." },
+    { q: "Сколько стоит EinfachAmt?", a: "Первое письмо бесплатно — без регистрации. Подписка Plus стоит 9 €/мес (50 писем, PDF, OCR). Сервис заполнения форм Bürgergeld стоит 39,99 €/мес." },
+    { q: "Что такое Antragsservice?", a: "За 39,99 €/мес мы автоматически заполняем официальную форму Bürgergeld (Hauptantrag HA). Вы отвечаете на несколько вопросов — мы создаём готовый PDF для скачивания и подачи." },
+    { q: "Что такое Widerspruch и как помогает EinfachAmt?", a: "Widerspruch — официальная апелляция против решения органа власти. С помощью бесплатного генератора EinfachAmt создаёт черновик письма, который вы можете адаптировать и подать." },
+    { q: "Могу ли я отменить подписку в любое время?", a: "Да, в любое время без предупреждения. Оплата через Stripe. Отменить можно в разделе Аккаунт → Подписка, или напрямую через Stripe." },
+    { q: "Для каких писем подходит EinfachAmt?", a: "В основном для писем Jobcenter и Bürgergeld. Но EinfachAmt может читать и объяснять любое официальное письмо от немецких органов власти." },
+  ],
+  ar: [
+    { q: "ما هو EinfachAmt؟", a: "EinfachAmt خدمة مساعدة خاصة تساعدك على فهم خطابات Jobcenter أو Bürgergeld بلغة بسيطة وإعداد رد. EinfachAmt ليست خدمة حكومية رسمية." },
+    { q: "كيف يعمل التعرف على النصوص؟", a: "التقط صورة لخطابك أو ارفع ملف PDF. يقرأ EinfachAmt النص تلقائياً (OCR) ويشرح المحتوى — أي موعد مهم، وما يجب فعله، وكيفية الرد." },
+    { q: "هل وثائقي آمنة؟", a: "نعم. جميع الوثائق مشفرة ومخزنة على خوادم الاتحاد الأوروبي في فرانكفورت (Supabase). لا إعلانات، لا مشاركة بيانات مع أطراف ثالثة. يمكنك حذف بياناتك في أي وقت." },
+    { q: "كم تكلف EinfachAmt؟", a: "الخطاب الأول مجاني — دون حساب. اشتراك Plus بـ 9 €/شهر (50 خطاباً، PDF، OCR). خدمة ملء نموذج Bürgergeld بـ 39,99 €/شهر." },
+    { q: "ما هي خدمة التقديم؟", a: "مقابل 39,99 €/شهر، نملأ نموذج Bürgergeld الرسمي (Hauptantrag HA) تلقائياً. تجيب على بعض الأسئلة — ننشئ PDF جاهزاً للتحميل والتقديم." },
+    { q: "ما هو Widerspruch وكيف تساعد EinfachAmt؟", a: "Widerspruch هو اعتراض رسمي ضد قرار جهة حكومية. مع المولّد المجاني، تنشئ EinfachAmt مسودة خطاب يمكنك تكييفها وتقديمها." },
+    { q: "هل يمكنني إلغاء الاشتراك في أي وقت؟", a: "نعم، في أي وقت دون إشعار مسبق. الفوترة عبر Stripe. يمكن الإلغاء من: الحساب ← الاشتراك، أو مباشرة عبر Stripe." },
+    { q: "ما الخطابات التي يدعمها EinfachAmt؟", a: "بشكل رئيسي خطابات Jobcenter وBürgergeld. لكن EinfachAmt يمكنه بشكل عام قراءة وشرح أي خطاب رسمي من الجهات الحكومية الألمانية." },
+  ],
+  tr: [
+    { q: "EinfachAmt nedir?", a: "EinfachAmt, Jobcenter veya Bürgergeld mektuplarını sade bir dille anlamanıza ve yanıt hazırlamanıza yardımcı olan özel bir hizmettir. EinfachAmt resmi bir devlet hizmeti değildir." },
+    { q: "Metin tanıma nasıl çalışır?", a: "Mektubunuzun fotoğrafını çekin veya PDF yükleyin. EinfachAmt metni otomatik olarak okur (OCR) ve içeriği açıklar — hangi son tarih önemli, ne yapmanız gerekiyor ve nasıl yanıt vereceğiniz." },
+    { q: "Belgelerim güvende mi?", a: "Evet. Tüm belgeler şifrelenmiş olarak Frankfurt'taki AB sunucularında saklanır (Supabase). Reklam takibi yok, üçüncü taraflarla veri paylaşımı yok. Verilerinizi istediğiniz zaman silebilirsiniz." },
+    { q: "EinfachAmt'ın fiyatı nedir?", a: "İlk mektup ücretsiz — hesap gerekmez. Plus aboneliği 9 €/ay (50 mektup, PDF, OCR). Bürgergeld formu doldurma hizmeti 39,99 €/ay." },
+    { q: "Başvuru Hizmeti nedir?", a: "Ayda 39,99 € karşılığında resmi Bürgergeld formunu (Hauptantrag HA) otomatik olarak dolduruyoruz. Birkaç soruyu yanıtlıyorsunuz — indirip teslim edebileceğiniz tamamlanmış PDF'i oluşturuyoruz." },
+    { q: "Widerspruch nedir ve EinfachAmt nasıl yardımcı olur?", a: "Widerspruch, resmi bir karara karşı yapılan resmi bir itirazdır. Ücretsiz itiraz oluşturucuyla EinfachAmt, uyarlayıp teslim edebileceğiniz bir mektup taslağı oluşturur." },
+    { q: "Aboneliğimi istediğim zaman iptal edebilir miyim?", a: "Evet, önceden bildirim gerekmeksizin istediğiniz zaman. Faturalama Stripe üzerinden yapılır. Hesap → Abonelik bölümünden veya doğrudan Stripe üzerinden iptal edebilirsiniz." },
+    { q: "EinfachAmt hangi mektupları destekler?", a: "Ağırlıklı olarak Jobcenter ve Bürgergeld bildirimleri. Ancak EinfachAmt genel olarak herhangi bir Alman resmi mektubunu okuyabilir, açıklayabilir ve yanıt vermenize yardımcı olabilir." },
+  ],
+};
