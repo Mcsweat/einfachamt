@@ -7,9 +7,11 @@ import { FooterDisclaimer } from "@/components/FooterDisclaimer";
 import { MobileHeader } from "@/components/MobileHeader";
 import { TodoChecklist } from "@/components/TodoChecklist";
 import { TrustSignalList } from "@/components/TrustSignalList";
+import { UpsellBanner } from "@/components/UpsellBanner";
 import { getAnalysisForDocument } from "@/lib/document-data";
 import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
+import { getSafeUser } from "@/lib/supabase/safe-auth";
 
 type AnalysisPageProps = {
   params: Promise<{
@@ -21,7 +23,12 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
   const { id } = await params;
   const language = await getLanguage();
   const t = copy[language];
-  const analysis = await getAnalysisForDocument(id);
+  const [analysis, user] = await Promise.all([
+    getAnalysisForDocument(id),
+    getSafeUser(),
+  ]);
+  // Show upsell to anonymous users and users without a confirmed email
+  const showUpsell = !user || user.is_anonymous || !user.email;
 
   return (
     <main className="min-h-svh bg-trust-50">
@@ -106,6 +113,15 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
           </section>
 
           <TrustSignalList compact language={language} />
+
+          {showUpsell && (
+            <UpsellBanner
+              title={t.upsellTitle}
+              text={t.upsellText}
+              cta={t.upsellCta}
+              documentId={id}
+            />
+          )}
         </div>
       </section>
       <FooterDisclaimer language={language} />
