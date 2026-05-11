@@ -7,17 +7,17 @@ export const copy = {
     chooseSubtitle: "Du kannst die Sprache später jederzeit oben ändern.",
     german: "Deutsch",
     english: "English",
-    heroEyebrow: "Hilfe für Jobcenter und Bürgergeld",
+    heroEyebrow: "Kostenlos testen — kein Konto nötig",
     heroTitle: "Verstehe Behördenbriefe in 30 Sekunden.",
     heroSubtitle:
-      "Lade deinen Brief hoch. EinfachAmt erklärt dir verständlich, was das Amt von dir möchte, welche Fristen wichtig sind und wie du antworten kannst.",
+      "Brief vom Jobcenter bekommen und weißt nicht, was du tun sollst? EinfachAmt liest deinen Brief, erklärt alles in einfacher Sprache und schreibt dir einen Antwortentwurf.",
     uploadCta: "Brief hochladen",
     exampleCta: "Beispiel ansehen",
     howItWorks: "So funktioniert es",
     steps: [
-      ["Brief hochladen", "Foto oder PDF auswählen."],
-      ["Erklärung erhalten", "EinfachAmt zeigt dir die wichtigsten Punkte."],
-      ["Antwort vorbereiten", "Du bekommst einen höflichen Entwurf."],
+      ["Brief fotografieren", "Mach ein klares Foto oder wähle eine PDF-Datei — kein Scannen nötig."],
+      ["Erklärung bekommen", "EinfachAmt zeigt dir, was der Brief bedeutet, welche Frist wichtig ist und was du tun musst — in einfacher Sprache."],
+      ["Antwort abschicken", "Du bekommst einen höflichen Entwurf, den du einfach kopieren und abschicken kannst."],
     ],
     helpsTitle: "Wobei EinfachAmt hilft",
     helpAreas: [
@@ -26,18 +26,18 @@ export const copy = {
       "To-dos sortieren",
       "Antwortentwürfe erstellen",
     ],
-    trustTitle: "Vertrauen",
+    trustTitle: "Deine Daten sind sicher",
     trustText:
       "EinfachAmt ist ein privater Dienst. Wir erklären klar, was mit deinem Brief passiert.",
     trustItems: [
-      "Privater Dienst",
-      "Keine Rechtsberatung",
-      "DSGVO-orientiert",
-      "Daten geschützt",
+      "EU-Server in Frankfurt",
+      "Kein Werbe-Tracking",
+      "DSGVO-konform",
+      "Daten jederzeit löschbar",
     ],
     pricingTitle: "Einmal kostenlos testen",
     pricingText:
-      "Ein Brief als Probe – kostenlos, kein Konto nötig. Für weitere Briefe und PDFs gibt es eine einfache Mitgliedschaft.",
+      "Ein Brief kostenlos testen — ohne Konto, ohne Kreditkarte. Für weitere Briefe und PDFs gibt es eine günstige Mitgliedschaft.",
     pricingLink: "Mitgliedschaft ansehen",
     uploadTitle: "Lade deinen Brief hoch",
     uploadIntro:
@@ -247,23 +247,31 @@ export const copy = {
     ],
     securityTitle: "Sicherheit",
     securityIntro:
-      "Kurz und klar: Du sollst verstehen, was mit deinen Daten passiert.",
+      "Klar und konkret: Hier erfährst du, wie deine Daten geschützt werden.",
     securityCards: [
       [
-        "Wo werden meine Daten gespeichert?",
-        "Uploads und Analysen werden in Supabase gespeichert. Für den Betrieb nutzen wir Anbieter, die moderne Sicherheitsstandards unterstützen.",
+        "EU-Server in Frankfurt",
+        "Deine Briefe werden in Supabase auf einem Server in Frankfurt (EU) gespeichert. Kein unkontrollierter Datentransfer in die USA.",
       ],
       [
-        "Wer kann meine Briefe sehen?",
-        "Deine Briefe sind deinem Konto zugeordnet. Wir bauen die App so, dass nur dein Konto Zugriff auf deine gespeicherten Uploads hat.",
+        "Nur du siehst deine Briefe",
+        "Jeder Brief ist ausschließlich deinem Konto zugeordnet. Row Level Security stellt sicher, dass kein anderer Nutzer deine Daten sehen kann.",
       ],
       [
-        "Kann ich alles löschen?",
-        "Ja. Im Bereich Meine Briefe kannst du einzelne Uploads löschen. Weitere Löschoptionen bauen wir aus.",
+        "Kein Werbe-Tracking",
+        "Keine Werbe-Cookies, kein Facebook Pixel, keine Google Analytics. Deshalb brauchst du auch keinen Cookie-Banner wegklicken.",
       ],
       [
-        "Wichtig",
-        "EinfachAmt ist kein offizieller Behördendienst und bietet keine Rechtsberatung.",
+        "Verschlüsselte Verbindung",
+        "Alle Verbindungen sind TLS-verschlüsselt (HTTPS). Deine Daten werden niemals unverschlüsselt übertragen.",
+      ],
+      [
+        "Daten jederzeit löschen",
+        "Du kannst jeden hochgeladenen Brief in deinem Konto unter 'Meine Briefe' löschen. Für die komplette Kontolöschung schreib uns kurz.",
+      ],
+      [
+        "DSGVO-konform",
+        "Mit allen eingesetzten Dienstleistern bestehen Auftragsverarbeitungsverträge nach Art. 28 DSGVO. Deine Rechte (Auskunft, Löschung, Übertragbarkeit) gelten vollständig.",
       ],
     ],
   },
@@ -273,17 +281,17 @@ export const copy = {
     chooseSubtitle: "You can change the language at the top later.",
     german: "Deutsch",
     english: "English",
-    heroEyebrow: "Help for Jobcenter and Bürgergeld letters",
+    heroEyebrow: "Try for free — no account needed",
     heroTitle: "Understand official letters in 30 seconds.",
     heroSubtitle:
-      "Upload your letter. EinfachAmt explains in simple words what the office wants from you, which deadlines matter, and how you can reply.",
+      "Got a letter from the Jobcenter and don't know what to do? EinfachAmt reads your letter, explains everything in plain language, and writes a reply draft for you.",
     uploadCta: "Upload letter",
     exampleCta: "View example",
     howItWorks: "How it works",
     steps: [
-      ["Upload letter", "Choose a photo or PDF."],
-      ["Get explanation", "EinfachAmt shows the most important points."],
-      ["Prepare reply", "You get a polite draft you can edit."],
+      ["Photograph the letter", "Take a clear photo or choose a PDF — no scanning needed."],
+      ["Get the explanation", "EinfachAmt shows you what the letter means, which deadline matters, and what you need to do — in plain language."],
+      ["Send the reply", "You get a polite draft you can simply copy and send."],
     ],
     helpsTitle: "What EinfachAmt helps with",
     helpAreas: [
@@ -292,18 +300,18 @@ export const copy = {
       "Sort to-dos",
       "Create reply drafts",
     ],
-    trustTitle: "Trust",
+    trustTitle: "Your data is safe",
     trustText:
       "EinfachAmt is a private service. We explain clearly what happens with your letter.",
     trustItems: [
-      "Private service",
-      "No legal advice",
-      "GDPR-oriented",
-      "Data protected",
+      "EU servers in Frankfurt",
+      "No ad tracking",
+      "GDPR compliant",
+      "Delete your data anytime",
     ],
     pricingTitle: "Try once for free",
     pricingText:
-      "One letter as a trial – free, no account needed. For more letters and PDFs there is a simple membership.",
+      "One letter free — no account, no credit card. For more letters and PDFs there is an affordable membership.",
     pricingLink: "View membership",
     uploadTitle: "Upload your letter",
     uploadIntro:
@@ -509,23 +517,31 @@ export const copy = {
     ],
     securityTitle: "Security",
     securityIntro:
-      "Short and clear: you should understand what happens with your data.",
+      "Clear and specific: here you can find out how your data is protected.",
     securityCards: [
       [
-        "Where is my data stored?",
-        "Uploads and analyses are stored in Supabase. For operations we use providers that support modern security standards.",
+        "EU servers in Frankfurt",
+        "Your letters are stored in Supabase on a server in Frankfurt (EU). No uncontrolled data transfer to the US.",
       ],
       [
-        "Who can see my letters?",
-        "Your letters are linked to your account. We build the app so only your account can access your saved uploads.",
+        "Only you can see your letters",
+        "Every letter is linked exclusively to your account. Row Level Security ensures no other user can access your data.",
       ],
       [
-        "Can I delete everything?",
-        "Yes. In My letters you can delete individual uploads. More deletion options will be added.",
+        "No ad tracking",
+        "No advertising cookies, no Facebook Pixel, no Google Analytics. That's why you don't need to click away a cookie banner.",
       ],
       [
-        "Important",
-        "EinfachAmt is not an official government service and does not provide legal advice.",
+        "Encrypted connection",
+        "All connections are TLS-encrypted (HTTPS). Your data is never transmitted unencrypted.",
+      ],
+      [
+        "Delete your data anytime",
+        "You can delete every uploaded letter in your account under 'My letters'. For full account deletion, just send us a short message.",
+      ],
+      [
+        "GDPR compliant",
+        "We have data processing agreements under Art. 28 GDPR with all service providers. Your rights (access, deletion, portability) apply in full.",
       ],
     ],
   },
