@@ -188,7 +188,7 @@ export default async function LandingPage() {
               </span>
             </div>
             <p className="mt-0.5 text-sm leading-5 text-white/80">
-              {language === "de" ? "Formular automatisch ausfüllen · PDF herunterladen" : language === "ar" ? "ملء النموذج تلقائياً · تنزيل PDF" : language === "tr" ? "Formu otomatik doldur · PDF indir" : language === "uk" ? "Автозаповнення · PDF завантажити" : language === "ru" ? "Автозаполнение · Скачать PDF" : "Auto-fill form · Download PDF"}
+              {language === "de" ? "Formular automatisch ausfüllen" : language === "ar" ? "ملء النموذج تلقائياً" : language === "tr" ? "Formu otomatik doldur" : language === "uk" ? "Автозаповнення форми" : language === "ru" ? "Автозаполнение формы" : "Auto-fill the form"}
             </p>
           </div>
           <span className="shrink-0 text-xl font-semibold text-white/60">›</span>
