@@ -12,6 +12,28 @@ type AntragPageProps = {
   searchParams?: Promise<{ checkout?: string }>;
 };
 
+export async function generateMetadata() {
+  const language = await getLanguage();
+  const isDe = language === "de";
+  const title = isDe
+    ? "Bürgergeld-Antrag ausfüllen | EinfachAmt"
+    : "Fill Bürgergeld application | EinfachAmt";
+  const description = isDe
+    ? "Bürgergeld-Antrag (HA + Anlage EK) automatisch ausfüllen — als PDF herunterladen. 39,99 €/Monat."
+    : "Auto-fill the Bürgergeld application (HA + Annex EK) and download as PDF. €39.99/month.";
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: "https://einfachamt.com/antrag",
+      siteName: "EinfachAmt",
+      locale: isDe ? "de_DE" : "en_GB",
+    },
+  };
+}
+
 export default async function AntragPage({ searchParams }: AntragPageProps) {
   const params = await searchParams;
   const language = await getLanguage();

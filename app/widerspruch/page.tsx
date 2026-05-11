@@ -5,6 +5,28 @@ import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
 import { WiderspruchWizard } from "./WiderspruchWizard";
 
+export async function generateMetadata() {
+  const language = await getLanguage();
+  const isDe = language === "de";
+  const title = isDe
+    ? "Widerspruch einlegen — kostenlos | EinfachAmt"
+    : "File an appeal — free | EinfachAmt";
+  const description = isDe
+    ? "Kostenlosen Widerspruchsbrief gegen Jobcenter- oder Bürgergeld-Bescheide in 3 Schritten erstellen."
+    : "Create a free appeal letter against Jobcenter or Bürgergeld decisions in 3 steps.";
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: "https://einfachamt.com/widerspruch",
+      siteName: "EinfachAmt",
+      locale: isDe ? "de_DE" : "en_GB",
+    },
+  };
+}
+
 export default async function WiderspruchPage() {
   const language = await getLanguage();
   const t = copy[language];

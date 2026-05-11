@@ -29,6 +29,22 @@ function Placeholder({ label }: { label: string }) {
   );
 }
 
+export async function generateMetadata() {
+  const title = "Impressum | EinfachAmt";
+  const description = "Impressum und Anbieterkennzeichnung gemäß § 5 TMG.";
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: "https://einfachamt.com/impressum",
+      siteName: "EinfachAmt",
+      locale: "de_DE",
+    },
+  };
+}
+
 export default async function ImpressumPage() {
   const language = await getLanguage();
   const t = copy[language];

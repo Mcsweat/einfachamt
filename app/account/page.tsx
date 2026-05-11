@@ -9,6 +9,7 @@ import { getCurrentUserSubscription } from "@/lib/subscription";
 import { getSavedDocuments } from "@/lib/saved-documents";
 import { getCurrentUserAntragSubscription } from "@/lib/subscription";
 import { SignOutButton } from "./AccountActions";
+import { ManageSubscriptionButton } from "@/components/ManageSubscriptionButton";
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -113,9 +114,15 @@ export default async function AccountPage() {
                 icon="⭐"
                 label={t.subscription}
                 value={subscription.isPaid ? t.plusActive : "Free"}
-                href="/pricing"
-                last
+                href={subscription.isPaid ? undefined : "/pricing"}
+                last={!subscription.isPaid}
               />
+              {subscription.isPaid && (
+                <ManageSubscriptionButton
+                  label={language === "de" ? "Abo verwalten / kündigen" : "Manage / cancel subscription"}
+                  loadingLabel={language === "de" ? "Weiterleitung…" : "Redirecting…"}
+                />
+              )}
             </div>
 
             {/* Tools / Dienste section */}

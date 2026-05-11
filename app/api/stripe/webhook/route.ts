@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getStripe } from "@/lib/stripe";
+import { sendSubscriptionConfirmationEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
 
@@ -84,6 +85,20 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     status: subscription.status,
     productType,
   });
+
+  // Send confirmation email (fire-and-forget — never block the webhook)
+  if (subscription.status === "active" || subscription.status === "trialing") {
+    const supabase = createAdminClient();
+    const { data: userData } = await supabase.auth.admin.getUserById(userId);
+    const email = userData?.user?.email;
+    if (email) {
+      sendSubscriptionConfirmationEmail({
+        to: email,
+        language: "de",
+        plan: productType,
+      }).catch(() => {}); // ignore email errors
+    }
+  }
 }
 
 async function handleSubscriptionChange(subscription: Stripe.Subscription) {

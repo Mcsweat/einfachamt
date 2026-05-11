@@ -73,6 +73,28 @@ function Cell({ value }: { value: boolean | string }) {
   );
 }
 
+export async function generateMetadata() {
+  const language = await getLanguage();
+  const isDe = language === "de";
+  const title = isDe
+    ? "Preise & Pläne | EinfachAmt"
+    : "Pricing & Plans | EinfachAmt";
+  const description = isDe
+    ? "Kostenlos testen, Plus ab 9 €/Monat, Antragsservice ab 39,99 €/Monat. Jederzeit kündbar."
+    : "Free trial, Plus from €9/month, Application Service from €39.99/month. Cancel anytime.";
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: "https://einfachamt.com/pricing",
+      siteName: "EinfachAmt",
+      locale: isDe ? "de_DE" : "en_GB",
+    },
+  };
+}
+
 export default async function PricingPage({ searchParams }: PricingPageProps) {
   const params = await searchParams;
   const checkout = params?.checkout;

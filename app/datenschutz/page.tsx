@@ -30,6 +30,23 @@ function Placeholder({ label }: { label: string }) {
   );
 }
 
+export async function generateMetadata() {
+  const title = "Datenschutz | EinfachAmt";
+  const description =
+    "Datenschutzerklärung von EinfachAmt. Alle Daten auf EU-Servern, DSGVO-konform, kein Werbe-Tracking.";
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: "https://einfachamt.com/datenschutz",
+      siteName: "EinfachAmt",
+      locale: "de_DE",
+    },
+  };
+}
+
 export default async function DatenschutzPage() {
   const language = await getLanguage();
   const t = copy[language];

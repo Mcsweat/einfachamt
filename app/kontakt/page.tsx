@@ -5,6 +5,28 @@ import { getLanguage } from "@/lib/i18n-server";
 
 const CONTACT_EMAIL = "Einfachamt@gmail.com";
 
+export async function generateMetadata() {
+  const language = await getLanguage();
+  const isDe = language === "de";
+  const title = isDe
+    ? "Kontakt | EinfachAmt"
+    : "Contact | EinfachAmt";
+  const description = isDe
+    ? "Fragen oder Probleme? Schreib uns — wir antworten so schnell wie möglich."
+    : "Questions or problems? Send us an email — we'll reply as soon as possible.";
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: "https://einfachamt.com/kontakt",
+      siteName: "EinfachAmt",
+      locale: isDe ? "de_DE" : "en_GB",
+    },
+  };
+}
+
 export default async function KontaktPage() {
   const language = await getLanguage();
   const t = copy[language];

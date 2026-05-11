@@ -91,6 +91,28 @@ function TrustRow({ language }: { language: Language }) {
   );
 }
 
+export async function generateMetadata() {
+  const language = await getLanguage();
+  const isDe = language === "de";
+  const title = isDe
+    ? "Jobcenter-Briefe verstehen | EinfachAmt"
+    : "Understand Jobcenter letters | EinfachAmt";
+  const description = isDe
+    ? "Behördenbriefe in 30 Sekunden verstehen. EinfachAmt erklärt Jobcenter- und Bürgergeld-Bescheide in einfacher Sprache — kostenlos testen."
+    : "Understand government letters in 30 seconds. EinfachAmt explains Jobcenter and Bürgergeld notices in plain language — free to try.";
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: "https://einfachamt.com",
+      siteName: "EinfachAmt",
+      locale: isDe ? "de_DE" : "en_GB",
+    },
+  };
+}
+
 export default async function LandingPage() {
   const language = await getLanguage();
   const t = copy[language];

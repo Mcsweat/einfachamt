@@ -4,6 +4,28 @@ import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
 import { faqData } from "@/lib/faqData";
 
+export async function generateMetadata() {
+  const language = await getLanguage();
+  const isDe = language === "de";
+  const title = isDe
+    ? "Häufige Fragen | EinfachAmt"
+    : "FAQ | EinfachAmt";
+  const description = isDe
+    ? "Antworten auf die häufigsten Fragen zu EinfachAmt, Datenschutz, Kosten und Bürgergeld."
+    : "Answers to the most common questions about EinfachAmt, privacy, pricing and Bürgergeld.";
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: "https://einfachamt.com/faq",
+      siteName: "EinfachAmt",
+      locale: isDe ? "de_DE" : "en_GB",
+    },
+  };
+}
+
 export default async function FaqPage() {
   const language = await getLanguage();
   const t = copy[language];
