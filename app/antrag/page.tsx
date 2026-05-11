@@ -5,9 +5,8 @@ import { copy } from "@/lib/i18n";
 import { getLanguage } from "@/lib/i18n-server";
 import { getCurrentUserAntragSubscription } from "@/lib/subscription";
 import { getSafeUser } from "@/lib/supabase/safe-auth";
-import { AntragWizard } from "./AntragWizard";
+import { BuergergeldWizard } from "./BuergergeldWizard";
 import { AntragCheckoutButton } from "./AntragCheckoutButton";
-import { AnlageEKWizard } from "./AnlageEKWizard";
 
 type AntragPageProps = {
   searchParams?: Promise<{ checkout?: string }>;
@@ -65,27 +64,8 @@ export default async function AntragPage({ searchParams }: AntragPageProps) {
         <p className="mt-3 text-lg leading-7 text-slate-700">{ta.intro}</p>
 
         {hasAccess ? (
-          <div className="mt-7 space-y-10">
-            {/* Main form — Hauptantrag HA */}
-            <section>
-              <div className="mb-4 flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-trust-500 text-sm font-black text-white">1</span>
-                <h2 className="text-xl font-bold text-ink">{isDe ? "Hauptantrag (HA)" : "Main application (HA)"}</h2>
-              </div>
-              <AntragWizard language={language} />
-            </section>
-
-            {/* Anlage EK */}
-            <section>
-              <div className="mb-1 flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-400 text-sm font-black text-white">2</span>
-                <h2 className="text-xl font-bold text-ink">{isDe ? "Anlage EK — Einkommen" : "Annex EK — Income"}</h2>
-              </div>
-              <p className="mb-4 text-sm leading-6 text-slate-500 pl-10">
-                {isDe ? "Notwendig, wenn Sie Einkommen haben (Arbeit, Rente, Unterhalt, etc.)." : "Required if you have income (employment, pension, maintenance, etc.)."}
-              </p>
-              <AnlageEKWizard language={language} />
-            </section>
+          <div className="mt-7">
+            <BuergergeldWizard language={language} />
           </div>
         ) : (
           <div className="mt-7 space-y-4">
