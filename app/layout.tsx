@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { LanguageGate } from "@/components/LanguageGate";
+import { getLanguage } from "@/lib/i18n-server";
+import { languageMeta } from "@/lib/i18n";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -28,13 +30,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const language = await getLanguage();
+  const { dir } = languageMeta[language];
+
   return (
-    <html lang="de">
+    <html lang={language} dir={dir}>
       <body>
         {children}
         <LanguageGate />
