@@ -2,17 +2,29 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import type { Language } from "@/lib/i18n";
 
 type UpsellBannerProps = {
   title: string;
   text: string;
   cta: string;
   documentId: string;
+  language?: Language;
 };
 
-export function UpsellBanner({ title, text, cta, documentId }: UpsellBannerProps) {
+export function UpsellBanner({
+  title,
+  text,
+  cta,
+  documentId,
+  language = "de",
+}: UpsellBannerProps) {
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
+  const isDe = language === "de";
+  const features = isDe
+    ? ["50 Briefe/Monat", "PDF-Upload", "OCR", "Gespeichert"]
+    : ["50 letters/month", "PDF upload", "OCR", "Saved"];
 
   useEffect(() => {
     // Only show once per document — don't nag if they already dismissed this one
@@ -50,10 +62,10 @@ export function UpsellBanner({ title, text, cta, documentId }: UpsellBannerProps
       <button
         type="button"
         onClick={dismiss}
-        aria-label="Schließen"
+        aria-label={isDe ? "Schließen" : "Close"}
         className="absolute right-4 top-4 flex h-7 w-7 items-center justify-center rounded-full bg-white/20 text-xs font-bold text-white/80 transition active:scale-95"
       >
-        ✕
+        x
       </button>
 
       {/* Eyebrow */}
@@ -69,7 +81,7 @@ export function UpsellBanner({ title, text, cta, documentId }: UpsellBannerProps
 
       {/* Feature pills */}
       <div className="mt-3 flex flex-wrap gap-1.5">
-        {["50 Briefe/Monat", "PDF-Upload", "OCR", "Gespeichert"].map((f) => (
+        {features.map((f) => (
           <span
             key={f}
             className="rounded-full bg-white/20 px-2.5 py-1 text-xs font-bold text-white"

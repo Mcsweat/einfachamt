@@ -57,6 +57,20 @@ export default async function UploadPage() {
             serverTrialUsed={!subscription.isPaid && isLoggedIn && monthlyCount >= FREE_LIMIT}
           />
         </div>
+        {!subscription.isPaid ? (
+          <div className="mt-5 rounded-[1.4rem] border border-amber-200 bg-amber-50 p-5 shadow-sm">
+            <h2 className="text-xl font-bold text-amber-950">
+              {language === "de"
+                ? "Mehrere Seiten oder PDF?"
+                : "Multiple pages or PDF?"}
+            </h2>
+            <p className="mt-2 text-base leading-7 text-amber-900">
+              {language === "de"
+                ? "Der kostenlose Test ist für ein gut lesbares Foto. Mit Plus kannst du PDFs und mehrseitige Briefe hochladen."
+                : "The free trial is for one readable photo. With Plus you can upload PDFs and multi-page letters."}
+            </p>
+          </div>
+        ) : null}
         <div className="mt-5 rounded-[1.4rem] bg-white/95 p-5 shadow-sm">
           <h2 className="text-xl font-bold text-ink">{t.safeUploadTitle}</h2>
           <p className="mt-2 text-base leading-7 text-slate-700">

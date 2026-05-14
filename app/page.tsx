@@ -92,6 +92,61 @@ function TrustRow({ language }: { language: Language }) {
   );
 }
 
+function SalesProof({ language }: { language: Language }) {
+  const isDe = language === "de";
+  const quotes = isDe
+    ? [
+        "Ich wusste endlich, was das Amt von mir will.",
+        "Die Frist war sofort sichtbar. Das hat mich beruhigt.",
+        "Der Antwortentwurf war genau der Start, den ich gebraucht habe.",
+      ]
+    : [
+        "I finally understood what the office wanted from me.",
+        "The deadline was visible right away. That calmed me down.",
+        "The reply draft gave me exactly the start I needed.",
+      ];
+
+  return (
+    <section className="mt-5 rounded-[1.65rem] bg-white/95 p-5 shadow-sm">
+      <p className="text-sm font-black uppercase tracking-wide text-trust-500">
+        {isDe ? "Von Nutzern getestet" : "Tested by users"}
+      </p>
+      <h2 className="mt-1 text-2xl font-bold text-ink">
+        {isDe ? "Sofort ruhiger werden" : "Feel calmer fast"}
+      </h2>
+      <div className="mt-4 space-y-3">
+        {quotes.map((quote) => (
+          <blockquote
+            key={quote}
+            className="rounded-[1.25rem] bg-slate-50 px-4 py-3 text-base font-semibold leading-7 text-slate-700"
+          >
+            "{quote}"
+          </blockquote>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function DeadlineReminder({ language }: { language: Language }) {
+  const isDe = language === "de";
+  return (
+    <section className="mt-5 rounded-[1.65rem] border border-amber-200 bg-amber-50 p-5 shadow-sm">
+      <p className="text-sm font-black uppercase tracking-wide text-amber-700">
+        {isDe ? "Wichtig bei Behördenpost" : "Important for official letters"}
+      </p>
+      <h2 className="mt-1 text-2xl font-bold text-amber-950">
+        {isDe ? "Viele Briefe haben Fristen." : "Many letters have deadlines."}
+      </h2>
+      <p className="mt-2 text-base leading-7 text-amber-900">
+        {isDe
+          ? "EinfachAmt zeigt dir zuerst, ob du wahrscheinlich antworten musst und was der nächste einfache Schritt ist."
+          : "EinfachAmt first shows whether you probably need to reply and what the next simple step is."}
+      </p>
+    </section>
+  );
+}
+
 export async function generateMetadata() {
   const language = await getLanguage();
   const isDe = language === "de";
@@ -267,6 +322,10 @@ export default async function LandingPage() {
             {language === "de" ? "Mehr zur Sicherheit →" : "More about security →"}
           </Link>
         </section>
+
+        <DeadlineReminder language={language} />
+
+        <SalesProof language={language} />
 
         {/* Tools */}
         <section className="mt-5 space-y-3">

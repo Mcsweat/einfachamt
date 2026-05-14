@@ -74,6 +74,57 @@ function Cell({ value }: { value: boolean | string }) {
   );
 }
 
+function WhyPlus({ isDe }: { isDe: boolean }) {
+  const reasons = isDe
+    ? [
+        "dein Brief mehrere Seiten hat",
+        "du PDFs statt Fotos hochladen möchtest",
+        "du öfter Post vom Amt bekommst",
+        "du deine Briefe auf mehreren Geräten wiederfinden möchtest",
+        "du Antwortentwürfe und Analysen gespeichert haben willst",
+      ]
+    : [
+        "your letter has several pages",
+        "you want to upload PDFs instead of photos",
+        "you often receive official letters",
+        "you want to find your letters again on different devices",
+        "you want reply drafts and analyses saved",
+      ];
+
+  return (
+    <section className="mt-4 rounded-[1.55rem] bg-white/95 p-5 shadow-sm">
+      <p className="text-sm font-black uppercase tracking-wide text-trust-500">
+        {isDe ? "Wann lohnt sich Plus?" : "When is Plus worth it?"}
+      </p>
+      <h2 className="mt-1 text-2xl font-bold leading-tight text-ink">
+        {isDe ? "Plus ist für mehr als einen schnellen Test." : "Plus is for more than one quick test."}
+      </h2>
+      <p className="mt-2 text-base leading-7 text-slate-700">
+        {isDe
+          ? "Der kostenlose Test ist ideal für ein einzelnes Foto. Wenn es mehrere Seiten sind, ist die Mitgliedschaft der einfachere Weg."
+          : "The free trial is ideal for one photo. If there are multiple pages, membership is the easier path."}
+      </p>
+      <div className="mt-4 divide-y divide-slate-100">
+        {reasons.map((reason) => (
+          <div key={reason} className="flex min-h-12 items-center gap-3 py-2">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-700">
+              ✓
+            </span>
+            <span className="text-[16px] font-semibold leading-6 text-slate-800">
+              {reason}
+            </span>
+          </div>
+        ))}
+      </div>
+      <p className="mt-4 rounded-[1.15rem] bg-trust-50 px-4 py-3 text-sm font-semibold leading-6 text-trust-800">
+        {isDe
+          ? "Weniger als viele Alltagskosten, aber hilfreich wenn wichtige Behördenpost regelmäßig kommt."
+          : "Less than many everyday costs, useful when important official letters arrive regularly."}
+      </p>
+    </section>
+  );
+}
+
 export async function generateMetadata() {
   const language = await getLanguage();
   const isDe = language === "de";
@@ -126,6 +177,14 @@ export default async function PricingPage({ searchParams }: PricingPageProps) {
           {t.pricingPageIntro}
         </p>
 
+        <section className="mt-5 rounded-[1.4rem] border border-emerald-200 bg-emerald-50 p-4">
+          <p className="text-base font-bold leading-6 text-emerald-900">
+            {isDe
+              ? "Ein Brief ist kostenlos. Für mehrere Seiten, PDFs und gespeicherte Briefe brauchst du Plus."
+              : "One letter is free. For multiple pages, PDFs and saved letters, you need Plus."}
+          </p>
+        </section>
+
         {checkout === "success" ? (
           <p className="mt-5 rounded-[1.25rem] bg-emerald-50 p-4 text-base font-bold leading-6 text-emerald-800">
             {t.checkoutSuccess}
@@ -157,6 +216,8 @@ export default async function PricingPage({ searchParams }: PricingPageProps) {
             <p className="mt-2 text-sm leading-6 text-white/85">{t.plans.plus.description}</p>
           </article>
         </div>
+
+        <WhyPlus isDe={isDe} />
 
         {/* Comparison table */}
         <section className="mt-4 overflow-hidden rounded-[1.55rem] bg-white/95 shadow-sm">

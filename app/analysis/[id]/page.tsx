@@ -120,6 +120,7 @@ export default async function AnalysisPage({ params }: AnalysisPageProps) {
               text={t.upsellText}
               cta={t.upsellCta}
               documentId={id}
+              language={language}
             />
           )}
         </div>
